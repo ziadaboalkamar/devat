@@ -10,10 +10,14 @@
         href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    {{-- @toastr_css --}}
 @stop
+
 @section('content')
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -27,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المؤسسات</h2>
+                                    <h2 class="content-header-title float-left mb-0">القسائم الشرائية</h2>
 
                                 </div>
                             </div>
@@ -36,41 +40,43 @@
                     <div class="content-body">
                         <!-- users list start -->
                         <section class="app-user-list">
-
                             <div class="card">
                                 <div class="card-datatable table-responsive pt-0">
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>الشعار</th>
-                                                <th>اسم المؤسسة</th>
+                                                <th>اسم المستفيد</th>
+                                                <th>اسم المشروع</th>
+                                                <th>السعر</th>
+                                                <th>محتوى القسيمة</th>
+                                                <th>ملاحظة</th>
                                                 <th>العمليات</th>
                                             </tr>
                                         </thead>
                                     </table>
                                 </div>
-
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{ route('main-branches.create') }}" method="get" class="d-none" id="create_new">
+                        <form action="{{ route('vawtchers.create') }}" method="get" class="d-none"
+                            id="create_new">
                             @csrf
                             <button type="submit"></button>
                         </form>
-                        @foreach ($mainBranches as $mainBranche)
+                        @foreach ($vawtchers as $vawtcher)
                         <!-- Modal -->
-                        <div class="modal fade" id="delete{{ $mainBranche->id }}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="delete{{ $vawtcher->id }}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">  حذف المؤسسة <span class="text-primary">{{ $mainBranche->name }}</span></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">  حذف القسيمة الشرائية <span class="text-primary"></span></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{ route('main-branches.destroy', $mainBranche->id) }}" method="post">
+                                    <form action="{{ route('vawtchers.destroy', $vawtcher->id) }}" method="post">
                                         {{ method_field('delete') }}
                                         {{ csrf_field() }}
                                         <div class="modal-body">
@@ -127,22 +133,38 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('main-branches.index') }}',
+                url: '{{ route('vawtchers.index') }}',
             },
             columns: [{
-                    data: 'logo',
-                    name: 'logo',
+                    data: 'user_id',
+                    name: 'user_id',
                     searchable: true
                 },
                 {
-                    data: 'name',
-                    name: 'name',
+                    data: 'project_id',
+                    name: 'project_id',
                     searchable: true
                 },
-
-                {data:''}
+                {
+                    data: 'ammount',
+                    name: 'ammount',
+                    searchable: true
+                },
+                {
+                    data: 'text',
+                    name: 'text',
+                    searchable: true
+                },
+                {
+                    data: 'note',
+                    name: 'note',
+                    searchable: true
+                },
+                {
+                    data: ''
+                }
             ],
-            order: [1, 'desc'],
+            order: [2, 'desc'],
             buttons: [{
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
@@ -222,7 +244,6 @@
                     }
                 }
             ],
-            // Actions
             columnDefs: [
                 // Actions
                 {
@@ -239,7 +260,7 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="main-branches/' + id + '/edit" class="dropdown-item">' +
+                            '<a href="vawtchers/' + id + '/edit" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
@@ -260,5 +281,6 @@
 
         });
     </script>
-
+    {{-- @toastr_js
+@toastr_render --}}
 @stop

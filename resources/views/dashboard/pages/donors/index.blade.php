@@ -1,19 +1,17 @@
 @extends('dashboard.layouts.master')
-@section('title', 'index')
+@section('title','index')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors-rtl.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css')}}">
+    {{-- @toastr_css --}}
 @stop
+
 @section('content')
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -27,7 +25,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المؤسسات</h2>
+                                    <h2 class="content-header-title float-left mb-0">المتبرعين</h2>
 
                                 </div>
                             </div>
@@ -36,16 +34,18 @@
                     <div class="content-body">
                         <!-- users list start -->
                         <section class="app-user-list">
-
+                           
                             <div class="card">
                                 <div class="card-datatable table-responsive pt-0">
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
-                                            <tr>
-                                                <th>الشعار</th>
-                                                <th>اسم المؤسسة</th>
-                                                <th>العمليات</th>
-                                            </tr>
+                                        <tr>
+                                            <th>الاسم</th>
+                                            <th>رقم الهاتف</th>
+                                            <th>الشعار</th>
+                                            <th>البريد الالكتروني</th>
+                                            <th>العمليات</th>
+                                        </tr>
                                         </thead>
                                     </table>
                                 </div>
@@ -53,24 +53,24 @@
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{ route('main-branches.create') }}" method="get" class="d-none" id="create_new">
+                        <form action="{{ route('donors.create') }}" method="get" class="d-none" id="create_new">
                             @csrf
                             <button type="submit"></button>
                         </form>
-                        @foreach ($mainBranches as $mainBranche)
-                        <!-- Modal -->
-                        <div class="modal fade" id="delete{{ $mainBranche->id }}" tabindex="-1" role="dialog"
+                        @foreach ($donors as $donor)
+                                       <!-- Modal -->
+                        <div class="modal fade" id="delete{{ $donor->id }}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">  حذف المؤسسة <span class="text-primary">{{ $mainBranche->name }}</span></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"> حذف المؤسسة الداعمة <span class="text-primary">{{ $donor->name }}</span></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{ route('main-branches.destroy', $mainBranche->id) }}" method="post">
+                                    <form action="{{ route('donors.destroy', $donor->id) }}" method="post">
                                         {{ method_field('delete') }}
                                         {{ csrf_field() }}
                                         <div class="modal-body">
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -107,13 +107,15 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
 
     <!-- END: Page Vendor JS-->
 
     <script>
+
         let project_table = $('.project-list-table').DataTable({
-            dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+            dom:
+                '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
                 '<"col-lg-12 col-xl-6" l>' +
                 '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
                 '>t' +
@@ -127,85 +129,58 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('main-branches.index') }}',
+                url: '{{ route('donors.index') }}',
             },
-            columns: [{
-                    data: 'logo',
-                    name: 'logo',
-                    searchable: true
-                },
-                {
-                    data: 'name',
-                    name: 'name',
-                    searchable: true
-                },
-
+            columns: [
+                {data: 'name', name:'name',searchable: true},
+                {data: 'phone',name:'phone',searchable: true},
+                {data: 'logo',name:'logo',searchable: true},
+                {data: 'email',name:'email',searchable: false},
                 {data:''}
             ],
-            order: [1, 'desc'],
-            buttons: [{
+            order: [0, 'desc'],
+            buttons: [
+                {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({
-                        class: 'font-small-4 mr-50'
-                    }) + 'Export',
-                    buttons: [{
+                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'Export',
+                    buttons: [
+                        {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Print',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 mr-50'}) + 'Print',
                             className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
+                            exportOptions: {columns: [0, 1, 2, 3, 4]}
                         },
                         {
                             extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Csv',
+                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 mr-50'}) + 'Csv',
                             className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
+                            exportOptions: {columns: [0, 1, 2, 3, 4]}
                         },
                         {
                             extend: 'excel',
-                            text: feather.icons['file'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Excel',
+                            text: feather.icons['file'].toSvg({class: 'font-small-4 mr-50'}) + 'Excel',
                             className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
+                            exportOptions: {columns: [0, 1, 2, 3, 4]}
                         },
                         {
                             extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Pdf',
+                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 mr-50'}) + 'Pdf',
                             className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
+                            exportOptions: {columns: [0, 1, 2, 3, 4]}
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Copy',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 mr-50'}) + 'Copy',
                             className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
+                            exportOptions: {columns: [0, 1, 2, 3, 4]}
                         }
                     ],
-                    init: function(api, node, config) {
+                    init: function (api, node, config) {
                         $(node).removeClass('btn-secondary');
                         $(node).parent().removeClass('btn-group');
-                        setTimeout(function() {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass(
-                                'd-inline-flex');
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex');
                         }, 50);
                     }
                 },
@@ -217,12 +192,11 @@
                     attr: {
                         'onclick': "document.getElementById('create_new').submit()",
                     },
-                    init: function(api, node, config) {
+                    init: function (api, node, config) {
                         $(node).removeClass('btn-secondary');
                     }
                 }
             ],
-            // Actions
             columnDefs: [
                 // Actions
                 {
@@ -239,7 +213,7 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="main-branches/' + id + '/edit" class="dropdown-item">' +
+                            '<a href="donors/' + id + '/edit" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
@@ -259,6 +233,9 @@
 
 
         });
-    </script>
 
+
+    </script>
+{{-- @toastr_js
+@toastr_render --}}
 @stop

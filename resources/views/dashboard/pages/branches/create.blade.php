@@ -38,11 +38,11 @@
                                     <h4 class="card-title">اضافة فرع</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form class="row" action="{{ route('branches.store') }}" method="POST">
+                                    <form class="row" action="{{ route('branches.store') }}" method="POST" id="create_new">
                                         @csrf
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم الفرع</label>
-                                            <input type="text" name="address" class="form-control credit-card-mask" placeholder="العنوان"  />
+                                            <input type="text" name="address" value="{{ old('address') }}" class="form-control credit-card-mask" placeholder="اسم الفرع"  />
                                             @error('address')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
 
@@ -56,33 +56,29 @@
                                             <input type="email" name="email" class="form-control credit-card-mask" placeholder="البريد الالكتروني"  />
                                             @error('email')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">رقم الموظف</label>
-                                            <input type="text" name="number_of_employe" class="form-control credit-card-mask" placeholder="رقم الموظف"  />
-                                            @error('number_of_employe')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
+                                        
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم المدير</label>
                                             <input type="text" name="manager_name" class="form-control credit-card-mask" placeholder="اسم المدير"  />
                                             @error('manager_name')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-
+ 
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <div class="form-group">
                                                 <label for="basicInput">المدينة</label>
                                                 <select name="city_id" class="form-control">
                                                     <option value="" selected disabled>اختر المدينة</option>
                                                     @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"> {{ $city->city_name }}</option>
+                                                    <option value="{{ $city->id }}"> {{ $city->city_name }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('city_id')<span class="text-danger">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
-
+ 
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                            <button type="reset" class="btn btn-outline-secondary">اغلاق</button>
+                                            <a href="{{ route('branches.index') }}" class="btn btn-outline-secondary">اغلاق</a>
                                         </div>
                                     </form>
                                     </div>

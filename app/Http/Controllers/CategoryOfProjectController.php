@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriesOfProject;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryOfProjectController extends Controller
 {
@@ -12,9 +13,23 @@ class CategoryOfProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->ajax()){
+            $categoriesOfProject = CategoriesOfProject::all();
+
+            return DataTables::of($categoriesOfProject)
+                ->addIndexColumn()
+                ->editColumn('created_at', function (CategoriesOfProject $categoriesOfProject) {
+                    return $categoriesOfProject->created_at->format('Y-m-d');
+                })
+                ->rawColumns(['record_select', 'actions'])
+                ->make(true);
+        }
+
+        return view('dashboard.pages.category_of_projects.index',[
+            'categoriesOfProjects' => CategoriesOfProject::get(),
+        ]);
     }
 
     /**
@@ -43,7 +58,8 @@ class CategoryOfProjectController extends Controller
         $data = [];
         $data['name'] = $request->name;
         CategoriesOfProject::create($data);
-        return redirect()->route('category-of-projects.create') ;
+        toastr()->success(__('تم حفظ البيانات بنجاح'));
+        return redirect()->route('category-of-projects.index') ;
     }
 
     /**
@@ -63,9 +79,11 @@ class CategoryOfProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CategoriesOfProject $category_of_project)
     {
-        //
+        return view('dashboard.pages.category_of_projects.edit',[
+            'category_of_project' => $category_of_project,
+        ]);
     }
 
     /**
@@ -75,9 +93,17 @@ class CategoryOfProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CategoriesOfProject $category_of_project)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $data = [];
+        $data['name'] = $request->name;
+        $category_of_project->update($data);
+        toastr()->success(__('تم تعديل البيانات بنجاح'));
+        return redirect()->route('category-of-projects.index') ;
     }
 
     /**
@@ -86,8 +112,11 @@ class CategoryOfProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CategoriesOfProject $category_of_project)
     {
-        //
+        $category_of_project->delete();
+        toastr()->success(__('تم حذف البيانات بنجاح'));
+
+        return redirect()->route('category-of-projects.index') ;
     }
 }

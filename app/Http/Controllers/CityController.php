@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Beneficiary;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
 {
@@ -12,9 +14,23 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->ajax()){
+            $cities = City::all();
+
+            return DataTables::of($cities)
+                ->addIndexColumn()
+                ->editColumn('created_at', function (City $cities) {
+                    return $cities->created_at->format('Y-m-d');
+                })
+                ->rawColumns(['record_select', 'actions'])
+                ->make(true);
+        }
+
+        return view('dashboard.pages.cities.index',[
+            'cities' => City::get(),
+        ]);
     }
 
     /**
@@ -26,6 +42,7 @@ class CityController extends Controller
     {
         return view('dashboard.pages.cities.create');
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -42,7 +59,9 @@ class CityController extends Controller
         $data = [];
         $data['city_name'] = $request->city_name;
         City::create($data);
-        return redirect()->route('cities.create') ;
+        toastr()->success(__('تم حفظ البيانات بنجاح'));
+
+        return redirect()->route('cities.index') ;
 
     }
 
@@ -63,9 +82,11 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(City $city)
     {
-        //
+        return view('dashboard.pages.cities.edit',[
+            'city' => $city,
+        ]);
     }
 
     /**
@@ -75,9 +96,18 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, City $city)
     {
-        //
+        $request->validate([
+            'city_name' => 'required|string',
+        ]);
+
+        $data = [];
+        $data['city_name'] = $request->city_name;
+        $city->update($data);
+        toastr()->success(__('تم تعديل البيانات بنجاح'));
+
+        return redirect()->route('cities.index') ;
     }
 
     /**
@@ -86,8 +116,17 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(City $city)
     {
-        //
+        if(count($city->Beneficiaries) > 0){
+            toastr()->error(__('لايمكنك حذف هذه المدينة'));
+            return redirect()->route('cities.index') ;
+        }else{
+            $city->delete();
+            toastr()->success(__('تم حذف البيانات بنجاح'));
+    
+            return redirect()->route('cities.index') ;
+        }
+       
     }
 }

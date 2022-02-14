@@ -48,7 +48,7 @@
  
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                            <button type="reset" class="btn btn-outline-secondary">اغلاق</button>
+                                            <a href="{{ route('cities.index') }}" class="btn btn-outline-secondary">اغلاق</a>
                                         </div>
                                     </form>
                                     </div>

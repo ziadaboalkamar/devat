@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','edit')
+@section('title','create')
 @section('css')
 @stop
 @section('content')
@@ -12,14 +12,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">تعديل مؤسسة</h2>
+                            <h2 class="content-header-title float-left mb-0">اضافة مؤسسة داعمة</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">الرئيسية</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#">المؤسسات</a>
+                                    <li class="breadcrumb-item"><a href="#">المؤسسةالداعمة</a>
                                     </li>
-                                    <li class="breadcrumb-item active"> تعديل مؤسسة
+                                    <li class="breadcrumb-item active">اضافة مؤسسة داعمة
                                     </li>
                                 </ol>
                             </div>
@@ -35,28 +35,37 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">تعديل مؤسسة</h4>
+                                    <h4 class="card-title">اضافة مؤسسة داعمة</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form class="row" action="{{ route('main-branches.update',$main_branch->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="row" action="{{ route('donors.store') }}" method="POST" id="create_new" enctype="multipart/form-data">
                                         @csrf
-                                        @method('put')
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">اسم المؤسسة</label>
-                                            <input type="text" value="{{ old('name',$main_branch->name) }}" name="name" class="form-control credit-card-mask" placeholder="اسم المؤسسة" id="credit-card" />
+                                            <label for="credit-card">اسم المؤسسةالداعمة</label>
+                                            <input type="text" name="name" value="{{ old('name') }}" class="form-control credit-card-mask" placeholder="اسم المؤسسة الداعمة"  />
                                             @error('name')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
+
+                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
+                                            <label for="credit-card">رقم الهاتف</label>
+                                            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control credit-card-mask" placeholder="رقم الهاتف"  />
+                                            @error('phone')<span class="text-danger">{{ $message }}</span>@enderror
+                                        </div>
+                                       
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الشعار</label>
-                                            @if ($main_branch->logo)
-                                             <img src="{{asset('assets/'.$main_branch->logo)}}" height="120" alt="" class="ml-auto">
-                                            @endif     
-                                            <input type="file" name="logo" class="form-control credit-card-mask" placeholder="الشعار" id="credit-card" />
+                                            <input type="file" name="logo" class="form-control credit-card-mask" placeholder="الشعار"  />
                                             @error('logo')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
+                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
+                                            <label for="credit-card">البريد الالكتروني</label>
+                                            <input type="email" name="email" value="{{ old('email') }}" class="form-control credit-card-mask" placeholder="البريد الالكتروني"  />
+                                            @error('email')<span class="text-danger">{{ $message }}</span>@enderror
+                                        </div>
+ 
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                            <a href="{{ route('main-branches.index') }}" class="btn btn-outline-secondary">اغلاق</a>
+                                            <a href="{{ route('donors.index') }}" class="btn btn-outline-secondary">اغلاق</a>
                                         </div>
                                     </form>
                                     </div>

@@ -50,10 +50,13 @@
                                             <input type="file" name="logo" class="form-control credit-card-mask" placeholder="الشعار" id="credit-card" />
                                             @error('logo')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <br>
-                                        <button class="btn btn-primary">حفظ</button>
-                                        </div>
+
+                                     
+                                            <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                                                <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
+                                                <a href="{{ route('main-branches.index') }}" class="btn btn-outline-secondary">اغلاق</a>
+                                            </div>
+
                                     </form>
                                     </div>
                                 </div>

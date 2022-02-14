@@ -51,10 +51,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/users/roles/update/{id}',[RoleController::class,'update_role'])->name('user.role-update');
 //    end roles route
 
-    Route::resource('main-branches', MainBrancheController::class);
-    Route::resource('cities', CityController::class);
-    Route::resource('branches', BrancheController::class);
-    Route::resource('category-of-projects', CategoryOfProjectController::class);
+Route::resource('main-branches', MainBrancheController::class);
+Route::resource('cities', CityController::class);
+Route::resource('branches', BrancheController::class);
+Route::resource('category-of-projects', CategoryOfProjectController::class);
+Route::resource('donors', DonorController::class);
+Route::resource('beneficiareis', BeneficiaryController::class);
+Route::resource('beneficiareis-projects', BeneficiariesProjectController::class);
+Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
+Route::resource('vawtchers', VawtcherController::class);
+
 
 //    start project
     Route::get('/projects',[ProjectController::class,'index'])->name('projects.index');

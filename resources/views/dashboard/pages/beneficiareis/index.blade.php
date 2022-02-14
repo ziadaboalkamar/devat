@@ -10,10 +10,14 @@
         href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    {{-- @toastr_css --}}
 @stop
+
 @section('content')
     <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -27,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المؤسسات</h2>
+                                    <h2 class="content-header-title float-left mb-0">المستفيدين</h2>
 
                                 </div>
                             </div>
@@ -36,56 +40,71 @@
                     <div class="content-body">
                         <!-- users list start -->
                         <section class="app-user-list">
-
                             <div class="card">
                                 <div class="card-datatable table-responsive pt-0">
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>الشعار</th>
-                                                <th>اسم المؤسسة</th>
+                                                <th>اسم الاول</th>
+                                                <th>اسم الاب</th>
+                                                <th>اسم الجد</th>
+                                                <th>اسم العائلة</th>
+                                                <th>الجنس</th>
+                                                <th>رقم الهوية</th>
+                                                <th>رقم الجوال</th>
+                                                <th>عدد افراد الاسرة</th>
+                                                <th>اسم الفرع</th>
+                                                <th>المدينة</th>
+                                                <th>العنوان</th>
+                                                <th>الحالة الاجتماعية</th>
+                                                <th>الحالة</th>
                                                 <th>العمليات</th>
                                             </tr>
                                         </thead>
                                     </table>
                                 </div>
-
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{ route('main-branches.create') }}" method="get" class="d-none" id="create_new">
+                        <form action="{{ route('beneficiareis.create') }}" method="get" class="d-none"
+                            id="create_new">
                             @csrf
                             <button type="submit"></button>
                         </form>
-                        @foreach ($mainBranches as $mainBranche)
-                        <!-- Modal -->
-                        <div class="modal fade" id="delete{{ $mainBranche->id }}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">  حذف المؤسسة <span class="text-primary">{{ $mainBranche->name }}</span></h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                        @foreach ($beneficiareis as $beneficiary)
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete{{ $beneficiary->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">حذف الفرع <span
+                                                    class="text-primary">{{ $beneficiary->firstName }}</span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('beneficiareis.destroy', $beneficiary->id) }}"
+                                            method="post">
+                                            {{ method_field('delete') }}
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
+                                                {{-- <input type="hidden" name="id" value="{{ $section->id }}"> --}}
+                                                <h5>هل انت متاكد من حذف البيانات</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">{{ __('Close') }}</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <form action="{{ route('main-branches.destroy', $mainBranche->id) }}" method="post">
-                                        {{ method_field('delete') }}
-                                        {{ csrf_field() }}
-                                        <div class="modal-body">
-                                            <h5>هل انت متاكد من حذف البيانات</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">اغلاق</button>
-                                            <button type="submit" class="btn btn-danger">حذف</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                            @include('dashboard.pages.beneficiareis.updateStatus')
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -127,22 +146,79 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('main-branches.index') }}',
+                url: '{{ route('beneficiareis.index') }}',
             },
             columns: [{
-                    data: 'logo',
-                    name: 'logo',
+                    data: 'firstName',
+                    name: 'firstName',
                     searchable: true
                 },
                 {
-                    data: 'name',
-                    name: 'name',
+                    data: 'secondName',
+                    name: 'secondName',
                     searchable: true
                 },
-
-                {data:''}
+                {
+                    data: 'thirdName',
+                    name: 'thirdName',
+                    searchable: true
+                },
+                {
+                    data: 'lastName',
+                    name: 'lastName',
+                    searchable: true
+                },
+                {
+                    data: 'gender',
+                    name: 'gender',
+                    searchable: true
+                },
+                {
+                    data: 'id_number',
+                    name: 'id_number',
+                    searchable: true
+                },
+                {
+                    data: 'PhoneNumber',
+                    name: 'PhoneNumber',
+                    searchable: true
+                },
+                {
+                    data: 'family_member',
+                    name: 'family_member',
+                    searchable: true
+                },
+                {
+                    data: 'branch_name',
+                    name: 'branch_name',
+                    searchable: true
+                },
+               
+                {
+                    data: 'city_name',
+                    name: 'city_name',
+                    searchable: true
+                },
+                {
+                    data: 'address',
+                    name: 'address',
+                    searchable: false
+                },
+                {
+                    data: 'maritial',
+                    name: 'maritial',
+                    searchable: false
+                },
+                {
+                    data: 'active',
+                    name: 'active',
+                    searchable: false
+                },
+                {
+                    data: ''
+                }
             ],
-            order: [1, 'desc'],
+            order: [0, 'desc'],
             buttons: [{
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
@@ -222,7 +298,6 @@
                     }
                 }
             ],
-            // Actions
             columnDefs: [
                 // Actions
                 {
@@ -239,7 +314,7 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="main-branches/' + id + '/edit" class="dropdown-item">' +
+                            '<a href="beneficiareis/' + id + '/edit" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
@@ -249,7 +324,12 @@
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'Delete</a></div>' +
+                            'Delete</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            ' data-target="#update_status' + id + '">' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            'update_status</a> </div>' +
                             '</div>' +
                             '</div>'
                         );
@@ -260,5 +340,6 @@
 
         });
     </script>
-
+    {{-- @toastr_js
+@toastr_render --}}
 @stop
