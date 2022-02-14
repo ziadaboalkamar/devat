@@ -65,12 +65,12 @@ class BrancheController extends Controller
         ]);
         //  return $request;
         $data = [];
-        $data['address'] = $request->address;
+        $data['name'] = $request->address;
         $data['phoneNumber'] = $request->phoneNumber;
         $data['email'] = $request->email;
         $data['manager_name'] = $request->manager_name;
         $data['city_id'] = $request->city_id;
-        
+
         Branches::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
@@ -120,12 +120,12 @@ class BrancheController extends Controller
         ]);
         //  return $request;
         $data = [];
-        $data['address'] = $request->address;
+        $data['name'] = $request->address;
         $data['phoneNumber'] = $request->phoneNumber;
         $data['email'] = $request->email;
         $data['manager_name'] = $request->manager_name;
         $data['city_id'] = $request->city_id;
-        
+
         $branch->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 

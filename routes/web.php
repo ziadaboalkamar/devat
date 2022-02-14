@@ -58,7 +58,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 Route::resource('main-branches', MainBrancheController::class);
 Route::resource('cities', CityController::class);
 Route::resource('branches', BrancheController::class);
-Route::resource('category-of-projects', CategoryOfProjectController::class);
+Route::resource('category-of-projects',CategoryOfProjectController::class);
 Route::resource('donors', DonorController::class);
 Route::resource('beneficiareis', BeneficiaryController::class);
 Route::resource('beneficiareis-projects', BeneficiariesProjectController::class);

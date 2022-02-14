@@ -20,10 +20,6 @@ class CategoryOfProjectController extends Controller
 
             return DataTables::of($categoriesOfProject)
                 ->addIndexColumn()
-                ->editColumn('created_at', function (CategoriesOfProject $categoriesOfProject) {
-                    return $categoriesOfProject->created_at->format('Y-m-d');
-                })
-                ->rawColumns(['record_select', 'actions'])
                 ->make(true);
         }
 

@@ -137,8 +137,8 @@
                 url: '{{ route('branches.index') }}',
             },
             columns: [{
-                    data: 'address',
-                    name: 'address',
+                    data: 'name',
+                    name: 'name',
                     searchable: true
                 },
                 {
@@ -151,7 +151,7 @@
                     name: 'email',
                     searchable: true
                 },
-              
+
                 {
                     data: 'manager_name',
                     name: 'manager_name',
