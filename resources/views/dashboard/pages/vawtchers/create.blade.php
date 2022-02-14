@@ -38,7 +38,7 @@
                                     <h4 class="card-title">اضافة قسيمة شرائية</h4>
                                 </div>
                                 <div class="card-body">
-                                    
+
                                     <form class="row" action="{{ route('vawtchers.store') }}" method="POST" id="create_new">
                                         @csrf
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
@@ -46,7 +46,7 @@
                                             <select name="user_id" class="form-control">
                                                 <option value="" selected disabled>اختر اسم المستفيد</option>
                                                 @foreach ($users as $user)
-                                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : null }}> {{ $user->name }}</option>                                                      
+                                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : null }}> {{ $user->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('user_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -56,7 +56,7 @@
                                             <select name="project_id" class="form-control">
                                                 <option value="" selected disabled>اختر المشروع</option>
                                                 @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : null }}> {{ $project->name }}</option>                                                      
+                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : null }}> {{ $project->project_name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('project_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -80,8 +80,8 @@
                                                 @error('note')<span class="text-danger">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
-                                        
-                                    
+
+
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
                                             <a href="{{ route('vawtchers.index') }}" class="btn btn-outline-secondary">اغلاق</a>
