@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DonorController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\BeneficiariesProjectController;
+use App\Http\Controllers\VawtcherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

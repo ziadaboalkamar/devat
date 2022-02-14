@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use App\Models\AttachmentCategory;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
@@ -42,7 +43,7 @@ class ProjectController extends Controller
         return view('dashboard.pages.projects.create', compact('categories', 'mainBranches', 'categories_attachment', 'attachments', 'currencies'));
     }
 
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
 
         try {
@@ -83,8 +84,8 @@ class ProjectController extends Controller
             return redirect()->route('projects.index');
 
         } catch (\Exception $ex) {
-            return $ex;
-        }
+            toastr()->error(__('يوجد خطاء ما'));
+            return redirect()->route('projects.index');        }
     }
 
     public function edit($id)
@@ -102,7 +103,7 @@ class ProjectController extends Controller
         return view('dashboard.pages.projects.edit', compact('projects','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
     }
 
-    public function update($id,Request $request)
+    public function update($id,ProjectRequest $request)
     {
 
         try {

@@ -25,7 +25,7 @@ class ProjectRequest extends FormRequest
     {
         return [
 
-              'company_name' =>  ['required', 'string','max:225'],
+              'main_branch_id' =>  ['required'],
                 'project_name' => ['required', 'string','max:225'],
                 'grant_date' =>  ['required', 'date'],
                 'category_id' =>  ['required', 'numeric'],
