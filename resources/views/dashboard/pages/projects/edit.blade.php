@@ -1,11 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('title','create')
+@section('title','edit')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset("app-assets/vendors/css/forms/select/select2.min.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/jstree.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css-rtl/plugins/extensions/ext-component-tree.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css-rtl/pages/app-file-manager.css')}}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
 
@@ -237,7 +238,7 @@
                                                                                     <h6 class="font-weight-bold d-inline-block mr-1 mb-0">Actions</h6>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="card file-manager-item folder level-up">
+                                                                            <div class="card file-manager-item folder level-up" >
                                                                                 <div class="card-img-top file-logo-wrapper">
                                                                                     <div class="d-flex align-items-center justify-content-center w-100">
                                                                                         <i data-feather="arrow-up"></i>
@@ -250,7 +251,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             @foreach($projectsAttachment as $project1)
-                                                                            <div class="card file-manager-item folder">
+                                                                            <div class="card file-manager-item folder" id="file-manager-item">
                                                                                 <div class="custom-control custom-checkbox">
                                                                                     <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                     <label class="custom-control-label" for="customCheck1"></label>
@@ -280,7 +281,10 @@
                                                                                     @if($project1->url)
                                                                                         <small class="file-accessed text-muted">url</small>
                                                                                     @endif
-                                                                                    <small class="file-accessed text-muted"><a href="{{route('projects.delete.attachment',$project1->id)}}">حذف</a></small>
+                                                                                    <small class="file-accessed text-muted">
+
+                                                                                            <button id="delete_attachment" data-id="{{$project1->id}}" type="button" class="btn btn-danger">حذف</button>
+                                                                                    </small>
                                                                                 </div>
                                                                             </div>
                                                                             @endforeach
@@ -290,8 +294,6 @@
                                                                             </div>
                                                                         </div>
                                                                         <!-- /Folders Container Ends -->
-
-
                                                                     </div>
                                                                 </div>
                                                                 <!-- file manager app content ends -->
@@ -325,7 +327,7 @@
                                                                                 <div class="tab-content" id="myTabContent">
                                                                                     <div class="tab-pane fade show active" id="details-tab" role="tabpanel" aria-labelledby="details-tab">
                                                                                         <div class="d-flex flex-column justify-content-center align-items-center py-5">
-                                                                                            <img src="../../../app-assets/images/icons/js.png" alt="file-icon" height="64" />
+                                                                                            <img src="{{asset('app-assets/images/icons/js.png')}}" alt="file-icon" height="64" />
                                                                                             <p class="mb-0 mt-1">54kb</p>
                                                                                         </div>
                                                                                         <h6 class="file-manager-title my-2">Settings</h6>
@@ -386,7 +388,7 @@
                                                                                         <h6 class="file-manager-title my-2">Today</h6>
                                                                                         <div class="media align-items-center mb-2">
                                                                                             <div class="avatar avatar-sm mr-50">
-                                                                                                <img src="../../../app-assets/images/avatars/5-small.png" alt="avatar" width="28" />
+                                                                                                <img src="{{asset('app-assets/images/avatars/5-small.png')}}" alt="avatar" width="28" />
                                                                                             </div>
                                                                                             <div class="media-body">
                                                                                                 <p class="mb-0">
@@ -422,7 +424,7 @@
                                                                                         </div>
                                                                                         <div class="media align-items-center">
                                                                                             <div class="avatar avatar-sm mr-50">
-                                                                                                <img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" width="28" />
+                                                                                                <img src="{{asset('app-assets/images/portrait/small/avatar-s-1.jpg')}}" alt="Avatar" width="28" />
                                                                                             </div>
                                                                                             <div class="media-body">
                                                                                                 <p class="mb-0">
@@ -434,14 +436,14 @@
                                                                                         <h6 class="file-manager-title mt-3 mb-2">3 days ago</h6>
                                                                                         <div class="media">
                                                                                             <div class="avatar avatar-sm mr-50">
-                                                                                                <img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" width="28" />
+                                                                                                <img src="{{asset('app-assets/images/portrait/small/avatar-s-1.jpg')}}" alt="Avatar" width="28" />
                                                                                             </div>
                                                                                             <div class="media-body">
                                                                                                 <p class="mb-50">
                                                                                                     <span class="font-weight-bold">You</span>
                                                                                                     uploaded this file
                                                                                                 </p>
-                                                                                                <img src="../../../app-assets/images/icons/js.png" alt="Avatar" class="mr-50" height="24" />
+                                                                                                <img src="{{asset('app-assets/images/icons/js.png')}}" alt="Avatar" class="mr-50" height="24" />
                                                                                                 <span class="font-weight-bold">app.js</span>
                                                                                             </div>
                                                                                         </div>
@@ -452,15 +454,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- File Info Sidebar Ends -->
-
-                                                                <!-- File Dropdown Starts-->
-
-
-
-                                                                <!-- /File Dropdown Ends -->
-
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -560,7 +553,51 @@
     <!-- END: Page JS-->
     <script src="{{asset('app-assets/vendors/js/forms/repeater/jquery.repeater.min.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/pages/app-file-manager.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        $(document).on('click','#delete_attachment', function () {
+
+            var delete_id = $(this).attr('data-id');
+            var delete_element =document.getElementById('file-manager-item');
+            var $ele = $(this).parent().parent().parent();
+            swal.fire({
+                html:'هل انت متأكد<b>بحذف<b/> هذا المرفق',
+                icon: 'warning',
+                showCancelButton:true,
+                showCloseButton:true,
+                cancelButtonText:'الغاء',
+                confirmButtonText:'نعم,حذف',
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#556ee6',
+
+                allowOutsideClick:false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        type: "POST",
+                        url: "{{route('delete.attachment')}}"+ '/' + delete_id,
+
+                        success: function (data) {
+                                $ele.fadeOut().remove();
+
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                    Swal.fire(
+                        'تم الحذف بنجاح',
+
+                    )
+                }
+            });
+
+        });
+
+
+    </script>
 
 
 @stop

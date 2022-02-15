@@ -28,8 +28,8 @@ class UserRequest extends FormRequest
             'firstname'=> ['required', 'string','max:100'],
             'lastname'=> ['required', 'string', 'max:100'],
             'jobName'=> ['required', 'string', 'max:100'],
-            'phoneNumber'=> ['required'],
-            'email' => ['required', 'string', 'email'],
+            'phoneNumber'=> ['required','numeric'],
+            'email' => ['required','string','email'],
             'password' => ['required', 'string'],
             'userName'=> ['required', 'string', 'max:100']
 
