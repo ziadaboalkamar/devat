@@ -177,20 +177,14 @@ class ProjectController extends Controller
     }
     public function deleteAttachment($id)
     {
-        try {
-            $projectAttachment= ProjectAttachment::find($id);
-            if (!$projectAttachment){
-                toastr()->error(__('يوجد خطاء ما'));
-                return redirect()->route('user.index');
-            }
-            $projectAttachment ->delete();
 
-            toastr()->success(__('تم تحديث البيانات بنجاح'));
-            return back();
+     ProjectAttachment::find($id)->delete();
 
-        }catch (\Exception $ex){
-            toastr()->error(__('يوجد خطاء ما'));
-            return back();
-        }
+    }
+
+
+    public function deleteaa()
+    {
+
     }
 }

@@ -72,7 +72,8 @@ Route::resource('vawtchers', VawtcherController::class);
     Route::post('/projects/store',[ProjectController::class,'store'])->name('projects.store');
     Route::get('/projects/edit/{id}',[ProjectController::class,'edit'])->name('projects.edit');
     Route::post('/projects/update/{id}',[ProjectController::class,'update'])->name('projects.update');
-    Route::get('/projects/delete/attachment/{id}',[ProjectController::class,'deleteAttachment'])->name('projects.delete.attachment');
+    Route::post('/projects/delete/attachment/{id}',[ProjectController::class,'deleteAttachment'])->name('projects.delete.attachment');
+    Route::get('/projects/delete/attachment',[ProjectController::class,'deleteaa'])->name('delete.attachment');
     Route::get('/projects/delete/{id}',[ProjectController::class,'delete'])->name('projects.delete');
 
 
