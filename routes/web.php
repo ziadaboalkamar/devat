@@ -37,7 +37,7 @@ require __DIR__.'/auth.php';
 
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
 //    home route
     Route::get('/',[HomeController::class,'index'])->name('admin');
 //    start user
