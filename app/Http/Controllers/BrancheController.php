@@ -21,14 +21,12 @@ class BrancheController extends Controller
 
             return DataTables::of($branch)
                 ->addIndexColumn()
-                ->editColumn('created_at', function (Branches $branche) {
-                    return $branche->created_at->format('Y-m-d');
-                })
+                
                 ->editColumn('city_name', function (Branches $branch) {
                     return $branch->cities->city_name;
                 })
-                ->rawColumns(['record_select', 'actions'])
                 ->make(true);
+            
         }
 
         return view('dashboard.pages.branches.index',[
@@ -57,15 +55,15 @@ class BrancheController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'address' => 'required|string',
-            'phoneNumber' => 'required|numeric',
-            'email' => 'required',
-            'manager_name' => 'required|string',
+            'name' => 'required|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
+            'phoneNumber' => 'required|numeric|unique:branches',
+            'email' => 'required|unique:branches|email',
+            'manager_name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
             'city_id' => 'required',
         ]);
         //  return $request;
         $data = [];
-        $data['name'] = $request->address;
+        $data['name'] = $request->name;
         $data['phoneNumber'] = $request->phoneNumber;
         $data['email'] = $request->email;
         $data['manager_name'] = $request->manager_name;
@@ -112,15 +110,15 @@ class BrancheController extends Controller
     public function update(Request $request, Branches $branch)
     {
         $request->validate([
-            'address' => 'required|string',
-            'phoneNumber' => 'required|numeric',
-            'email' => 'required',
-            'manager_name' => 'required|string',
+            'name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
+            'phoneNumber' => 'required|numeric|unique:branches,phoneNumber,'. $branch->id,
+            'email' => 'required|email|unique:branches,email,'.$branch->id,
+            'manager_name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
             'city_id' => 'required',
         ]);
         //  return $request;
         $data = [];
-        $data['name'] = $request->address;
+        $data['name'] = $request->name;
         $data['phoneNumber'] = $request->phoneNumber;
         $data['email'] = $request->email;
         $data['manager_name'] = $request->manager_name;

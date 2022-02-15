@@ -43,7 +43,7 @@
                                         @method('put')
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم الفرع</label>
-                                            <input type="text" name="address" value="{{ old('address',$branch->address) }}" class="form-control credit-card-mask" placeholder="اسم الفرع"  />
+                                            <input type="text" name="name" value="{{ old('name',$branch->name) }}" class="form-control credit-card-mask" placeholder="اسم الفرع"  />
                                             @error('address')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
 

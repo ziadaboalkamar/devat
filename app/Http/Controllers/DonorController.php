@@ -55,10 +55,10 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|numeric',
-            'logo' => 'required',
-            'email' => 'required',
+            'name' => 'required|string|',
+            'phone' => 'required|numeric|unique:donors',
+            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
+            'email' => 'required|unique:donors|email',
         ]);
         //  return $request;
         $data = [];
@@ -112,10 +112,10 @@ class DonorController extends Controller
     public function update(Request $request, Donor $donor)
     {
         $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|numeric',
-            'logo' => 'required',
-            'email' => 'required',
+            'name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
+            'phone' => 'required|numeric|unique:donors,phone,' . $donor->id,
+            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
+            'email' => 'required|email|unique:donors,email,'. $donor->id,
         ]);
         //  return $request;
         $data = [];

@@ -61,6 +61,7 @@ class MainBrancheController extends Controller
         // return $request;
         $request->validate([
             'name' => 'required|string',
+            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
         ]);
 
         $data = [];
@@ -70,7 +71,8 @@ class MainBrancheController extends Controller
             $img = $request->file('logo');
             $img_path = $img->store('/MainBranches', 'assets');
         }
-        $data['logo'] = $img_path;
+
+        $data['logo'] = strip_tags($img_path,'<img>');
         MainBranche::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
@@ -112,6 +114,8 @@ class MainBrancheController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
+
         ]);
 
         $data = [];
@@ -124,7 +128,7 @@ class MainBrancheController extends Controller
             } else {
                 $img_path = $imag->store('/MainBranches', 'assets');
             }
-            $data['logo'] = $img_path;
+            $data['logo'] = strip_tags($img_path,'<img>');
         }
 
         $main_branch->update($data);
