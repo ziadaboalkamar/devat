@@ -83,8 +83,7 @@ Route::post('update_setting', [SettingController::class, 'update'])->name('setti
     Route::get('/projects/delete/attachment',[ProjectController::class,'deleteaa'])->name('delete.attachment');
     Route::get('/projects/delete/{id}',[ProjectController::class,'delete'])->name('projects.delete');
     Route::get('/projects/show/{id}',[ProjectController::class,'show'])->name('projects.show');
-    Route::get('/projects/delete/{id}',[ProjectController::class,'delete'])->name('projects.delete');
-
+    Route::get('/projects/beneficiareis/{id}',[ProjectController::class,'benefactoryPoject'])->name('projects.beneficiareis.get');
     Route::post('projects/update_status', [ProjectController::class, 'updateStatus'])->name('projects.update.status');
 
 
