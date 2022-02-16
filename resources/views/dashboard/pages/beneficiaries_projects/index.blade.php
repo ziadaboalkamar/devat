@@ -142,7 +142,7 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('beneficiareis-projects.index') }}',
+                url: '{{ route('projects.beneficiareis.get',$project_id) }}',
             },
             columns: [{
                     data: 'project_id',

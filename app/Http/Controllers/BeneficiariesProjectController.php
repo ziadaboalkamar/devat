@@ -42,7 +42,7 @@ class BeneficiariesProjectController extends Controller
                 // })
                 ->rawColumns(['record_select', 'actions'])
                 ->make(true);
-        
+
         }
 
         return view('dashboard.pages.beneficiaries_projects.index',[
@@ -87,10 +87,10 @@ class BeneficiariesProjectController extends Controller
         $data['delivery_date'] = $request->delivery_date;
         $data['employee_who_delivered'] = $request->employee_who_delivered;
         // $data['status_id'] = 1;
-        
+
         BeneficiariesProject::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
-        return redirect()->route('beneficiareis-projects.index') ;     
+        return redirect()->route('beneficiareis-projects.index') ;
     }
 
     /**
@@ -144,10 +144,10 @@ class BeneficiariesProjectController extends Controller
         $data['delivery_date'] = $request->delivery_date;
         $data['employee_who_delivered'] = $request->employee_who_delivered;
         // $data['status_id'] = 1;
-        
+
         $beneficiareis_project->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
-        return redirect()->route('beneficiareis-projects.index') ;     
+        return redirect()->route('beneficiareis-projects.index') ;
     }
 
     /**
@@ -161,6 +161,6 @@ class BeneficiariesProjectController extends Controller
         $beneficiareis_project->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis-projects.index') ;   
+        return redirect()->route('beneficiareis-projects.index') ;
     }
 }

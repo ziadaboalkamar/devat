@@ -38,7 +38,7 @@
                                     <h4 class="card-title">اضافة مستفيد</h4>
                                 </div>
                                 <div class="card-body">
-                                    
+
                                     <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
@@ -46,7 +46,7 @@
                                             <select name="project_id" class="form-control">
                                                 <option value="" selected disabled>اختر المشروع</option>
                                                 @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : null }}> {{ $project->company_name }}</option>                                                      
+                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : null }}> {{ $project->project_name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('project_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -56,7 +56,7 @@
                                             <select name="beneficiary_id" class="form-control">
                                                 <option value="" selected disabled>اختر المستفيد</option>
                                                 @foreach ($beneficiaries as $beneficiarie)
-                                                <option value="{{ $beneficiarie->id }}" {{ old('beneficiary_id') == $beneficiarie->id ? 'selected' : null }}> {{ $beneficiarie->address }}</option>                                                      
+                                                <option value="{{ $beneficiarie->id }}" {{ old('beneficiary_id') == $beneficiarie->id ? 'selected' : null }}> {{ $beneficiarie->address }}</option>
                                                 @endforeach
                                             </select>
                                             @error('beneficiary_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -67,7 +67,7 @@
                                                 <select name="branch_id" class="form-control">
                                                     <option value="" selected disabled>اختر الفرع</option>
                                                     @foreach ($brnches as $brnch)
-                                                    <option value="{{ $brnch->id }}" {{ old('branch_id') == $brnch->id ? 'selected' : null }}> {{ $brnch->address }}</option>                                                      
+                                                    <option value="{{ $brnch->id }}" {{ old('branch_id') == $brnch->id ? 'selected' : null }}> {{ $brnch->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -87,10 +87,10 @@
                                                 <option value="{{ $family_member }}" {{ old('family_member_count') == $family_member ? 'selected' : null }}>{{ $family_member }}</option>
                                                 @endforeach
                                             </select>
-                                           
+
                                             @error('family_member_count')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-                                       
+
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">تاريخ التسليم</label>
                                             <input type="date" name="delivery_date" value="{{ old('delivery_date') }}" class="form-control credit-card-mask" placeholder="تاريخ التسليم"  />
@@ -107,7 +107,7 @@
                                             <input type="text" name="employee_who_delivered" value="{{ old('employee_who_delivered') }}" class="form-control credit-card-mask" placeholder="الموظف الذي تم تسليمه"  />
                                             @error('employee_who_delivered')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-                                        
+
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
                                             <a href="{{ route('beneficiareis-projects.index') }}" class="btn btn-outline-secondary">اغلاق</a>

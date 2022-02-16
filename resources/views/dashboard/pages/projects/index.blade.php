@@ -134,7 +134,7 @@
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'Export',
+                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'تصدير',
                     buttons: [
                         {
                             extend: 'print',
@@ -177,7 +177,7 @@
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضافة جديد',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {
@@ -204,11 +204,19 @@
                             '<div class="dropdown-menu dropdown-menu-right">' +
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
-                            'Edit</a>' +
+                            'تعديل</a>' +
                             '<a href="projects/delete/' + id + '" class="dropdown-item delete-record">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
-                            'Delete</a></div>' +
+                            'حذف</a>' +
+                            '<a href="projects/edit/' + id + '" class="dropdown-item">' +
+                            feather.icons['user'].toSvg({class: 'font-small-4 mr-50'}) +
+                            'قسيمة شرائية</a>' +
+                            '<a href="projects/beneficiareis/' + id + '" class="dropdown-item">' +
+                            feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
+                            'مستفدين المشروع</a>' +
                             '</div>' +
+                            '</div>' +
+
                             '</div>'
                         );
                     }
