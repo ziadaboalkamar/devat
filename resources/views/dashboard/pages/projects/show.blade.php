@@ -23,7 +23,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">اضافة مشروع</h2>
+                            <h2 class="content-header-title float-left mb-0">عرض مشروع</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">الرئيسية</a>
@@ -46,108 +46,56 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">اضافة مشروع</h4>
+                                    <h4 class="card-title"> عرض مشروع</h4>
                                 </div>
-                                <div class="card-body">
-                                    <form class="row invoice-repeater" action="{{route('projects.update',$projects->id)}}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
+                                <div class="card-body row">
+
+                                        <div class="col-xl-4 col-md-4 col-sm-12 mb-2">
+
                                             <label for="date">اسم المشروع</label>
-                                            <input name="project_name" value="{{$projects->project_name}}"  type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
-                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+                                            <h4 for="date">{{$projects->project_name}}</h4>
+
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الجمعية الرئيسية</label>
-                                            <select name="main_branch_id" class="select2 form-control form-control-lg">
-                                                <option value=""> --- </option>
-                                                @if($mainBranches && $mainBranches -> count() > 0)
-                                                    @foreach($mainBranches as $mainBranch)
-                                                        <option @if($mainBranch->id == $projects->main_branch_id ) selected @endif value="{{$mainBranch->id}}">{{$mainBranch->name}}</option>
-
-                                                    @endforeach
-                                                @endif
-
-                                            </select>
-                                            @error('main_branch_id')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4 for="date">{{$projects->mainBranches->name}} </h4>
                                         </div>
 
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="date">المؤسسات الداعمة</label>
-                                            <select name="donor_id" class="select2 form-control form-control-lg">
-                                                <option value=""> --- </option>
-                                                @if($donors && $donors -> count() > 0)
-                                                    @foreach($donors as $donor)
-                                                        <option @if($donor->id == $projects->donor_id ) selected @endif value="{{$donor->id}}">{{$donor->name}}</option>
-
-                                                    @endforeach
-                                                @endif
-
-                                            </select>
-                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                                <h4 for="date">{{{$projects->donors->name}}} </h4>
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="time">تاريخ المنحة</label>
-                                            <input type="date" value="{{$projects->grant_date}}"  name="grant_date" class="form-control time-mask" placeholder="hh:mm:ss" id="time" />
-                                            @error('grant_date')<span class="text-danger">{{ $message }}</span>@enderror
+                                            <h4 for="time">{{$projects->grant_date}}</h4>
 
                                         </div>
                                         <!-- Basic -->
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label>نوع المنحة</label>
-                                            <select name="category_id" class="select2 form-control form-control-lg">
-                                                <option value=""> --- </option>
-                                                @if($categories && $categories -> count() > 0)
-                                                    @foreach($categories as $category)
-                                                        <option @if($category -> id == $projects->category_id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
-
-                                                    @endforeach
-                                                @endif
-
-                                            </select>
-                                            @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4>{{$projects->category->name}}</h4>
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="numeral-formatting">قيمة المنحة</label>
-                                            <input value="{{$projects->grant_value}}"  type="text" name="grant_value" class="form-control numeral-mask" placeholder="10,000" id="قيمة المنحة" />
-                                            @error('grant_value')<span class="text-danger">{{ $message }}</span>@enderror
+                                            <h4 for="date">{{$projects->grant_value}}</h4>
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label>العملة</label>
-                                            <select name="currency_id" class="select2 form-control form-control-lg">
-                                                <option value=""> --- </option>
-                                                @if($currencies && $currencies -> count() > 0)
-                                                    @foreach($currencies as $currency)
-                                                        <option  @if($currency -> id == $projects->currency_id) selected @endif  value="{{$currency->id}}">{{$currency->name}}</option>
-
-                                                    @endforeach
-                                                @endif
-
-                                            </select>
-                                            @error('currency_id')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4 for="">{{$projects->currency->name}}</h4>
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="delimiters">سعر الصرف</label>
-                                            <input value="{{$projects->exchange_amount}}" type="text" name="exchange_amount" class="form-control delimiter-mask" placeholder="سعر الصرف" id="delimiters" />
-                                            @error('exchange_amount')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4 for="">{{$projects->exchange_amount}}</h4>
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="prefix">الاداريات</label>
-                                            <input value="{{$projects->managerial_fees}}"  type="text" name="managerial_fees" class="form-control prefix-mask" id="prefix" />
-                                            @error('managerial_fees')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4 for="">{{$projects->managerial_fees}}</h4>
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>
-                                            <input value="{{$projects->start_date}}"  type="date" name="start_date" class="form-control custom-delimiter-mask" placeholder="" id="custom-delimiters" />
-                                            @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
-
+                                            <h4 for="">{{$projects->start_date}}</h4>
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
                                             <!-- BEGIN: Content-->
@@ -296,10 +244,7 @@
                                                                                     @if($project1->url)
                                                                                         <small class="file-accessed text-muted">url</small>
                                                                                     @endif
-                                                                                    <small class="file-accessed text-muted">
 
-                                                                                            <button id="delete_attachment" data-id="{{$project1->id}}" type="button" class="btn btn-danger">حذف</button>
-                                                                                    </small>
                                                                                 </div>
                                                                             </div>
                                                                             @endforeach
@@ -477,77 +422,17 @@
                                             <!-- END: Content-->
                                         </div>
 
-                                        <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
-                                            <div data-repeater-list="invoice">
-                                                <div data-repeater-item>
-                                                    <div class="row d-flex align-items-end">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label for="category_attachment_id">نوع الملف</label>
-                                                                <select name="category_attachment_id" class="form-control form-control-lg">
-                                                                    <option value=""> --- </option>
-                                                                    @if($categories_attachment && $categories_attachment -> count() > 0)
-                                                                        @foreach($categories_attachment as $category_attachment)
-                                                                            <option value="{{$category_attachment->id}}">{{$category_attachment->name}}</option>
 
-                                                                        @endforeach
-                                                                    @endif
-
-                                                                </select>
-                                                                @error('category_attachment_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                                            </div></div>
-
-                                                        <div class="col-md-3">  <div class="form-group">
-                                                                <label for="customFile">ارفاق رابط</label>
-                                                                <input type="url" name="url" class="form-control prefix-mask" id="basicInputFile" />
-
-                                                                @error('url')<span class="text-danger">{{ $message }}</span>@enderror
-
-                                                            </div></div>
-                                                        <div class="col-md-3"><div class="form-group">
-                                                                <label for="customFile">ارفاق ملف</label>
-                                                                <input type="file" name="file" class="form-control credit-card-mask" placeholder="المرفق" id="credit-card" />
-                                                                @error('file')<span class="text-danger">{{ $message }}</span>@enderror
-
-                                                            </div></div>
-                                                        <div class="col-md-2 col-12 mb-50">
-                                                            <div class="form-group">
-                                                                <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete type="button">
-                                                                    <i data-feather="x" class="mr-25"></i>
-                                                                    <span>Delete</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
-                                                    <i data-feather="plus" class="mr-25"></i>
-                                                    <span>Add New</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-                                <div class="col-12 d-flex flex-sm-row flex-column mt-2">
-                                    <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                    <button type="reset" class="btn btn-outline-secondary">اغلاق</button>
-                                </div>
-                                </form>
                             </div>
                         </div>
                     </div>
             </div>
+                    </div>
             </section>
 
         </div>
         <!-- Input Mask End -->
 
-    </div>
     </div>
     </div>
     <!-- END: Content-->

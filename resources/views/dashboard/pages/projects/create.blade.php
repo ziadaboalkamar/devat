@@ -42,8 +42,14 @@
                                 <div class="card-body">
                                     <form class="row invoice-repeater" action="{{route('projects.store')}}" method="post" enctype="multipart/form-data">
                                         @csrf
+                                        <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
+                                            <label for="date">اسم المشروع</label>
+                                            <input name="project_name" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
+                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+
+                                        </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">اسم المؤسسة</label>
+                                            <label for="credit-card">الجمعية الرئيسية</label>
                                             <select name="main_branch_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
                                                 @if($mainBranches && $mainBranches -> count() > 0)
@@ -59,9 +65,17 @@
                                         </div>
 
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="date">اسم المشروع</label>
-                                            <input name="project_name" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
-                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+                                            <label for="date">المؤسسات الداعمة</label>
+                                            <select name="donor_id" class="select2 form-control form-control-lg">
+                                                <option value=""> --- </option>
+                                                @if($donors && $donors -> count() > 0)
+                                                    @foreach($donors as $donor)
+                                                        <option value="{{$donor->id}}">{{$donor->name}}</option>
+
+                                                    @endforeach
+                                                @endif
+
+                                            </select>                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">

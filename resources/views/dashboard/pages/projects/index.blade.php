@@ -250,6 +250,11 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
 
                             'حذف</a>' +
+
+                            '<a href="projects/show/' + id + '" class="dropdown-item delete-record">' +
+                            feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
+
+                            'عرض</a>' +
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['user'].toSvg({class: 'font-small-4 mr-50'}) +
                             'قسيمة شرائية</a>' +
@@ -257,7 +262,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
                             'مستفدين المشروع</a>' +
 
-                            'حذف</a>'+'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            '</a>'+'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'

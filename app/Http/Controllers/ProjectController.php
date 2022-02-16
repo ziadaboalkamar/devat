@@ -7,6 +7,7 @@ use App\Models\AttachmentCategory;
 use App\Models\BeneficiariesProject;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
+use App\Models\Donor;
 use App\Models\MainBranche;
 use App\Models\Project;
 use App\Models\ProjectAttachment;
@@ -57,8 +58,9 @@ class ProjectController extends Controller
         $attachments = ProjectAttachment::all();
         $categories_attachment = AttachmentCategory::all();
         $mainBranches = MainBranche::all();
+        $donors = Donor::all();
 
-        return view('dashboard.pages.projects.create', compact('categories', 'mainBranches', 'categories_attachment', 'attachments', 'currencies'));
+        return view('dashboard.pages.projects.create', compact('categories','donors', 'mainBranches', 'categories_attachment', 'attachments', 'currencies'));
     }
 
     public function store(ProjectRequest $request)
@@ -76,6 +78,7 @@ class ProjectController extends Controller
                 'exchange_amount' => $request->exchange_amount,
                 'managerial_fees' => $request->managerial_fees,
                 'start_date' => $request->start_date,
+                'donor_id'=>$request->donor_id,
                 'status' => 1
             ]);
 
@@ -104,8 +107,8 @@ class ProjectController extends Controller
             return redirect()->route('projects.index');
 
         } catch (\Exception $ex) {
-            toastr()->error(__('يوجد خطاء ما'));
-            return ($ex); exit();
+
+            return ($ex);
            // return redirect()->route('projects.index');
              }
     }
@@ -118,11 +121,11 @@ class ProjectController extends Controller
         $attachments = ProjectAttachment::all();
         $categories_attachment = AttachmentCategory::all();
         $projectsAttachment = ProjectAttachment::select()->where('project_id', '=', $id)->get();
-
+        $donors = Donor::all();
         $mainBranches = MainBranche::all();
 
 
-        return view('dashboard.pages.projects.edit', compact('projects','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
+        return view('dashboard.pages.projects.edit', compact('projects','donors','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
     }
 
     public function update($id,ProjectRequest $request)
@@ -145,6 +148,8 @@ class ProjectController extends Controller
                 'exchange_amount' => $request->exchange_amount,
                 'managerial_fees' => $request->managerial_fees,
                 'start_date' => $request->start_date,
+                'donor_id'=>$request->donor_id
+
 
             ]);
 
@@ -173,6 +178,7 @@ class ProjectController extends Controller
 
         }
         catch (\Exception $exception){
+            return $exception;
             toastr()->error(__('يوجد خطاء ما'));
             return redirect()->route('projects.index');
 
@@ -253,6 +259,20 @@ class ProjectController extends Controller
        toastr()->success(__('تم تعديل البيانات بنجاح'));
 
        return redirect()->route('projects.index') ;
+
+    }
+    public function show($id){
+        $projects = Project::select()->find($id);
+        $categories = CategoriesOfProject::all();
+        $currencies = Currency::all();
+        $attachments = ProjectAttachment::all();
+        $categories_attachment = AttachmentCategory::all();
+        $projectsAttachment = ProjectAttachment::select()->where('project_id', '=', $id)->get();
+        $donors = Donor::all();
+        $mainBranches = MainBranche::all();
+
+
+        return view('dashboard.pages.projects.show', compact('projects','donors','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
 
     }
 }
