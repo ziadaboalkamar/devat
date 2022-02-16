@@ -51,8 +51,8 @@
                                                 <th>رقم الجوال</th>
                                                 <th>عدد افراد الاسرة</th>
                                                 <th>اسم الفرع</th>
-                                                <th>المدينة</th>
-                                                <th>العنوان</th>
+                                                {{-- <th>المدينة</th>
+                                                <th>العنوان</th> --}}
                                                 <th>الحالة الاجتماعية</th>
                                                 <th>الحالة</th>
                                                 <th>العمليات</th>
@@ -179,16 +179,16 @@
                     searchable: true
                 },
                
-                {
-                    data: 'city_name',
-                    name: 'city_name',
-                    searchable: true
-                },
-                {
-                    data: 'address',
-                    name: 'address',
-                    searchable: false
-                },
+                // {
+                //     data: 'city_name',
+                //     name: 'city_name',
+                //     searchable: true
+                // },
+                // {
+                //     data: 'address',
+                //     name: 'address',
+                //     searchable: false
+                // },
                 {
                     data: 'maritial',
                     name: 'maritial',
@@ -314,7 +314,11 @@
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'تغيير الحالة</a> </div>' +
+                            'تغيير الحالة</a> '+'<a href="beneficiareis/' + id +'" class="dropdown-item">' +
+                            feather.icons['archive'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            'التفاصيل</a>  </div>' +
                             '</div>' +
                             '</div>'
                         );
