@@ -42,7 +42,7 @@ class ProjectController extends Controller
                 })
                 ->make(true);
         }
-        
+
 
         return view('dashboard.pages.projects.index',[
             'projects' => Project::get(),
@@ -228,10 +228,10 @@ class ProjectController extends Controller
                         return $beneficiariesProject->getActive();
                     })
                     ->editColumn('branch_name', function (BeneficiariesProject $beneficiariesProject) {
-                        return $beneficiariesProject->branchs->address;
+                        return $beneficiariesProject->branchs->name;
                     })
                     ->editColumn('beneficiary_name', function (BeneficiariesProject $beneficiariesProject) {
-                        return $beneficiariesProject->beneficiaries->address;
+                        return $beneficiariesProject->beneficiaries->firstName.' ' .$beneficiariesProject->beneficiaries->lastName;
                     })
                     ->make(true);
 
@@ -239,7 +239,8 @@ class ProjectController extends Controller
 
             return view('dashboard.pages.beneficiaries_projects.index',[
                 'beneficiariesProjects' => BeneficiariesProject::where('project_id','=',$id)->get(),
-                'project_id' => $id
+                'project_id' => $id,
+                'project' => Project::find($id)
             ]);
     }
 

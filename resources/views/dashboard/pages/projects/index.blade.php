@@ -248,7 +248,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             'تعديل</a>' +
                             '<a href="projects/delete/' + id + '" class="dropdown-item delete-record">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
-<<<<<<< HEAD
+
                             'حذف</a>' +
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['user'].toSvg({class: 'font-small-4 mr-50'}) +
@@ -256,14 +256,13 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             '<a href="projects/beneficiareis/' + id + '" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
                             'مستفدين المشروع</a>' +
-=======
+
                             'حذف</a>'+'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
                             'تغيير الحالة</a> </div>' +
->>>>>>> b711b8feed5c8d2abd10369d6c1c82c3ff967071
                             '</div>' +
                             '</div>' +
 

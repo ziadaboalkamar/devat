@@ -82,11 +82,10 @@ Route::post('update_setting', [SettingController::class, 'update'])->name('setti
     Route::post('/projects/delete/attachment/{id}',[ProjectController::class,'deleteAttachment'])->name('projects.delete.attachment');
     Route::get('/projects/delete/attachment',[ProjectController::class,'deleteaa'])->name('delete.attachment');
     Route::get('/projects/delete/{id}',[ProjectController::class,'delete'])->name('projects.delete');
-<<<<<<< HEAD
+
     Route::get('/projects/beneficiareis/{id}',[ProjectController::class,'benefactoryPoject'])->name('projects.beneficiareis.get');
-=======
+
     Route::post('projects/update_status', [ProjectController::class, 'updateStatus'])->name('projects.update.status');
->>>>>>> b711b8feed5c8d2abd10369d6c1c82c3ff967071
 
 
 //    end project
