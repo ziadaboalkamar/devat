@@ -28,6 +28,7 @@ class User extends Authenticatable
         'branch_id',
         'userName',
         'updated_at',
+        'status',
         'created_at'
     ];
 
@@ -61,5 +62,8 @@ class User extends Authenticatable
     public function route()
     {
         return $this->belongsToMany(Route::class, 'user_route','user_id','route_id');
+    }
+    public function getActive(){
+        return $this->status == 0 ? __(' غير فعال ') : __('فعال') ;
     }
 }

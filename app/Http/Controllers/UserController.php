@@ -31,6 +31,9 @@ class UserController extends Controller
 
                     return $users->roles->role_name;
                 })
+                ->editColumn('active', function (User $user) {
+                    return $user->getActive();
+                })
                 ->editColumn('branch_id', function (User $users) {
                     return $users->branches->name;
                 })
@@ -67,6 +70,7 @@ class UserController extends Controller
                'role_id' => $request->rolle_id,
                 'branch_id' => $request->branch_id,
                 'userName'=>$request->userName,
+                'status' => 1,
             ]);
             toastr()->success(__('تم حفظ البيانات بنجاح'));
             return redirect()->route('users.index');
@@ -145,4 +149,15 @@ class UserController extends Controller
             return redirect()->route('users.index');
         }
     }
+
+    public function updateStatus(Request $request)
+     {
+        $b = User::findorfail($request->id);
+            $b->update([
+                'status'=>$request->status
+            ]);
+        toastr()->success(__('تم تعديل البيانات بنجاح'));
+
+        return redirect()->route('users.index') ;   
+     }
 }

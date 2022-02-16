@@ -9,7 +9,7 @@
     @include('dashboard.layouts.menu')
   @yield('content')
     @include('dashboard.layouts.footer')
-    @include('sweetalert::alert')
+    {{-- @include('sweetalert::alert') --}}
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->

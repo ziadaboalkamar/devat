@@ -12,7 +12,10 @@ use App\Http\Controllers\DonorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\BeneficiariesProjectController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VawtcherController;
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,11 +51,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('user.view');
     Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
     Route::get('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
+    Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update');
 
 //    end user
 //    start roles route
     Route::get('/users/roles/{id}',[RoleController::class,'show_roles'])->name('user.view.role');
     Route::get('/users/roles/update/{id}',[RoleController::class,'update_role'])->name('user.role-update');
+
 //    end roles route
 
 Route::resource('main-branches', MainBrancheController::class);
@@ -64,6 +69,8 @@ Route::resource('beneficiareis', BeneficiaryController::class);
 Route::resource('beneficiareis-projects', BeneficiariesProjectController::class);
 Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
 Route::resource('vawtchers', VawtcherController::class);
+Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+Route::post('update_setting', [SettingController::class, 'update'])->name('settings.update');
 
 
 //    start project
@@ -75,7 +82,11 @@ Route::resource('vawtchers', VawtcherController::class);
     Route::post('/projects/delete/attachment/{id}',[ProjectController::class,'deleteAttachment'])->name('projects.delete.attachment');
     Route::get('/projects/delete/attachment',[ProjectController::class,'deleteaa'])->name('delete.attachment');
     Route::get('/projects/delete/{id}',[ProjectController::class,'delete'])->name('projects.delete');
+<<<<<<< HEAD
     Route::get('/projects/beneficiareis/{id}',[ProjectController::class,'benefactoryPoject'])->name('projects.beneficiareis.get');
+=======
+    Route::post('projects/update_status', [ProjectController::class, 'updateStatus'])->name('projects.update.status');
+>>>>>>> b711b8feed5c8d2abd10369d6c1c82c3ff967071
 
 
 //    end project

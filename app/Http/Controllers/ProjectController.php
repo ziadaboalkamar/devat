@@ -26,6 +26,7 @@ class ProjectController extends Controller
 
             return DataTables::of($project)
                 ->addIndexColumn()
+
                 ->editColumn('main_branch_id', function (Project $project) {
 
 
@@ -34,11 +35,17 @@ class ProjectController extends Controller
 
 
                     return $project->category->name;
+
+                ->editColumn('active', function (Project $project) {
+                    return $project->getActive();
+
                 })
                 ->make(true);
         }
 
-        return view('dashboard.pages.projects.index');
+        return view('dashboard.pages.projects.index',[
+            'projects' => Project::get(),
+        ]);
     }
 
 
@@ -68,6 +75,7 @@ class ProjectController extends Controller
                 'exchange_amount' => $request->exchange_amount,
                 'managerial_fees' => $request->managerial_fees,
                 'start_date' => $request->start_date,
+                'status' => 1
             ]);
 
             $attachment_array = $request->invoice;
@@ -201,6 +209,7 @@ class ProjectController extends Controller
 
     }
 
+
     public function benefactoryPoject($id,Request $request){
 
 
@@ -231,7 +240,19 @@ class ProjectController extends Controller
                 'beneficiariesProjects' => BeneficiariesProject::where('project_id','=',$id)->get(),
                 'project_id' => $id
             ]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+       $b = Project::findorfail($request->id);
+           $b->update([
+               'status'=>$request->status
+           ]);
+       toastr()->success(__('تم تعديل البيانات بنجاح'));
+
+       return redirect()->route('projects.index') ;
 
     }
 }
+
 

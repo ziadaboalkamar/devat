@@ -54,10 +54,8 @@
                                             <th>رقم الهاتف </th>
                                             <th>الصلاحيات</th>
                                             <th>الفرع</th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
-
-
-
                                         </tr>
                                         </thead>
                                     </table>
@@ -71,6 +69,45 @@
                             @csrf
                             <button type="submit"></button>
                         </form>
+                        @foreach ($users as $user)
+                            <!-- Modal -->
+<div class="modal fade" id="update_status{{ $user->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    تغيير الحالة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('users.update') }}" method="post" autocomplete="off">
+                {{ csrf_field() }}
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="status">{{__('Status')}}</label>
+                        <select class="form-control" id="status" name="status" required>
+                            <option value="" selected disabled>--{{__('اختر')}}--</option>
+                            <option value="1" {{ old('status',$user->status) == 1 ? 'selected' : null }}>فعال</option>
+                            <option value="0" {{ old('status',$user->status) == 0 ? 'selected' : null }}>غير فعال</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{{ $user->id }}">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{__('الغاء')}}</button>
+                    <button type="submit" class="btn btn-primary">{{__('حفظ')}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -123,6 +160,7 @@
                 {data: 'phoneNumber',name:'phoneNumber',searchable: true},
                 {data: 'role_id',name:'role_id',searchable: false},
                 {data: 'branch_id',name:'branch_id',searchable: false},
+                {data: 'active', name:'active',searchable: false},
                 {data: ''}
 
 
@@ -211,8 +249,12 @@
                             'تعديل</a>' +
                             '<a href="users/delete/' + id + '" class="dropdown-item delete-record">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
-                            'حذف</a>' +
-                            '</div>' +
+                            'حذف</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            ' data-target="#update_status' + id + '">' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            'تغيير الحالة</a> </div>' +
                             '</div>' +
                             '</div>'
                         );
