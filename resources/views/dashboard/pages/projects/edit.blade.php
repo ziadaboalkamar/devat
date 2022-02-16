@@ -268,7 +268,7 @@
 
                                                                                         <div class="content-wrapper">
                                                                                             <p class="card-text file-name mb-0">
-                                                                                                <a @if($project1->file) href="{{asset('assets/'.$project1->file)}}" @else href="{{asset($project1->url)}}" @endif>{{$project1->categoryAttachment->name}}</a></p>
+                                                                                                <a @if($project1->file) href="{{asset('assets/'.$project1->file)}}" @else href="{{asset($project1->url)}}" @endif target="_blank">{{$project1->categoryAttachment->name}}</a></p>
 
 
                                                                                         </div>

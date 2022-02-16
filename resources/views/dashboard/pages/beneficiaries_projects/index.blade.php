@@ -31,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المستفيدين</h2>
+                                    <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2>
 
                                 </div>
                             </div>
@@ -45,15 +45,11 @@
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>اسم المشروع</th>
                                                 <th>اسم المستفيد</th>
                                                 <th>اسم الفرع</th>
-                                                <th>اسم المتلقي</th>
                                                 <th>الحالة</th>
                                                 <th>عدد افراد الاسرة</th>
-                                                <th>أضيف من قبل</th>
                                                 <th>تاريخ التسليم</th>
-                                                <th>الموظف الذي تم تسليمه</th>
                                                 <th>العمليات</th>
                                             </tr>
                                         </thead>
@@ -142,13 +138,9 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('beneficiareis-projects.index') }}',
+                url: '{{ route('projects.beneficiareis.get',$project_id) }}',
             },
-            columns: [{
-                    data: 'project_id',
-                    name: 'project_id',
-                    searchable: true
-                },
+            columns: [
                 {
                     data: 'beneficiary_name',
                     name: 'beneficiary_name',
@@ -160,13 +152,8 @@
                     searchable: true
                 },
                 {
-                    data: 'recever_name',
-                    name: 'recever_name',
-                    searchable: true
-                },
-                {
-                    data: 'status_id',
-                    name: 'status_id',
+                    data: 'active',
+                    name: 'active',
                     searchable: true
                 },
                 {
@@ -175,18 +162,8 @@
                     searchable: true
                 },
                 {
-                    data: 'add_by',
-                    name: 'add_by',
-                    searchable: true
-                },
-                {
                     data: 'delivery_date',
                     name: 'delivery_date',
-                    searchable: true
-                },
-                {
-                    data: 'employee_who_delivered',
-                    name: 'employee_who_delivered',
                     searchable: true
                 },
                 {
@@ -199,7 +176,7 @@
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
                     text: feather.icons['share'].toSvg({
                         class: 'font-small-4 mr-50'
-                    }) + 'Export',
+                    }) + 'تصدير',
                     buttons: [{
                             extend: 'print',
                             text: feather.icons['printer'].toSvg({
@@ -262,7 +239,7 @@
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضافة مستفيد',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

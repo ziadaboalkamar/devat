@@ -19,6 +19,13 @@ class Project extends Model
     ];
 
     public $timestamps = true;
+    public function mainBranches(){
+        return $this->belongsTo(MainBranche::class,'main_branch_id','id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(CategoriesOfProject::class, 'category_id', 'id');
+    }
     public function getActive(){
         return $this->status == 0 ? __(' غير فعال ') : __('فعال') ;
     }

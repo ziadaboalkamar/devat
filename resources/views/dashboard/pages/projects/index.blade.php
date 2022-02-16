@@ -175,7 +175,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'Export',
+                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'تصدير',
                     buttons: [
                         {
                             extend: 'print',
@@ -218,7 +218,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضافة جديد',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {
@@ -248,6 +248,15 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             'تعديل</a>' +
                             '<a href="projects/delete/' + id + '" class="dropdown-item delete-record">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
+
+                            'حذف</a>' +
+                            '<a href="projects/edit/' + id + '" class="dropdown-item">' +
+                            feather.icons['user'].toSvg({class: 'font-small-4 mr-50'}) +
+                            'قسيمة شرائية</a>' +
+                            '<a href="projects/beneficiareis/' + id + '" class="dropdown-item">' +
+                            feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
+                            'مستفدين المشروع</a>' +
+
                             'حذف</a>'+'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
@@ -255,6 +264,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             }) +
                             'تغيير الحالة</a> </div>' +
                             '</div>' +
+                            '</div>' +
+
                             '</div>'
                         );
                     }

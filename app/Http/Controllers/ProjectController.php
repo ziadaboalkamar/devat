@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\AttachmentCategory;
+use App\Models\BeneficiariesProject;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
 use App\Models\MainBranche;
@@ -25,11 +26,23 @@ class ProjectController extends Controller
 
             return DataTables::of($project)
                 ->addIndexColumn()
+
+                ->editColumn('main_branch_id', function (Project $project) {
+
+
+                    return $project->mainBranches->name;
+                })   ->editColumn('category_id', function (Project $project) {
+
+
+                    return $project->category->name;})
+
                 ->editColumn('active', function (Project $project) {
                     return $project->getActive();
+
                 })
                 ->make(true);
         }
+
 
         return view('dashboard.pages.projects.index',[
             'projects' => Project::get(),
@@ -50,6 +63,7 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
+
 
         try {
             $project = Project::insertGetId([
@@ -91,7 +105,9 @@ class ProjectController extends Controller
 
         } catch (\Exception $ex) {
             toastr()->error(__('يوجد خطاء ما'));
-            return redirect()->route('projects.index');        }
+            return ($ex); exit();
+           // return redirect()->route('projects.index');
+             }
     }
 
     public function edit($id)
@@ -194,6 +210,40 @@ class ProjectController extends Controller
 
     }
 
+
+    public function benefactoryPoject($id,Request $request){
+
+
+            if($request->ajax()){
+                $beneficiariesProject = BeneficiariesProject::where('project_id','=',$id)->get();
+
+
+                return DataTables::of($beneficiariesProject)
+                    ->addIndexColumn()
+                    ->editColumn('created_at', function (BeneficiariesProject $beneficiariesProject) {
+                        return $beneficiariesProject->created_at->format('Y-m-d');
+                    })
+
+                    ->editColumn('active', function (BeneficiariesProject $beneficiariesProject) {
+                        return $beneficiariesProject->getActive();
+                    })
+                    ->editColumn('branch_name', function (BeneficiariesProject $beneficiariesProject) {
+                        return $beneficiariesProject->branchs->name;
+                    })
+                    ->editColumn('beneficiary_name', function (BeneficiariesProject $beneficiariesProject) {
+                        return $beneficiariesProject->beneficiaries->firstName.' ' .$beneficiariesProject->beneficiaries->lastName;
+                    })
+                    ->make(true);
+
+            }
+
+            return view('dashboard.pages.beneficiaries_projects.index',[
+                'beneficiariesProjects' => BeneficiariesProject::where('project_id','=',$id)->get(),
+                'project_id' => $id,
+                'project' => Project::find($id)
+            ]);
+    }
+
     public function updateStatus(Request $request)
     {
        $b = Project::findorfail($request->id);
@@ -202,6 +252,9 @@ class ProjectController extends Controller
            ]);
        toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-       return redirect()->route('projects.index') ;   
+       return redirect()->route('projects.index') ;
+
     }
 }
+
+
