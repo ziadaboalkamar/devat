@@ -34,7 +34,7 @@ class ProjectController extends Controller
                 })   ->editColumn('category_id', function (Project $project) {
 
 
-                    return $project->category->name;
+                    return $project->category->name;})
 
                 ->editColumn('active', function (Project $project) {
                     return $project->getActive();
@@ -42,6 +42,7 @@ class ProjectController extends Controller
                 })
                 ->make(true);
         }
+        
 
         return view('dashboard.pages.projects.index',[
             'projects' => Project::get(),
