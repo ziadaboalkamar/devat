@@ -46,6 +46,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
 
+
         try {
             $project = Project::insertGetId([
                 'main_branch_id' => $request->main_branch_id,
@@ -85,7 +86,9 @@ class ProjectController extends Controller
 
         } catch (\Exception $ex) {
             toastr()->error(__('يوجد خطاء ما'));
-            return redirect()->route('projects.index');        }
+            return ($ex); exit();
+           // return redirect()->route('projects.index');
+             }
     }
 
     public function edit($id)
