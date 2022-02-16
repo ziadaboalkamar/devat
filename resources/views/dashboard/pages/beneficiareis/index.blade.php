@@ -45,10 +45,7 @@
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>اسم الاول</th>
-                                                <th>اسم الاب</th>
-                                                <th>اسم الجد</th>
-                                                <th>اسم العائلة</th>
+                                                <th>الاسم كاملا</th>
                                                 <th>الجنس</th>
                                                 <th>رقم الهوية</th>
                                                 <th>رقم الجوال</th>
@@ -148,24 +145,11 @@
             ajax: {
                 url: '{{ route('beneficiareis.index') }}',
             },
-            columns: [{
-                    data: 'firstName',
-                    name: 'firstName',
-                    searchable: true
-                },
-                {
-                    data: 'secondName',
-                    name: 'secondName',
-                    searchable: true
-                },
-                {
-                    data: 'thirdName',
-                    name: 'thirdName',
-                    searchable: true
-                },
-                {
-                    data: 'lastName',
-                    name: 'lastName',
+            columns: [
+               
+            {
+                    data: 'FullName',
+                    name: 'FullName',
                     searchable: true
                 },
                 {
@@ -173,6 +157,7 @@
                     name: 'gender',
                     searchable: true
                 },
+               
                 {
                     data: 'id_number',
                     name: 'id_number',
@@ -318,18 +303,18 @@
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'Edit</a>' +
+                            'تعديل</a>' +
                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#delete' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'Delete</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            'حذف</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'update_status</a> </div>' +
+                            'تغيير الحالة</a> </div>' +
                             '</div>' +
                             '</div>'
                         );

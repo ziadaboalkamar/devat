@@ -100,7 +100,7 @@
                                                 <select name="branch_id" class="form-control">
                                                     <option value="" selected disabled>اختر الفرع</option>
                                                     @foreach ($brnches as $brnch)
-                                                    <option value="{{ $brnch->id }}"> {{ $brnch->address }}</option>                                                      
+                                                    <option value="{{ $brnch->id }}"> {{ $brnch->name }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror

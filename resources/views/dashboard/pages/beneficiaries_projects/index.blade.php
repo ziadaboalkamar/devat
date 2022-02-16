@@ -293,18 +293,18 @@
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'Edit</a>' +
+                            'تعديل</a>' +
                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#delete' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'Delete</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            'حذف</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'update_status</a> </div>' +
+                            'تغيير الحالة</a> </div>' +
                             '</div>' +
                             '</div>'
                         );

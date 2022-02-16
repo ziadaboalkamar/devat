@@ -44,8 +44,11 @@ class BeneficiaryController extends Controller
                 ->editColumn('active', function (Beneficiary $beneficiary) {
                     return $beneficiary->getActive();
                 })
+                ->editColumn('FullName', function (Beneficiary $beneficiary) {
+                    return $beneficiary->getFullNameAttribute();
+                })
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
-                    return $beneficiary->branchs->address;
+                    return $beneficiary->branchs->name;
                 })
                 // ->editColumn('project_name', function (Beneficiary $beneficiary) {
                 //     return $beneficiary->projects->company_name;

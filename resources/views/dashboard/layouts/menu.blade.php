@@ -92,13 +92,13 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">مشاريع المستفيدين</span></a>
+            {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">مشاريع المستفيدين</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('beneficiareis-projects.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة المشاريع</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('beneficiareis-projects.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء مشروع</span></a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">قسائم شرائية</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('vawtchers.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List"> كافة القسائم الشرائية </span></a>
@@ -108,9 +108,9 @@
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">المشاريع الخيرية</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="{{ route('projects.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">عرض جميع المشاريع الخيرية</span></a>
+                    <li><a class="d-flex align-items-center" href="{{ route('projects.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">عرض جميع المشاريع </span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="{{ route('projects.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء مشروع خيري جديد</span></a>
+                    <li><a class="d-flex align-items-center" href="{{ route('projects.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء مشروع  جديد</span></a>
                     </li>
                     <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">اقسام المشاريع الخيرية</span></a>
                         <ul class="menu-content">
@@ -122,6 +122,9 @@
                     </li>
 
                 </ul>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('settings.index') }}"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">الاعدادات</span></a>
+                
             </li>
         </ul>
     </div>

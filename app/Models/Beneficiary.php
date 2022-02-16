@@ -27,5 +27,9 @@ class Beneficiary extends Model
         return $this->status_id == 0 ? __(' غير فعال ') : __('فعال') ;
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return ucfirst($this->firstName) . ' ' . ucfirst($this->secondName) . ' ' .ucfirst($this->thirdName) . ' ' .ucfirst($this->lastName);
+    }
     public $timestamps = true;
 }
