@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title', 'index')
+@section('title', 'الصفحة الرئيسية للمستفيدين')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css"
@@ -209,7 +209,7 @@
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
                     text: feather.icons['share'].toSvg({
                         class: 'font-small-4 mr-50'
-                    }) + 'Export',
+                    }) + 'تصدير',
                     buttons: [{
                             extend: 'print',
                             text: feather.icons['printer'].toSvg({
@@ -272,7 +272,7 @@
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضف مستفيد',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','index')
+@section('title','الصفحة الرئيسية للمدن')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors-rtl.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
@@ -135,7 +135,7 @@
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'Export',
+                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'تصدير',
                     buttons: [
                         {
                             extend: 'print',
@@ -178,7 +178,7 @@
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضافة مدينة',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','index')
+@section('title','المشاريع الخيرية')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors-rtl.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">

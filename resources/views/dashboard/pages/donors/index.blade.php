@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','index')
+@section('title','الصفحة الرئيسية للمؤسسات الداعمة')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors-rtl.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')}}">
@@ -25,7 +25,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المتبرعين</h2>
+                                    <h2 class="content-header-title float-left mb-0">المؤسسات الداعمة</h2>
 
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'Export',
+                    text: feather.icons['share'].toSvg({class: 'font-small-4 mr-50'}) + 'تصدير',
                     buttons: [
                         {
                             extend: 'print',
@@ -186,7 +186,7 @@
                 },
 
                 {
-                    text: 'Add new',
+                    text: 'اضافة مؤسسة داعمة',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

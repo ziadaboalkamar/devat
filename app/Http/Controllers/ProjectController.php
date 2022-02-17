@@ -30,13 +30,12 @@ class ProjectController extends Controller
                 ->addIndexColumn()
 
                 ->editColumn('main_branch_id', function (Project $project) {
-
-
                     return $project->mainBranches->name;
-                })   ->editColumn('category_id', function (Project $project) {
+                })  
+                 ->editColumn('category_id', function (Project $project) {
 
-
-                    return $project->category->name;})
+                    return $project->category->name;
+                })
 
                 ->editColumn('active', function (Project $project) {
                     return $project->getActive();
