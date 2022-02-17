@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\AttachmentCategory;
 use App\Models\BeneficiariesProject;
+use App\Models\Branches;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
 use App\Models\Donor;
@@ -275,6 +276,56 @@ class ProjectController extends Controller
         return view('dashboard.pages.projects.show', compact('projects','donors','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
 
     }
+
+    public function branchCount($id,Request $request){
+        $branch = ProjectBranchCount::where("project_id","=",$id)->get();
+        $project = Project::find($id);
+        $project_id =$id;
+
+        if($request->ajax()){
+            $branch = ProjectBranchCount::where("project_id","=",$id)->get();
+
+            return DataTables::of($branch)
+                ->addIndexColumn()
+                ->editColumn('branch_id', function (ProjectBranchCount $branchCount) {
+                    return $branchCount->branches->name;
+                })
+                ->editColumn('active', function (ProjectBranchCount $branchCount) {
+                    return $branchCount->getActive();
+                })
+                ->make(true);
+
+        }
+
+        return view('dashboard.pages.branch_count.index',compact('branch','project_id','project'));
+
+    }
+    public function storeBranchCount($id,Request $request){
+        $branch = ProjectBranchCount::where("project_id","=",$id)->get();
+        $project = Project::find($id);
+        $project_id = $id;
+        $attachment_array = $request->invoice;
+
+        for ($i = 0; $i < count($attachment_array); $i++) {
+
+            ProjectBranchCount::create([
+                'branch_id' => $attachment_array[$i]["branch_id"],
+                'beneficiaries_count' => $attachment_array[$i]["beneficiaries_count"],
+                'count'=>$attachment_array[$i]["count"],
+                'deadline_date'=>$attachment_array[$i]["deadline_date"],
+                'project_id'=>$project_id,
+                'status_id'=>1
+
+
+            ]);
+        }
+        toastr()->success(__('تم تحديث البيانات بنجاح'));
+        return redirect()->route('projects.branchCount.index',$project_id)->with([$project_id,$branch,$project]);
+
+    }
+
+
+
 }
 
 

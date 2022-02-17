@@ -14,7 +14,8 @@ use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\BeneficiariesProjectController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VawtcherController;
-use App\Models\User;
+use App\Http\Controllers\BranchCountController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -85,9 +86,15 @@ Route::post('update_setting', [SettingController::class, 'update'])->name('setti
     Route::get('/projects/show/{id}',[ProjectController::class,'show'])->name('projects.show');
     Route::get('/projects/beneficiareis/{id}',[ProjectController::class,'benefactoryPoject'])->name('projects.beneficiareis.get');
     Route::post('projects/update_status', [ProjectController::class, 'updateStatus'])->name('projects.update.status');
-
-
 //    end project
+//    start branch Count
+    Route::get('/projects/branchCount/{id}',[ProjectController::class,'branchCount'])->name('projects.branchCount.index');
+    Route::get('/projects/branch/Count/create',[BranchCountController::class,'create'])->name('projects.branchCount.create');
+    Route::post('projects/branch/count/store/{id}',[ProjectController::class, 'storeBranchCount'])->name('projects.branchCount.store');
+    Route::get('/projects/branch/Count/edit/{id}',[BranchCountController::class,'edit'])->name('projects.branchCount.edit');
+    Route::post('/projects/branch/Count/update/{id}',[BranchCountController::class,'update'])->name('projects.branchCount.update');
+
+//    end branch count
 
 }
 

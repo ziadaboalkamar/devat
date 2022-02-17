@@ -86,13 +86,11 @@ class BeneficiariesProjectController extends Controller
         $data['add_by'] = $request->add_by;
         $data['delivery_date'] = $request->delivery_date;
         $data['employee_who_delivered'] = $request->employee_who_delivered;
-<<<<<<< HEAD
         $data['status_id'] = 1;
-        
-=======
+
+
         // $data['status_id'] = 1;
 
->>>>>>> 2992cfe939796a99d3cfc2be4c69b80a87b5d9e6
         BeneficiariesProject::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
         return redirect()->route('beneficiareis-projects.index') ;
@@ -177,6 +175,6 @@ class BeneficiariesProjectController extends Controller
             ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;   
+        return redirect()->route('beneficiareis.index') ;
      }
 }
