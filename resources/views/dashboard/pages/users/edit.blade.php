@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','edit')
+@section('title','تعديل مستخدم')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset("app-assets/vendors/css/forms/select/select2.min.css")}}">
 

@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','roles')
+@section('title','الصلاحيات')
 @section('css')
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors-rtl.min.css')}}">

@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title', 'index')
+@section('title', 'الصفحة الرئيسية للمشاريع')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css"
@@ -31,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2>
+                                    {{-- <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2> --}}
 
                                 </div>
                             </div>
@@ -137,9 +137,7 @@
             "language": {
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
-            ajax: {
-                url: '{{ route('projects.beneficiareis.get',$project_id) }}',
-            },
+
             columns: [
                 {
                     data: 'beneficiary_name',
@@ -239,7 +237,7 @@
                 },
 
                 {
-                    text: 'اضافة مستفيد',
+                    text: 'اضافةمشروع  مستفيد',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

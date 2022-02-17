@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','create')
+@section('title','اضافة مدينة جديد')
 @section('css')
 @stop
 @section('content')
