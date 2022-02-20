@@ -19,6 +19,8 @@ class BeneficiariesProjectController extends Controller
      */
     public function index(Request $request)
     {
+        $project_id = $request->project_id;
+
         if($request->ajax()){
             $beneficiariesProject = BeneficiariesProject::all();
 
@@ -47,6 +49,7 @@ class BeneficiariesProjectController extends Controller
 
         return view('dashboard.pages.beneficiaries_projects.index',[
             'beneficiariesProjects' => BeneficiariesProject::get(),
+            
         ]);
     }
 
@@ -55,8 +58,36 @@ class BeneficiariesProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $project_id = $request->project_id;
+        if($request->ajax()){
+            $beneficiary = Beneficiary::all();
+
+            return DataTables::of($beneficiary)
+                ->addIndexColumn()
+                ->editColumn('created_at', function (Beneficiary $beneficiary) {
+                    return $beneficiary->created_at->format('Y-m-d');
+                })
+                ->editColumn('city_name', function (Beneficiary $beneficiary) {
+                    return $beneficiary->cities->city_name;
+                })
+                ->editColumn('active', function (Beneficiary $beneficiary) {
+                    return $beneficiary->getActive();
+                })
+                ->editColumn('FullName', function (Beneficiary $beneficiary) {
+                    return $beneficiary->getFullNameAttribute();
+                })
+                ->editColumn('branch_name', function (Beneficiary $beneficiary) {
+                    return $beneficiary->branchs->name;
+                })
+                // ->editColumn('project_name', function (Beneficiary $beneficiary) {
+                //     return $beneficiary->projects->company_name;
+                // })
+                // ->rawColumns(['record_select', 'actions'])
+                ->make(true);
+        }
+
         for($i = 1 ; $i < 16 ; $i++)
         {
             $n[] = $i;
@@ -65,6 +96,8 @@ class BeneficiariesProjectController extends Controller
             'projects' => Project::get(),
             'brnches' => Branches::get(),
             'beneficiaries' => Beneficiary::get(),
+            'beneficiareis' => Beneficiary::get(),
+            'project_id' => $project_id,
             'family_members' => $n,
         ]);
     }
@@ -75,22 +108,31 @@ class BeneficiariesProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BeneficiariesProjectRequest $request)
+    public function store(Request $request)
     {
+        $id =  $request->benficary_id;
+     $beneficiary = Beneficiary::find($id);
+     $project_id = $request->project_id;
+     $project = Project::find($id);
+     $beneficiariesProjects = BeneficiariesProject::where('project_id','=',$id)->get();
+
+
+
         $data = [];
         $data['project_id'] = $request->project_id;
-        $data['beneficiary_id'] = $request->beneficiary_id;
-        $data['branch_id'] = $request->branch_id;
-        $data['recever_name'] = $request->recever_name;
-        $data['family_member_count'] = $request->family_member_count;
-        $data['add_by'] = $request->add_by;
-        $data['delivery_date'] = $request->delivery_date;
-        $data['employee_who_delivered'] = $request->employee_who_delivered;
-        $data['status'] = 1;
+        $data['beneficiary_id'] = $request->benficary_id;
+        $data['branch_id'] = $beneficiary->branch_id;
+        $data['recever_name'] = null;
+        $data['family_member_count'] = $beneficiary->family_member;
+        $data['delivery_date'] = null;
+        $data['employee_who_delivered'] = null;
+        $data['status'] = 0;
         
         BeneficiariesProject::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
-        return redirect()->route('beneficiareis-projects.index') ;
+        return redirect()->route('projects.beneficiareis.get',$project_id)->with([$project_id,$beneficiariesProjects,$project]);
+
+        // ->with([$project_id,$beneficiariesProjects,$project])
     }
 
     /**

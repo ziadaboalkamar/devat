@@ -66,6 +66,7 @@ Route::resource('branches', BrancheController::class);
 Route::resource('category-of-projects',CategoryOfProjectController::class);
 Route::resource('donors', DonorController::class);
 Route::resource('beneficiareis', BeneficiaryController::class);
+Route::post('beneficiareis-projects/store/test',[BeneficiariesProjectController::class,'store'])->name('beneficiareisProjects.store.test');
 Route::resource('beneficiareis-projects', BeneficiariesProjectController::class);
 Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
 Route::resource('vawtchers', VawtcherController::class);
