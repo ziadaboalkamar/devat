@@ -19,4 +19,8 @@ class City extends Model
     ];
 
     public $timestamps = true;
+
+    public  function beneficiaries(){
+        return $this->hasMany(Beneficiary::class,'city_id','id');
+    }
 }

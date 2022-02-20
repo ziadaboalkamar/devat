@@ -40,7 +40,7 @@ class BranchCountController extends Controller
                 'count'=>$attachment_array[$i]["count"],
                 'deadline_date'=>$attachment_array[$i]["deadline_date"],
                 'project_id'=>$project_id,
-                'status_id'=>1
+
 
 
             ]);

@@ -31,10 +31,7 @@ class UserRequest extends FormRequest
             'phoneNumber'=> ['required','numeric','unique:users,PhoneNumber,'.$this->id],
             'email' => ['required', 'string', 'email','unique:users,email,'.$this->id],
             'password' => ['required', 'string',' regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
-            'phoneNumber'=> ['required','numeric'],
-            'email' => ['required','string','email'],
-            'password' => ['required', 'string'],
-            'userName'=> ['required', 'string', 'max:100']
+            'userName'=> ['required','string', 'max:100']
 
         ];
     }

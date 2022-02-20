@@ -31,7 +31,7 @@ class ProjectController extends Controller
 
                 ->editColumn('main_branch_id', function (Project $project) {
                     return $project->mainBranches->name;
-                })  
+                })
                  ->editColumn('category_id', function (Project $project) {
 
                     return $project->category->name;
@@ -154,8 +154,8 @@ class ProjectController extends Controller
             ]);
 
             $attachment_array = $request->invoice;
-
-            for ($i = 0; $i < count($attachment_array); $i++) {
+           if ($attachment_array[0]["category_attachment_id"] != null)
+           {            for ($i = 0; $i < count($attachment_array); $i++) {
                 $file_attachment = null;
                 if (isset($attachment_array[$i]['file'])) {
                     $file_attachment = $attachment_array[$i]['file'];
@@ -173,12 +173,13 @@ class ProjectController extends Controller
 
                 ]);
             }
+           }
             toastr()->success(__('تم تحديث البيانات بنجاح'));
             return redirect()->route('projects.index');
 
         }
         catch (\Exception $exception){
-            return $exception;
+
             toastr()->error(__('يوجد خطاء ما'));
             return redirect()->route('projects.index');
 
