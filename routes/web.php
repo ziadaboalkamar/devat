@@ -93,6 +93,7 @@ Route::post('update_setting', [SettingController::class, 'update'])->name('setti
     Route::post('projects/branch/count/store/{id}',[ProjectController::class, 'storeBranchCount'])->name('projects.branchCount.store');
     Route::get('/projects/branch/Count/edit/{id}',[BranchCountController::class,'edit'])->name('projects.branchCount.edit');
     Route::post('/projects/branch/Count/update/{id}',[BranchCountController::class,'update'])->name('projects.branchCount.update');
+    Route::post('projects/branch/count/update_status', [BranchCountController::class, 'updateStatus'])->name('projects.branchCount.update.status');
 
 //    end branch count
 

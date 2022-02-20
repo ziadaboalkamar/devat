@@ -50,4 +50,20 @@ class BranchCountController extends Controller
 
 
     }
+
+    public function updateStatus(Request $request)
+    {
+
+        $b = ProjectBranchCount::findorfail($request->id);
+        $project_id =  $b->project_id;
+        $project = Project::find($project_id);
+        $branch = ProjectBranchCount::where("project_id","=",$project_id)->get();
+        $b->update([
+            'status_id'=>$request->status
+        ]);
+        toastr()->success(__('تم تعديل البيانات بنجاح'));
+
+        return redirect()->route('projects.branchCount.index',$project_id)->with([$project_id,$branch,$project]);
+
+    }
 }

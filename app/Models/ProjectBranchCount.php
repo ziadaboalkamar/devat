@@ -23,6 +23,6 @@ class ProjectBranchCount extends Model
         return $this->belongsTo(Branches::class,'branch_id','id');
     }
     public function getActive(){
-        return $this->status = 0 ? __(' غير معتمد ') : __('معتمد') ;
+        return $this->status_id == 0 ? __(' غير معتمد ') : __('معتمد') ;
     }
 }

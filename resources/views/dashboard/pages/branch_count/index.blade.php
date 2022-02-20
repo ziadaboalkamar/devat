@@ -62,7 +62,45 @@
                             <input type="hidden" name="project_name" value="{{$project_id}}">
                             <button type="submit"></button>
                         </form>
+                    @foreach ($branch as $branchOne)
+                        <!-- Modal -->
+                            <div class="modal fade" id="update_status{{ $branchOne->id }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                تغيير الحالة</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('projects.branchCount.update.status') }}" method="post" autocomplete="off">
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
 
+                                                <div class="form-group">
+                                                    <label for="status">{{__('Status')}}</label>
+                                                    <select class="form-control" id="status" name="status" required>
+                                                        <option value="" selected disabled>--{{__('اختر')}}--</option>
+                                                        <option value="1" {{ old('status',$project->status) == 1 ? 'selected' : null }}>معتمد</option>
+                                                        <option value="0" {{ old('status',$project->status) == 0 ? 'selected' : null }}>غير معتمد</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="{{ $branchOne->id }}">
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">{{__('الغاء')}}</button>
+                                                <button type="submit" class="btn btn-primary">{{__('حفظ')}}</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -237,7 +275,14 @@
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'حذف</a></div>' +
+                            'حذف</a>' +
+                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            ' data-target="#update_status' + id + '">' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            'تغير الحالة</a>' +
+                            '</div>' +
                             '</div>' +
                             '</div>'
                         );
