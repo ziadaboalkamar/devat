@@ -64,7 +64,7 @@
                         </form>
                         @foreach ($users as $user)
                             <!-- Modal -->
-<div class="modal fade" id="update_status{{ $user->id }}" tabindex="-1" role="dialog"
+                          <div class="modal fade" id="update_status{{ $user->id }}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -75,7 +75,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('users.update') }}" method="post" autocomplete="off">
+            <form action="{{ route('users.update.status') }}" method="post" autocomplete="off">
                 {{ csrf_field() }}
                 <div class="modal-body">
 
@@ -99,6 +99,32 @@
         </div>
     </div>
 </div>
+
+                                <div class="modal fade" id="delete{{$user->id}}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"> حذف المستخدم <span class="text-primary">{{ $user->firstname }}</span></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('users.destroy',$user->id) }}" method="post">
+                                                {{ csrf_field() }}
+                                                <div class="modal-body">
+                                                    <h5>هل انت متاكد من حذف البيانات</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">اغلاق</button>
+                                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
                         @endforeach
                     </div>
@@ -240,9 +266,13 @@
                             '<a href="users/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
                             'تعديل</a>' +
-                            '<a href="users/delete/' + id + '" class="dropdown-item delete-record">' +
+
+                            '<a href="javascript:void()" class="dropdown-item delete-record" data-toggle="modal" data-target="#delete' + id + '">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
-                            'حذف</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+
+                            'حذف</a>'+
+
+                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'

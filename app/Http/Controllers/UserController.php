@@ -140,10 +140,17 @@ class UserController extends Controller
                 toastr()->error(__('يوجد خطاء ما'));
                 return redirect()->route('user.index');
             }
-            $user ->delete();
+            if (auth()->id() == $id){
+                toastr()->error(__('لا يمكنك حذف نفسك'));
+                return redirect()->route('user.index');
+            }else{
+                $user ->delete();
+                toastr()->success(__('تم حذف المستخدم بنجاح'));
+                return redirect()->route('users.index');
 
-            toastr()->success(__('تم تحديث البيانات بنجاح'));
-            return redirect()->route('users.index');
+            }
+
+
 
         }catch (\Exception $ex){
             toastr()->error(__('يوجد خطاء ما'));
