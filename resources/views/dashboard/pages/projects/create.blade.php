@@ -45,12 +45,19 @@
                                         @csrf
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
                                             <label for="date">اسم المشروع</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input name="project_name" type="text" value="{{ old('project_name') }}"
                                                 class="form-control date-mask" placeholder="اسم المشروع" />
                                             @error('project_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
@@ -95,12 +102,19 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="time">تاريخ المنحة</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input type="date" name="grant_date" value="{{ old('grant_date') }}" class="form-control time-mask"
                                                 placeholder="hh:mm:ss" id="time" />
                                             @error('grant_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
 
                                         </div>
                                         <!-- Basic -->
@@ -108,6 +122,10 @@
                                             <label>نوع المنحة</label>
                                             <select name="category_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                                 @if ($categories && $categories->count() > 0)
                                                     @foreach ($categories as $category)
                                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected':null }}>{{ $category->name }}</option>
@@ -123,6 +141,10 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="numeral-formatting">قيمة المنحة</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input type="text" name="grant_value" value="{{ old('grant_value') }}" class="form-control numeral-mask"
                                                 placeholder="10,000" id="قيمة المنحة" />
                                             @error('grant_value')
@@ -149,6 +171,10 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="delimiters">سعر الصرف</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input type="text" name="exchange_amount" value="{{ old('exchange_amount') }}" class="form-control delimiter-mask"
                                                 placeholder="سعر الصرف" id="delimiters" />
                                             @error('exchange_amount')
@@ -159,22 +185,37 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="prefix">الاداريات</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input type="text" name="managerial_fees" value="{{ old('managerial_fees') }}" class="form-control prefix-mask"
                                                 id="prefix" />
                                             @error('managerial_fees')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+<<<<<<< HEAD
                                           
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
                                             <input type="date" name="start_date" value="{{ old('start_date') }}" class="form-control custom-delimiter-mask"
                                                 placeholder="" id="custom-delimiters" />
                                             @error('start_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+<<<<<<< HEAD
                                            
+=======
+>>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
 
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">

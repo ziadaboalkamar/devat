@@ -23,4 +23,8 @@ class MainBranche extends Model
         return $this->hasMany(Project::class,'main_branch_id','id');
     }
     public $timestamps = true;
+
+    public function project(){
+        return $this->hasMany(Project::class,'main_branch_id','id');
+}
 }

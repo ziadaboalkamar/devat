@@ -47,6 +47,7 @@
                                             <tr>
                                                 <th>اسم الفرع</th>
                                                 <th>الحصة</th>
+                                                <th>المستفيدين</th>
                                                 <th>تاريخ الانتهاء</th>
                                                 <th>الحالة</th>
                                                 <th>العمليات</th>
@@ -152,6 +153,11 @@
                 {
                     data: 'count',
                     name: 'count',
+                    searchable: true
+                },
+                {
+                    data: 'beneficiaries_count',
+                    name: 'beneficiaries_count',
                     searchable: true
                 },
                 {
