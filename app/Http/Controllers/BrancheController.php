@@ -21,12 +21,12 @@ class BrancheController extends Controller
 
             return DataTables::of($branch)
                 ->addIndexColumn()
-                
+
                 ->editColumn('city_name', function (Branches $branch) {
                     return $branch->cities->city_name;
                 })
                 ->make(true);
-            
+
         }
 
         return view('dashboard.pages.branches.index',[
@@ -56,7 +56,7 @@ class BrancheController extends Controller
     {
         $request->validate([
             'name' => 'required|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
-            'phoneNumber' => 'required|numeric|unique:branches',
+            'phoneNumber' => 'required|Digits:10|numeric|unique:branches',
             'email' => 'required|unique:branches|email',
             'manager_name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
             'city_id' => 'required',

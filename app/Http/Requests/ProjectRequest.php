@@ -26,7 +26,7 @@ class ProjectRequest extends FormRequest
         return [
 
 
-            'main_branch_id' =>  ['required'],
+            'main_branch_id' =>['required'],
             'project_name' => ['required', 'string','max:225','regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u'],
             'grant_date' =>  ['required', 'date'],
             'category_id' =>  ['required'],

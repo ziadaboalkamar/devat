@@ -28,10 +28,12 @@ class UserRequest extends FormRequest
             'firstname'=> ['required', 'string','max:100'],
             'lastname'=> ['required', 'string', 'max:100'],
             'jobName'=> ['required', 'string', 'max:100'],
-            'phoneNumber'=> ['required','numeric','unique:users,PhoneNumber,'.$this->id],
-            'email' => ['required', 'string', 'email','unique:users,email,'.$this->id],
-            'password' => ['required', 'string',' regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
-            'userName'=> ['required','string', 'max:100']
+            'phoneNumber'=> ['required','numeric','Digits:10','unique:users,PhoneNumber,'.$this->id],
+            'email' => ['required', 'string','email','unique:users,email,'.$this->id],
+            'password' => ['required','Password'],
+            'userName'=> ['required','string','max:100','unique:users,PhoneNumber,'.$this->id],
+            'rolle_id' =>['required'],
+            'branch_id' => ['required']
 
         ];
     }

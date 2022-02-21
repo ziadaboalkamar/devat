@@ -51,10 +51,11 @@
                                                             class="form-control" placeholder="العنوان">
                                                     </div>
                                                 </div>
-                                               
-                                               
+
+
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label font-weight-semibold">الهاتف</label>
+                                                    <label class="col-lg-4 col-form-label font-weight-semibold">الهاتف <span
+                                                            class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input name="phone" value="{{ $setting['phone'] }}" type="text" class="form-control"
                                                             placeholder="Phone">
@@ -62,18 +63,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label font-weight-semibold">البريد الالكتروني</label>
+                                                    <label class="col-lg-4 col-form-label font-weight-semibold"> البريد الالكتروني <span
+                                                            class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input name="email" value="{{ $setting['email'] }}" type="email"
                                                             class="form-control" placeholder="البريد الالكتروني">
 
                                                     </div>
                                                 </div>
-                                                
-                                                
-                    
+
+
+
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label font-weight-semibold">شعار الجمعية</label>
+                                                    <label class="col-lg-4 col-form-label font-weight-semibold">شعار الجمعية <span
+                                                            class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <div class="mb-3">
                                                             <img style="width: 100px" height="100px"

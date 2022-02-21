@@ -56,7 +56,7 @@ class DonorController extends Controller
     {
         $request->validate([
             'name' => 'required|string|',
-            'phone' => 'required|numeric|unique:donors',
+            'phone' => 'required|Digits:10|numeric|unique:donors',
             'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
             'email' => 'required|unique:donors|email',
         ]);
@@ -70,7 +70,7 @@ class DonorController extends Controller
             $img = $request->file('logo');
             $img_path = $img->store('/Donors', 'assets');
         }
-        $data['logo'] = $img_path;        
+        $data['logo'] = $img_path;
         Donor::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
@@ -96,7 +96,7 @@ class DonorController extends Controller
      */
     public function edit(Donor $donor)
     {
-        
+
         return view('dashboard.pages.donors.edit',[
             'donor' => $donor,
         ]);
@@ -113,21 +113,23 @@ class DonorController extends Controller
     {
         $request->validate([
             'name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
-            'phone' => 'required|numeric|unique:donors,phone,' . $donor->id,
-            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
-            'email' => 'required|email|unique:donors,email,'. $donor->id,
+            'phone' => 'required|Digits:10|numeric|unique:donors,phone,' . $donor->id,
+            'logo' => 'sometimes|mimes:jpg,jpeg,png|max:2000',
+            'email' => 'required|email|unique:donors,email,' . $donor->id,
         ]);
         //  return $request;
         $data = [];
         $data['name'] = $request->name;
         $data['phone'] = $request->phone;
         $data['email'] = $request->email;
-        $img_path = null;
-        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-            $img = $request->file('logo');
-            $img_path = $img->store('/Donors', 'assets');
+        if ($request->logo != null) {
+            $img_path = null;
+            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+                $img = $request->file('logo');
+                $img_path = $img->store('/Donors', 'assets');
+            }
+            $data['logo'] = $img_path;
         }
-        $data['logo'] = $img_path;        
         $donor->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 

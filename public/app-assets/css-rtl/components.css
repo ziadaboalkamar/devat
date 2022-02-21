@@ -809,6 +809,7 @@ footer.footer-border {
           transition : -webkit-transform 0.25s ease;
           transition :         transform 0.25s ease;
           transition :         transform 0.25s ease, -webkit-transform 0.25s ease;
+          font-family: 'Cairo', sans-serif!important;
 }
 
 .main-menu.menu-dark .navigation li.nav-item a:hover > * {

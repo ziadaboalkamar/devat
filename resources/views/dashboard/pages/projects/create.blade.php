@@ -44,7 +44,7 @@
                                         @csrf
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
                                             <label for="date">اسم المشروع</label>
-                                            <input name="project_name" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
+                                            <input name="project_name" value="{{ old('project_name') }}" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
                                             @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
@@ -54,7 +54,7 @@
                                                 <option value=""> --- </option>
                                                 @if($mainBranches && $mainBranches -> count() > 0)
                                                     @foreach($mainBranches as $mainBranch)
-                                                        <option value="{{$mainBranch->id}}">{{$mainBranch->name}}</option>
+                                                        <option value="{{$mainBranch->id}}" {{ old('main_branch_id')== $mainBranch->id ? 'selected' : null }}>{{$mainBranch->name}}</option>
 
                                                     @endforeach
                                                 @endif
@@ -70,7 +70,7 @@
                                                 <option value=""> --- </option>
                                                 @if($donors && $donors -> count() > 0)
                                                     @foreach($donors as $donor)
-                                                        <option value="{{$donor->id}}">{{$donor->name}}</option>
+                                                        <option {{ old('donor_id')== $donor->id ? 'selected' : null }} value="{{$donor->id}}">{{$donor->name}}</option>
 
                                                     @endforeach
                                                 @endif
@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="time">تاريخ المنحة</label>
-                                            <input type="date" name="grant_date" class="form-control time-mask" placeholder="hh:mm:ss" id="time" />
+                                            <input value="{{ old('grant_date') }}" type="date" name="grant_date" class="form-control time-mask" placeholder="hh:mm:ss" id="time" />
                                             @error('grant_date')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
@@ -91,7 +91,7 @@
                                                 <option value=""> --- </option>
                                                 @if($categories && $categories -> count() > 0)
                                                 @foreach($categories as $category)
-                                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                                        <option {{ old('category_id')== $category->id ? 'selected' : null }} value="{{$category->id}}">{{$category->name}}</option>
 
                                                     @endforeach
                                                 @endif
@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="numeral-formatting">قيمة المنحة</label>
-                                            <input type="text" name="grant_value" class="form-control numeral-mask" placeholder="10,000" id="قيمة المنحة" />
+                                            <input value="{{ old('grant_value') }}" type="text" name="grant_value" class="form-control numeral-mask" placeholder="10,000" id="قيمة المنحة" />
                                             @error('grant_value')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
@@ -112,7 +112,7 @@
                                                 <option value=""> --- </option>
                                                 @if($currencies && $currencies -> count() > 0)
                                                     @foreach($currencies as $currency)
-                                                        <option value="{{$currency->id}}">{{$currency->name}}</option>
+                                                        <option {{ old('currency_id')== $currency->id ? 'selected' : null }}value="{{$currency->id}}">{{$currency->name}}</option>
 
                                                     @endforeach
                                                 @endif
@@ -123,19 +123,19 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="delimiters">سعر الصرف</label>
-                                            <input type="text" name="exchange_amount" class="form-control delimiter-mask" placeholder="سعر الصرف" id="delimiters" />
+                                            <input type="text" value="{{ old('exchange_amount') }}" name="exchange_amount" class="form-control delimiter-mask" placeholder="سعر الصرف" id="delimiters" />
                                             @error('exchange_amount')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="prefix">الاداريات</label>
-                                            <input type="text" name="managerial_fees" class="form-control prefix-mask" id="prefix" />
+                                            <input type="text"  value="{{ old('managerial_fees') }}" name="managerial_fees" class="form-control prefix-mask" id="prefix" />
                                             @error('managerial_fees')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>
-                                            <input type="date" name="start_date" class="form-control custom-delimiter-mask" placeholder="" id="custom-delimiters" />
+                                            <input type="date"  value="{{ old('start_date') }}" name="start_date" class="form-control custom-delimiter-mask" placeholder="" id="custom-delimiters" />
                                             @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
 
                                         </div>

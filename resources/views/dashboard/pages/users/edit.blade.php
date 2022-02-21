@@ -99,7 +99,7 @@
                                     <div class="col-xl-4 col-md-6 col-12 mb-1">
                                         <div class="form-group">
                                             <label for="basicInput">{{ __('اسم المستخدم') }}</label>
-                                            <input type="text" class="form-control" name="userName" value="{{ old('userName',$user->userName) }}" placeholder="ادخل اسم المستخدم" />
+                                            <input type="text" disabled class="form-control" name="userName" value="{{ old('userName',$user->userName) }}" placeholder="ادخل اسم المستخدم" />
                                             @error('userName')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                     </div>
