@@ -1,9 +1,7 @@
 @extends('dashboard.layouts.master')
-<<<<<<< HEAD
+
 @section('title','الصفحة الرئيسية')
-=======
-@section('title','الرئيسية')
->>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
+
 
 @section('content')
     <!-- BEGIN: Content-->
@@ -159,13 +157,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$668.51</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">97%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -491,13 +483,7 @@
                                                         <span class="font-small-2 text-muted">in 24 hours</span>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">68%</span>
-                                                        <i data-feather="trending-down"
-                                                           class="text-danger font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -531,13 +517,7 @@
                                                         <span class="font-small-2 text-muted">in 2 days</span>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">97%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -572,13 +552,6 @@
                                                     </div>
                                                 </td>
 
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">62%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
                                             </tr>
 
                                             </tbody>

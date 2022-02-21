@@ -145,30 +145,22 @@ class MainBrancheController extends Controller
      */
     public function destroy(MainBranche $main_branch)
     {
-        
+
         if (File::exists('assets/' . $main_branch->logo)) {
             unlink('assets/' . $main_branch->logo);
         }
-<<<<<<< HEAD
+
         if(count($main_branch->projects) > 0){
             toastr()->error(__('لايمكنك حذف هذه الجمعية'));
             return redirect()->route('main-branches.index') ;
         }else{
             $main_branch->delete();
             toastr()->success(__('تم حذف البيانات بنجاح'));
-    
-            return redirect()->route('main-branches.index');
-        }
-=======
-        if (count($main_branch->project)>0){
-            toastr()->error(__('لا يمكن حذف جمعية الرئيسية'));
 
             return redirect()->route('main-branches.index');
         }
-        $main_branch->delete();
-        toastr()->success(__('تم حذف البيانات بنجاح'));
->>>>>>> 0c0456489b4ff1d4123a1e07bb92fc8f73d11679
 
-        
+
+
     }
 }

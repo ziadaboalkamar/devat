@@ -127,24 +127,24 @@ class BeneficiariesProjectController extends Controller
         $data['family_member_count'] = $beneficiary->family_member;
         $data['delivery_date'] = null;
         $data['employee_who_delivered'] = null;
-        $data['status'] = 0;
+        $data['status_id'] = 0;
 
 
         $msg_suc = toastr()->success(__('تم حفظ البيانات بنجاح'));
 
         $success = BeneficiariesProject::create($data);
-    //    $msg_error = toastr()->error(__('تاكد من صحة العملية'));
-        // if ($success) {
-        //     return response()->json([
-        //         'status' => 200,
-        //         'msg' => $msg_suc,
-        //     ]);
-        // } else {
-        //     return response()->json([
-        //         'status' => 404,
-        //         'msg' => $msg_error,
-        //     ]);
-        // }
+        $msg_error = toastr()->error(__('تاكد من صحة العملية'));
+         if ($success) {
+             return response()->json([
+                 'status' => 200,
+                 'msg' => $msg_suc,
+             ]);
+         } else {
+             return response()->json([
+                 'status' => 404,
+                 'msg' => $msg_error,
+             ]);
+         }
         // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
 
         // ->with([$project_id,$beneficiariesProjects,$project])

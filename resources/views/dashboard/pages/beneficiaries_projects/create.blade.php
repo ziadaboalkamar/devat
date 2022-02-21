@@ -16,6 +16,8 @@
 
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
     {{-- @toastr_css --}}
 @stop
 @section('content')
@@ -100,7 +102,7 @@
                                 @endforeach
                                     {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
-                                       
+
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <div class="form-group">
                                                 <label for="basicInput">اسم الفرع</label>
@@ -205,7 +207,8 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
-
+    <script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-toastr.js')}}"></script>
     <script>
         $('#example tfoot th').each(function() {
             var title = $(this).text();
@@ -294,13 +297,10 @@
                             '<div class="btn-group time-selector">' +'<form id="saveFormBen" method="post">'+'@csrf'+
                                 '<input type="hidden" name="benficary_id"  value="'+id+'">'+
                                 '<input type="hidden" name="project_id"  value="{{$project_id}}">'+
-                            '<button id="save_ben" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
-                            +'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete{{ $project_id }}">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            ' حذف المستفيد</a>'
+                            '<button id="save_ben'+id+'" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'+
+                            '<button id="delete_ben'+id+'"  value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check d-none">حذف</button>'
+
+
                             +'</form>'+
                             ' </div>' +
                             '</div>' +
@@ -405,7 +405,10 @@
         });
     </script>
     <script>
-            $(document).on('click', '#save_ben', function (e) {
+        var buttonApprove = document.getElementById('save_ben');
+        var buttonDelete = document.getElementById('delete_ben');
+    @foreach(\App\Models\Beneficiary::all() as $x)
+            $(document).on('click', '#save_ben{{$x->id}}', function (e) {
         e.preventDefault();
        var saveFormBen = new FormData($('#saveFormBen')[0])
         $.ajax({
@@ -414,10 +417,21 @@
             data: saveFormBen,
             processData: false,
             contentType: false,
-            cache: false,     
+            cache: false,
             success: function (data) {
                 if(data.status == 200){
                    data.msg;
+
+                   $('#save_ben{{$x->id}}').hide();
+                    $('#delete_ben{{$x->id}}').removeClass('d-none');
+                    toastr['success']('تم اضافة بنجاح', 'Progress Bar', {
+                        closeButton: true,
+                        tapToDismiss: false,
+                        progressBar: true,
+
+                    });
+
+
                 }
             },
             error: function (project) {
@@ -425,6 +439,7 @@
             }
         })
     })
+        @endforeach
     </script>
     <script>
         $('.btn-save-project-beneficiaries').on('click', function(){
@@ -434,14 +449,14 @@
                     beneficiaries.push($(this).val());
                 }
             });
-            
+
             $.ajax({
                 type: "POST",
                 url: "{{ route('beneficiareis-projects.store') }}",
                 data: { beneficiaries: beneficiaries},
                 dataType: 'json'
             }).done(function (data) {
-                
+
             });
         })
     </script>
