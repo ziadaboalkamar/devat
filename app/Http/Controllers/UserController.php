@@ -93,7 +93,7 @@ class UserController extends Controller
 
         return view('dashboard.pages.users.edit' , compact('user','roles','branches'));
     }
-    public function update(UserRequest $request,$id){
+    public function update(Request $request,$id){
 
         try {
             $user = User::select()->find($id);

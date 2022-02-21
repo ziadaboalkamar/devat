@@ -23,19 +23,19 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        // $id = $this->route('id', 0);    
         return [
-
             'firstname'=> ['required', 'string','max:100'],
             'lastname'=> ['required', 'string', 'max:100'],
             'jobName'=> ['required', 'string', 'max:100'],
-            'phoneNumber'=> ['required','numeric','digits:10','unique:users,PhoneNumber,'.$this->id],
-            'email' => ['required', 'string','email','unique:users,email,'.$this->id],
+            'phoneNumber'=> ['required','numeric','digits:10','unique:users,PhoneNumber,'],
+            'email' => ['required', 'string','email','unique:users,email,'],
             'password' => ['required','password'],
-            'userName'=> ['required','string','max:100','unique:users,userName,'.$this->id],
+            'userName'=> ['required','string','max:100','unique:users,userName,'],
             'rolle_id' =>['required'],
             'branch_id' => ['required']
-
         ];
+
     }
 
     public function messages()

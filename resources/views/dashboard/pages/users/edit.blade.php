@@ -13,7 +13,7 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <form action="{{route("users.update",$user->id)}}" method="POST">
+                <form action="{{route('users.update',$user->id)}}" method="POST">
                     @csrf
                     <div class="card">
                         <div class="card-body">
