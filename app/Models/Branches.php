@@ -27,4 +27,7 @@ class Branches extends Model
         return $this->belongsto(City::class,'city_id','id');
     }
 
+    public function beneficiaries(){
+        return $this->hasMany(Beneficiary::class,'branch_id','id');
+    }
 }

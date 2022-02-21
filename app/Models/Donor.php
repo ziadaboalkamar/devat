@@ -18,5 +18,8 @@ class Donor extends Model
         'created_at','updated_at'
     ];
 
+    public function projects(){
+        return $this->hasMany(Project::class,'donor_id','id');
+    }
     public $timestamps = true;
 }

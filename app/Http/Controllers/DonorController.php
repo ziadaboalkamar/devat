@@ -16,7 +16,7 @@ class DonorController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $donor = Donor::all();
             return DataTables::of($donor)
                 ->addIndexColumn()
@@ -31,7 +31,7 @@ class DonorController extends Controller
                 ->make(true);
         }
 
-        return view('dashboard.pages.donors.index',[
+        return view('dashboard.pages.donors.index', [
             'donors' => Donor::get(),
         ]);
     }
@@ -74,7 +74,7 @@ class DonorController extends Controller
         Donor::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
-        return redirect()->route('donors.index') ;
+        return redirect()->route('donors.index');
     }
 
     /**
@@ -97,7 +97,7 @@ class DonorController extends Controller
     public function edit(Donor $donor)
     {
 
-        return view('dashboard.pages.donors.edit',[
+        return view('dashboard.pages.donors.edit', [
             'donor' => $donor,
         ]);
     }
@@ -133,7 +133,7 @@ class DonorController extends Controller
         $donor->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('donors.index') ;
+        return redirect()->route('donors.index');
     }
 
     /**
@@ -144,8 +144,13 @@ class DonorController extends Controller
      */
     public function destroy(Donor $donor)
     {
-        $donor->delete();
-        toastr()->success(__('تم حذف البيانات بنجاح'));
-        return redirect()->route('donors.index') ;
+        if (count($donor->projects) > 0) {
+            toastr()->error(__('لايمكنك حذف هذه المؤسسة'));
+            return redirect()->route('donors.index');
+        } else {
+            $donor->delete();
+            toastr()->success(__('تم حذف البيانات بنجاح'));
+            return redirect()->route('donors.index');
+        }
     }
 }

@@ -110,9 +110,15 @@ class CategoryOfProjectController extends Controller
      */
     public function destroy(CategoriesOfProject $category_of_project)
     {
-        $category_of_project->delete();
+        if(count($category_of_project->projects) > 0){
+            toastr()->error(__('لايمكنك حذف هذا القسم'));
+            return redirect()->route('category-of-projects.index') ;
+        }else{
+            $category_of_project->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
         return redirect()->route('category-of-projects.index') ;
+        }
+
     }
 }

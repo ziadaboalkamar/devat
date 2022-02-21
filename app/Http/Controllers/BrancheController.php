@@ -138,9 +138,13 @@ class BrancheController extends Controller
      */
     public function destroy(Branches $branch)
     {
-        $branch->delete();
-        toastr()->success(__('تم حذف البيانات بنجاح'));
-
-        return redirect()->route('branches.index') ;
+        if (count($branch->beneficiaries ) > 0) {
+            toastr()->error(__('لايمكنك حذف هذا الفرع'));
+            return redirect()->route('branches.index');
+        } else {
+            $branch->delete();
+            toastr()->success(__('تم حذف البيانات بنجاح'));
+            return redirect()->route('branches.index') ;
+        }
     }
 }

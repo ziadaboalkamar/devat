@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','index')
+@section('title','الصفحة الرئيسية')
 
 @section('content')
     <!-- BEGIN: Content-->

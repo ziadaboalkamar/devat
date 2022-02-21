@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'jobName'=> ['required', 'string', 'max:100'],
             'phoneNumber'=> ['required','numeric','digits:10','unique:users,PhoneNumber,'],
             'email' => ['required', 'string','email','unique:users,email,'],
-            'password' => ['required','password'],
+            'password' => ['required'],
             'userName'=> ['required','string','max:100','unique:users,userName,'],
             'rolle_id' =>['required'],
             'branch_id' => ['required']
