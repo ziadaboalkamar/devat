@@ -21,7 +21,7 @@ class BeneficiariesProjectController extends Controller
     {
         $project_id = $request->project_id;
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             $beneficiariesProject = BeneficiariesProject::all();
 
             return DataTables::of($beneficiariesProject)
@@ -44,12 +44,11 @@ class BeneficiariesProjectController extends Controller
                 // })
                 ->rawColumns(['record_select', 'actions'])
                 ->make(true);
-
         }
 
-        return view('dashboard.pages.beneficiaries_projects.index',[
+        return view('dashboard.pages.beneficiaries_projects.index', [
             'beneficiariesProjects' => BeneficiariesProject::get(),
-            
+
         ]);
     }
 
@@ -60,8 +59,9 @@ class BeneficiariesProjectController extends Controller
      */
     public function create(Request $request)
     {
+
         $project_id = $request->project_id;
-        if($request->ajax()){
+        if ($request->ajax()) {
             $beneficiary = Beneficiary::all();
 
             return DataTables::of($beneficiary)
@@ -88,15 +88,15 @@ class BeneficiariesProjectController extends Controller
                 ->make(true);
         }
 
-        for($i = 1 ; $i < 16 ; $i++)
-        {
+        for ($i = 1; $i < 16; $i++) {
             $n[] = $i;
         }
-        return view('dashboard.pages.beneficiaries_projects.create',[
+        return view('dashboard.pages.beneficiaries_projects.create', [
             'projects' => Project::get(),
             'brnches' => Branches::get(),
             'beneficiaries' => Beneficiary::get(),
-            'beneficiareis' => Beneficiary::get(),
+            'beneficiariesProjects' => BeneficiariesProject::find($project_id),
+
             'project_id' => $project_id,
             'family_members' => $n,
         ]);
@@ -111,15 +111,16 @@ class BeneficiariesProjectController extends Controller
     public function store(Request $request)
     {
         $id =  $request->benficary_id;
-     $beneficiary = Beneficiary::find($id);
-     $project_id = $request->project_id;
-     $project = Project::find($id);
-     $beneficiariesProjects = BeneficiariesProject::where('project_id','=',$id)->get();
+        $beneficiary = Beneficiary::find($id);
+        $project_id = $request->project_id;
+        $project = Project::find($id);
+        $beneficiariesProjects = BeneficiariesProject::where('project_id', '=', $id)->get();
 
 
 
         $data = [];
         $data['project_id'] = $request->project_id;
+
         $data['beneficiary_id'] = $request->benficary_id;
         $data['branch_id'] = $beneficiary->branch_id;
         $data['recever_name'] = null;
@@ -127,10 +128,24 @@ class BeneficiariesProjectController extends Controller
         $data['delivery_date'] = null;
         $data['employee_who_delivered'] = null;
         $data['status'] = 0;
-        
-        BeneficiariesProject::create($data);
-        toastr()->success(__('تم حفظ البيانات بنجاح'));
-        return redirect()->route('projects.beneficiareis.get',$project_id)->with([$project_id,$beneficiariesProjects,$project]);
+
+
+        $msg_suc = toastr()->success(__('تم حفظ البيانات بنجاح'));
+
+        $success = BeneficiariesProject::create($data);
+    //    $msg_error = toastr()->error(__('تاكد من صحة العملية'));
+        // if ($success) {
+        //     return response()->json([
+        //         'status' => 200,
+        //         'msg' => $msg_suc,
+        //     ]);
+        // } else {
+        //     return response()->json([
+        //         'status' => 404,
+        //         'msg' => $msg_error,
+        //     ]);
+        // }
+        // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
 
         // ->with([$project_id,$beneficiariesProjects,$project])
     }
@@ -154,11 +169,10 @@ class BeneficiariesProjectController extends Controller
      */
     public function edit(BeneficiariesProject $beneficiareis_project)
     {
-        for($i = 1 ; $i < 16 ; $i++)
-        {
+        for ($i = 1; $i < 16; $i++) {
             $n[] = $i;
         }
-        return view('dashboard.pages.beneficiaries_projects.edit',[
+        return view('dashboard.pages.beneficiaries_projects.edit', [
             'projects' => Project::get(),
             'brnches' => Branches::get(),
             'beneficiaries' => Beneficiary::get(),
@@ -189,7 +203,7 @@ class BeneficiariesProjectController extends Controller
 
         $beneficiareis_project->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
-        return redirect()->route('beneficiareis-projects.index') ;
+        return redirect()->route('beneficiareis-projects.index');
     }
 
     /**
@@ -198,22 +212,25 @@ class BeneficiariesProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BeneficiariesProject $beneficiareis_project)
+    public function destroy(Request $request)
     {
-        $beneficiareis_project->delete();
+        return $request;
+        $id =  $request->project_id;
+        // return $id;
+        BeneficiariesProject::where('beneficiary_id',$id)->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis-projects.index') ;
+        return redirect()->back();
     }
 
     public function updateStatus(Request $request)
-     {
+    {
         $b = BeneficiariesProject::findorfail($request->id);
-            $b->update([
-                'status_id'=>$request->status_id
-            ]);
+        $b->update([
+            'status_id' => $request->status_id
+        ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;   
-     }
+        return redirect()->route('beneficiareis.index');
+    }
 }

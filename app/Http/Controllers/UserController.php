@@ -158,6 +158,6 @@ class UserController extends Controller
             ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('users.index') ;   
+        return redirect()->route('users.index') ;
      }
 }

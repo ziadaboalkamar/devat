@@ -42,7 +42,7 @@ class CityController extends Controller
     {
         return view('dashboard.pages.cities.create');
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -118,15 +118,15 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        if(count($city->Beneficiaries) > 0){
+        if(count($city->beneficiaries) > 0){
             toastr()->error(__('لايمكنك حذف هذه المدينة'));
             return redirect()->route('cities.index') ;
         }else{
             $city->delete();
             toastr()->success(__('تم حذف البيانات بنجاح'));
-    
+
             return redirect()->route('cities.index') ;
         }
-       
+
     }
 }
