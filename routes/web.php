@@ -52,8 +52,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('user.view');
     Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
     Route::get('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
-    Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update_status');
+    Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
 
+   
 //    end user
 //    start roles route
     Route::get('/users/roles/{id}',[RoleController::class,'show_roles'])->name('user.view.role');

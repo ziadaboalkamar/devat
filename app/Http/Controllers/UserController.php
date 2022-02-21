@@ -94,7 +94,6 @@ class UserController extends Controller
         return view('dashboard.pages.users.edit' , compact('user','roles','branches'));
     }
     public function update(Request $request,$id){
-
         try {
             $user = User::select()->find($id);
             if (!$user){
@@ -118,7 +117,6 @@ class UserController extends Controller
                 'password' => $password,
                 'role_id' => $request->rolle_id,
                 'branch_id' => $request->branch_id,
-                'userName'=>$request->userName,
 
             ]);
             toastr()->success(__('تم تحديث البيانات بنجاح'));
@@ -126,6 +124,7 @@ class UserController extends Controller
 
         }
         catch (\Exception $exception){
+            return $exception;
             toastr()->error(__('يوجد خطاء ما'));
             return redirect()->route('users.index');
 
@@ -140,10 +139,17 @@ class UserController extends Controller
                 toastr()->error(__('يوجد خطاء ما'));
                 return redirect()->route('user.index');
             }
-            $user ->delete();
+            if (auth()->id() == $id){
+                toastr()->error(__('لا يمكنك حذف نفسك'));
+                return redirect()->route('user.index');
+            }else{
+                $user ->delete();
+                toastr()->success(__('تم حذف المستخدم بنجاح'));
+                return redirect()->route('users.index');
 
-            toastr()->success(__('تم تحديث البيانات بنجاح'));
-            return redirect()->route('users.index');
+            }
+
+
 
         }catch (\Exception $ex){
             toastr()->error(__('يوجد خطاء ما'));
