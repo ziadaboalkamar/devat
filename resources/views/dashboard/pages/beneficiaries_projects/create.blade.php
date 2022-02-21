@@ -56,7 +56,6 @@
                                     <div class="col-md-3 famely_num"></div>
                                     <div class="col-md-3 metr"></div>
                                     <div class="col-md-3 gender"></div>
-
                                 </div>
                             </div>
                             <div class="card">
@@ -64,6 +63,41 @@
                                     <h4 class="card-title">اضافة مستفيد</h4>
                                 </div>
                                 <div class="card-body">
+                                    @foreach ($beneficiaries as $beneficiariesProject)
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="delete{{ $beneficiariesProject->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">حذف المستفيد <span
+                                                            class="text-primary"></span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
+                                                    method="post">
+                                                    {{ method_field('delete') }}
+                                                    {{ csrf_field() }}
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="project_id" value="{{ $project_id }}">
+                                                        <input type="hidden" name="projec" value="{{ $beneficiariesProject->id }}">
+                                                        <h5>هل انت متاكد من حذف البيانات</h5>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">{{ __('Close') }}</button>
+                                                        <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
+                                @endforeach
                                     {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
                                        
@@ -147,7 +181,9 @@
                         </div>
                     </div>
             </div>
-            <button class="btn btn-success btn-save-project-beneficiaries">حفظ</button>
+            {{-- <button class="btn btn-success btn-save-project-beneficiaries">حفظ</button> --}}
+            <a href="{{ route('projects.beneficiareis.get',$project_id) }}" class="btn btn-outline-secondary">اغلاق</a>
+
             </section>
 
         </div>
@@ -255,10 +291,16 @@
                         var id = full['id'];
 
                         return (
-                            '<div class="btn-group time-selector">' +'<form method="post" action="{{ route("beneficiareisProjects.store.test")}}">'+'@csrf'+
+                            '<div class="btn-group time-selector">' +'<form id="saveFormBen" method="post">'+'@csrf'+
                                 '<input type="hidden" name="benficary_id"  value="'+id+'">'+
                                 '<input type="hidden" name="project_id"  value="{{$project_id}}">'+
-                            '<button  value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
+                            '<button id="save_ben" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
+                            +'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            ' data-target="#delete{{ $project_id }}">' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            ' حذف المستفيد</a>'
                             +'</form>'+
                             ' </div>' +
                             '</div>' +
@@ -361,6 +403,28 @@
 
 
         });
+    </script>
+    <script>
+            $(document).on('click', '#save_ben', function (e) {
+        e.preventDefault();
+       var saveFormBen = new FormData($('#saveFormBen')[0])
+        $.ajax({
+            type: 'post',
+            url: "{{route('beneficiareisProjects.store')}}",
+            data: saveFormBen,
+            processData: false,
+            contentType: false,
+            cache: false,     
+            success: function (data) {
+                if(data.status == 200){
+                   data.msg;
+                }
+            },
+            error: function (project) {
+
+            }
+        })
+    })
     </script>
     <script>
         $('.btn-save-project-beneficiaries').on('click', function(){

@@ -67,7 +67,7 @@
                                                 <select name="gender" class="form-control">
                                                     <option value="" selected disabled>.......</option>
                                                     @foreach ($getPossibleGender as $getPossiblegender)
-                                                    <option value="{{ $getPossiblegender }}"> {{ $getPossiblegender }}</option>                                                      
+                                                    <option value="{{ $getPossiblegender }}" {{ old('gender') == $getPossiblegender ?'selected':null}}> {{ $getPossiblegender }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('gender')<span class="text-danger">{{ $message }}</span>@enderror
@@ -100,7 +100,7 @@
                                                 <select name="branch_id" class="form-control">
                                                     <option value="" selected disabled>اختر الفرع</option>
                                                     @foreach ($brnches as $brnch)
-                                                    <option value="{{ $brnch->id }}"> {{ $brnch->name }}</option>                                                      
+                                                    <option value="{{ $brnch->id }}" {{ old('branch_id')==$brnch->id?'selected':null }}> {{ $brnch->name }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror
@@ -114,7 +114,7 @@
                                                 <select name="city_id" class="form-control">
                                                     <option value="" selected disabled>اختر المدينة</option>
                                                     @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"> {{ $city->city_name }}</option>                                                      
+                                                    <option value="{{ $city->id }}" {{ old('city_id')== $city->id ? 'selected' : null }}> {{ $city->city_name }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('city_id')<span class="text-danger">{{ $message }}</span>@enderror

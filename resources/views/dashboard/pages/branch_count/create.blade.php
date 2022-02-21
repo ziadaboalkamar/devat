@@ -54,7 +54,7 @@
                                                                     <option value=""> --- </option>
                                                                     @if($branches && $branches -> count() > 0)
                                                                         @foreach($branches as $branch)
-                                                                            <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                                                            <option value="{{$branch->id}}" {{ old('branch_id')== $branch->id ? 'selected' : null }}>{{$branch->name}}</option>
 
                                                                         @endforeach
                                                                     @endif
@@ -66,7 +66,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="customFile">عدد المستفيدين</label>
-                                                                <input type="number" name="beneficiaries_count" placeholder="عدد المستفيدين" class="form-control prefix-mask" id="basicInputFile" />
+                                                                <input type="number" name="beneficiaries_count" value="{{ old('beneficiaries_count') }}" placeholder="عدد المستفيدين" class="form-control prefix-mask" id="basicInputFile" />
 
                                                                 @error('beneficiaries_count')<span class="text-danger">{{ $message }}</span>@enderror
 
@@ -74,14 +74,14 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="customFile">الكمية المخصصة</label>
-                                                                <input type="text" name="count" class="form-control credit-card-mask" placeholder="الكمية المخصصة" id="credit-card" />
+                                                                <input type="text" name="count" value="{{ old('count') }}" class="form-control credit-card-mask" placeholder="الكمية المخصصة" id="credit-card" />
                                                                 @error('count')<span class="text-danger">{{ $message }}</span>@enderror
 
                                                             </div></div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="customFile">تاريخ الانتهاء</label>
-                                                                <input type="date" name="deadline_date" class="form-control credit-card-mask" placeholder="الكمية المخصصة" id="credit-card" />
+                                                                <input type="date" value="{{ old('deadline_date') }}" name="deadline_date" class="form-control credit-card-mask" placeholder="الكمية المخصصة" id="credit-card" />
                                                                 @error('deadline_date')<span class="text-danger">{{ $message }}</span>@enderror
 
                                                             </div></div>

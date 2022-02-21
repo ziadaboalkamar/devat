@@ -58,6 +58,7 @@
                             </div>
                             <!-- list section end -->
                         </section>
+
                         <form action="{{ route('beneficiareis-projects.create') }}" method="get" class="d-none"
                             id="create_new">
                             @csrf

@@ -42,7 +42,7 @@
                                         @csrf
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم المنحة</label>
-                                            <input type="text" name="name" class="form-control credit-card-mask" placeholder="اسم المنحة"  />
+                                            <input type="text" name="name" value="{{ old('name') }}" class="form-control credit-card-mask" placeholder="اسم المنحة"  />
                                             @error('name')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
  
