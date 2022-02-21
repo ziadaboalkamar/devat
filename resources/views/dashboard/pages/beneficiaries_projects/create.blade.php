@@ -1,6 +1,22 @@
 @extends('dashboard.layouts.master')
-@section('title','اضافة مشروع مستفيد')
+@section('title', 'اضافة مشروع مستفيد')
+
 @section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    {{-- @toastr_css --}}
 @stop
 @section('content')
 
@@ -34,33 +50,57 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
+                                <h5 class="card-header">Search Filter</h5>
+                                <div class="d-flex justify-content-between align-items-center mx-50 row pt-0 pb-2">
+                                    <div class="col-md-3 user_name"></div>
+                                    <div class="col-md-3 famely_num"></div>
+                                    <div class="col-md-3 metr"></div>
+                                    <div class="col-md-3 gender"></div>
+                                </div>
+                            </div>
+                            <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">اضافة مستفيد</h4>
                                 </div>
                                 <div class="card-body">
-
-                                    <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
+                                    @foreach ($beneficiaries as $beneficiariesProject)
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="delete{{ $beneficiariesProject->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">حذف المستفيد <span
+                                                            class="text-primary"></span>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
+                                                    method="post">
+                                                    {{ method_field('delete') }}
+                                                    {{ csrf_field() }}
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="project_id" value="{{ $project_id }}">
+                                                        <input type="hidden" name="projec" value="{{ $beneficiariesProject->id }}">
+                                                        <h5>هل انت متاكد من حذف البيانات</h5>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">{{ __('Close') }}</button>
+                                                        <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
+                                @endforeach
+                                    {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">اسم المشروع</label>
-                                            <select name="project_id" class="form-control">
-                                                <option value="" selected disabled>اختر المشروع</option>
-                                                @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : null }}> {{ $project->project_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('project_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">اسم المستفيد</label>
-                                            <select name="beneficiary_id" class="form-control">
-                                                <option value="" selected disabled>اختر المستفيد</option>
-                                                @foreach ($beneficiaries as $beneficiarie)
-                                                <option value="{{ $beneficiarie->id }}" {{ old('beneficiary_id') == $beneficiarie->id ? 'selected' : null }}> {{ $beneficiarie->address }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('beneficiary_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
+                                       
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <div class="form-group">
                                                 <label for="basicInput">اسم الفرع</label>
@@ -112,18 +152,297 @@
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
                                             <a href="{{ route('beneficiareis-projects.index') }}" class="btn btn-outline-secondary">اغلاق</a>
                                         </div>
-                                    </form>
-                                    </div>
+                                    </form> --}}
+
+                                    <section class="app-user-list">
+                                        <div class="card">
+                                            <div class="card-datatable table-responsive pt-0">
+                                                <table id="example" class="project-list-table table">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>الاسم كاملا</th>
+                                                            <th>الجنس</th>
+                                                            <th>رقم الهوية</th>
+                                                            <th>رقم الجوال</th>
+                                                            <th>عدد افراد الاسرة</th>
+                                                            <th>اسم الفرع</th>
+                                                            <th>الحالة الاجتماعية</th>
+                                                            <th>الحالة</th>
+                                                            <th>العمليات</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- list section end -->
+                                    </section>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-
             </div>
+            {{-- <button class="btn btn-success btn-save-project-beneficiaries">حفظ</button> --}}
+            <a href="{{ route('projects.beneficiareis.get',$project_id) }}" class="btn btn-outline-secondary">اغلاق</a>
+
+            </section>
+
         </div>
+    </div>
     </div>
     <!-- END: Content-->
 @endsection
 @section('js')
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
+    {{-- <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script> --}}
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/jszip.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+
+    <script>
+        $('#example tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+        let project_table = $('.project-list-table').DataTable({
+
+            dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+                '<"col-lg-12 col-xl-6" l>' +
+                '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
+                '>t' +
+                '<"d-flex justify-content-between mx-2 row mb-1"' +
+                '<"col-sm-12 col-md-6"i>' +
+                '<"col-sm-12 col-md-6"p>' +
+                '>',
+            serverSide: true,
+            processing: true,
+            "language": {
+                "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
+            },
+            ajax: {
+                url: '{{ route('beneficiareis.index') }}',
+            },
+            columns: [
+
+                {
+                    data: 'FullName',
+                    name: 'FullName',
+                    searchable: true
+                },
+                {
+                    data: 'gender',
+                    name: 'gender',
+                    searchable: true
+                },
+
+                {
+                    data: 'id_number',
+                    name: 'id_number',
+                    searchable: true
+                },
+                {
+                    data: 'PhoneNumber',
+                    name: 'PhoneNumber',
+                    searchable: true
+                },
+                {
+                    data: 'family_member',
+                    name: 'family_member',
+                    searchable: true
+                },
+                {
+                    data: 'branch_name',
+                    name: 'branch_name',
+                    searchable: true
+                },
+
+
+                {
+                    data: 'maritial',
+                    name: 'maritial',
+                    searchable: true
+                },
+                {
+                    data: 'active',
+                    name: 'active',
+                    searchable: true
+                },
+                {
+                    data: ''
+                }
+            ],
+            order: [0, 'desc'],
+
+
+
+            columnDefs: [
+                // Actions
+                {
+                    targets: -1,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        var id = full['id'];
+
+                        return (
+                            '<div class="btn-group time-selector">' +'<form id="saveFormBen" method="post">'+'@csrf'+
+                                '<input type="hidden" name="benficary_id"  value="'+id+'">'+
+                                '<input type="hidden" name="project_id"  value="{{$project_id}}">'+
+                            '<button id="save_ben" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
+                            +'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                            ' data-target="#delete{{ $project_id }}">' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            ' حذف المستفيد</a>'
+                            +'</form>'+
+                            ' </div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    }
+                }
+            ],
+            initComplete: function() {
+                this.api()
+                    .columns(4)
+                    .every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select id="UserRole" class="form-control text-capitalize mb-md-0 mb-2"><option value="">عدد ارفراد الاسرة</option></select>'
+                            )
+                            .appendTo('.famely_num')
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                console.log(val);
+                                column.search(val ? val : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function(d, j) {
+                                select.append('<option value="' + d + '" class="text-capitalize">' + d +
+                                    '</option>');
+                            });
+                    });
+
+                this.api()
+                    .columns(6)
+                    .every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select id="UserRole" class="form-control text-capitalize mb-md-0 mb-2"><option value=""> الحالة الاجتماعية </option></select>'
+                            )
+                            .appendTo('.metr')
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                console.log(val);
+                                column.search(val ? val : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function(d, j) {
+                                select.append('<option value="' + d + '" class="text-capitalize">' + d +
+                                    '</option>');
+                            });
+                    });
+                this.api()
+                    .columns(1)
+                    .every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select id="UserRole" class="form-control text-capitalize mb-md-0 mb-2"><option value=""> الجنس  </option></select>'
+                            )
+                            .appendTo('.gender')
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                console.log(val);
+                                column.search(val ? val : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function(d, j) {
+                                select.append('<option value="' + d + '" class="text-capitalize">' + d +
+                                    '</option>');
+                            });
+                    });
+
+                this.api()
+                    .columns(0)
+                    .every(function() {
+                        var column = this;
+                        var select = $(
+                                '<input value="" id="plan" class="form-control text-capitalize mb-md-0 mb-2" placeholder="الاسم كاملا">'
+                            )
+                            .appendTo('.user_name')
+                            .on('keyup', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                console.log(val);
+                                column.search(val ? val : '', true, false).draw();
+                            });
+
+
+                    });
+
+
+            }
+
+
+        });
+    </script>
+    <script>
+            $(document).on('click', '#save_ben', function (e) {
+        e.preventDefault();
+       var saveFormBen = new FormData($('#saveFormBen')[0])
+        $.ajax({
+            type: 'post',
+            url: "{{route('beneficiareisProjects.store')}}",
+            data: saveFormBen,
+            processData: false,
+            contentType: false,
+            cache: false,     
+            success: function (data) {
+                if(data.status == 200){
+                   data.msg;
+                }
+            },
+            error: function (project) {
+
+            }
+        })
+    })
+    </script>
+    <script>
+        $('.btn-save-project-beneficiaries').on('click', function(){
+            var beneficiaries = Array();
+            $('table .beneficiary-check').each(function(e){
+                if($(this).prop('checked')){
+                    beneficiaries.push($(this).val());
+                }
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "{{ route('beneficiareis-projects.store') }}",
+                data: { beneficiaries: beneficiaries},
+                dataType: 'json'
+            }).done(function (data) {
+                
+            });
+        })
+    </script>
 @stop

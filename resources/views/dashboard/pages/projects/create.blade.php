@@ -1,9 +1,9 @@
 @extends('dashboard.layouts.master')
-@section('title','اضافة مشروع خيري جديد')
+@section('title', 'اضافة مشروع خيري جديد')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{asset("app-assets/vendors/css/forms/select/select2.min.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
 
-    @stop
+@stop
 @section('content')
 
     <div class="app-content content">
@@ -40,27 +40,46 @@
                                     <h4 class="card-title">اضافة مشروع</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form class="row invoice-repeater" action="{{route('projects.store')}}" method="post" enctype="multipart/form-data">
+                                    <form class="row invoice-repeater" action="{{ route('projects.store') }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
                                             <label for="date">اسم المشروع</label>
+<<<<<<< HEAD
+                                            <input name="project_name" type="text" value="{{ old('project_name') }}"
+                                                class="form-control date-mask" placeholder="اسم المشروع" />
+                                            @error('project_name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input name="project_name" value="{{ old('project_name') }}" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
                                             @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الجمعية الرئيسية</label>
                                             <select name="main_branch_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
+                                                @if ($mainBranches && $mainBranches->count() > 0)
+                                                    @foreach ($mainBranches as $mainBranch)
+                                                        <option value="{{ $mainBranch->id }}"
+                                                            {{ old('main_branch_id') == $mainBranch->id ? 'selected' : null }}>
+                                                            {{ $mainBranch->name }}</option>
+=======
                                                 @if($mainBranches && $mainBranches -> count() > 0)
                                                     @foreach($mainBranches as $mainBranch)
                                                         <option value="{{$mainBranch->id}}" {{ old('main_branch_id')== $mainBranch->id ? 'selected' : null }}>{{$mainBranch->name}}</option>
 
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
                                             </select>
-                                            @error('company_name')<span class="text-danger">{{ $message }}</span>@enderror
+                                            @error('main_branch_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
 
@@ -68,20 +87,38 @@
                                             <label for="date">المؤسسات الداعمة</label>
                                             <select name="donor_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
+                                                @if ($donors && $donors->count() > 0)
+                                                    @foreach ($donors as $donor)
+                                                        <option value="{{ $donor->id }}"
+                                                            {{ old('donor_id') == $donor->id ? 'selected' : null }}>
+                                                            {{ $donor->name }}</option>
+=======
                                                 @if($donors && $donors -> count() > 0)
                                                     @foreach($donors as $donor)
                                                         <option {{ old('donor_id')== $donor->id ? 'selected' : null }} value="{{$donor->id}}">{{$donor->name}}</option>
 
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
-                                            </select>                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+                                            </select> @error('project_name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="time">تاريخ المنحة</label>
+<<<<<<< HEAD
+                                            <input type="date" name="grant_date" value="{{ old('grant_date') }}" class="form-control time-mask"
+                                                placeholder="hh:mm:ss" id="time" />
+                                            @error('grant_date')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input value="{{ old('grant_date') }}" type="date" name="grant_date" class="form-control time-mask" placeholder="hh:mm:ss" id="time" />
                                             @error('grant_date')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <!-- Basic -->
@@ -89,59 +126,107 @@
                                             <label>نوع المنحة</label>
                                             <select name="category_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
+                                                @if ($categories && $categories->count() > 0)
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected':null }}>{{ $category->name }}</option>
+=======
                                                 @if($categories && $categories -> count() > 0)
                                                 @foreach($categories as $category)
                                                         <option {{ old('category_id')== $category->id ? 'selected' : null }} value="{{$category->id}}">{{$category->name}}</option>
 
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
                                             </select>
-                                            @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                                            @error('category_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="numeral-formatting">قيمة المنحة</label>
+<<<<<<< HEAD
+                                            <input type="text" name="grant_value" value="{{ old('grant_value') }}" class="form-control numeral-mask"
+                                                placeholder="10,000" id="قيمة المنحة" />
+                                            @error('grant_value')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input value="{{ old('grant_value') }}" type="text" name="grant_value" class="form-control numeral-mask" placeholder="10,000" id="قيمة المنحة" />
                                             @error('grant_value')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label>العملة</label>
                                             <select name="currency_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
+                                                @if ($currencies && $currencies->count() > 0)
+                                                    @foreach ($currencies as $currency)
+                                                        <option value="{{ $currency->id }}" {{ old('currency_id') == $currency->id ? 'selected' :null }}>{{ $currency->name }}</option>
+=======
                                                 @if($currencies && $currencies -> count() > 0)
                                                     @foreach($currencies as $currency)
                                                         <option {{ old('currency_id')== $currency->id ? 'selected' : null }}value="{{$currency->id}}">{{$currency->name}}</option>
 
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
                                             </select>
-                                            @error('currency_id')<span class="text-danger">{{ $message }}</span>@enderror
+                                            @error('currency_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="delimiters">سعر الصرف</label>
+<<<<<<< HEAD
+                                            <input type="text" name="exchange_amount" value="{{ old('exchange_amount') }}" class="form-control delimiter-mask"
+                                                placeholder="سعر الصرف" id="delimiters" />
+                                            @error('exchange_amount')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input type="text" value="{{ old('exchange_amount') }}" name="exchange_amount" class="form-control delimiter-mask" placeholder="سعر الصرف" id="delimiters" />
                                             @error('exchange_amount')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="prefix">الاداريات</label>
+<<<<<<< HEAD
+                                            <input type="text" name="managerial_fees" value="{{ old('managerial_fees') }}" class="form-control prefix-mask"
+                                                id="prefix" />
+                                            @error('managerial_fees')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input type="text"  value="{{ old('managerial_fees') }}" name="managerial_fees" class="form-control prefix-mask" id="prefix" />
                                             @error('managerial_fees')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>
+<<<<<<< HEAD
+                                            <input type="date" name="start_date" value="{{ old('start_date') }}" class="form-control custom-delimiter-mask"
+                                                placeholder="" id="custom-delimiters" />
+                                            @error('start_date')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+=======
                                             <input type="date"  value="{{ old('start_date') }}" name="start_date" class="form-control custom-delimiter-mask" placeholder="" id="custom-delimiters" />
                                             @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
 
-                                                <h4 class="card-title">المرفقات</h4>
+                                            <h4 class="card-title">المرفقات</h4>
 
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
@@ -151,72 +236,87 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="category_attachment_id">نوع الملف</label>
-                                                                <select name="category_attachment_id" class="form-control form-control-lg">
+                                                                <select name="category_attachment_id"
+                                                                    class="form-control form-control-lg">
                                                                     <option value=""> --- </option>
-                                                                    @if($categories_attachment && $categories_attachment -> count() > 0)
-                                                                        @foreach($categories_attachment as $category_attachment)
-                                                                            <option value="{{$category_attachment->id}}">{{$category_attachment->name}}</option>
-
+                                                                    @if ($categories_attachment && $categories_attachment->count() > 0)
+                                                                        @foreach ($categories_attachment as $category_attachment)
+                                                                            <option value="{{ $category_attachment->id }}">
+                                                                                {{ $category_attachment->name }}</option>
                                                                         @endforeach
                                                                     @endif
 
                                                                 </select>
-                                                                @error('category_attachment_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                                            </div></div>
+                                                                @error('category_attachment_id')
+                                                                    <span class="text-danger">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="customFile">ارفاق رابط</label>
-                                                                <input type="url" name="url" class="form-control prefix-mask" id="basicInputFile" />
+                                                                <input type="url" name="url"
+                                                                    class="form-control prefix-mask" value="{{ old('url') }}" id="basicInputFile" />
 
-                                                                @error('url')<span class="text-danger">{{ $message }}</span>@enderror
+                                                                @error('url')
+                                                                    <span class="text-danger">{{ $message }}</span>
+                                                                @enderror
 
-                                                            </div></div>
-                                                        <div class="col-md-3"><div class="form-group">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
                                                                 <label for="customFile">ارفاق ملف</label>
-                                                                <input type="file" name="file" value="null" class="form-control credit-card-mask" placeholder="المرفق" id="credit-card" />
-                                                                @error('file')<span class="text-danger">{{ $message }}</span>@enderror
+                                                                <input type="file" name="file" value="null"
+                                                                    class="form-control credit-card-mask"
+                                                                    placeholder="المرفق" id="credit-card" />
+                                                                @error('file')
+                                                                    <span class="text-danger">{{ $message }}</span>
+                                                                @enderror
 
-                                                            </div></div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-2 col-12 mb-50">
                                                             <div class="form-group">
-                                                                <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete type="button">
+                                                                <button class="btn btn-outline-danger text-nowrap px-1"
+                                                                    data-repeater-delete type="button">
                                                                     <i data-feather="x" class="mr-25"></i>
                                                                     <span>Delete</span>
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        </div>
                                                     </div>
-                                                    <hr />
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
-                                                        <i data-feather="plus" class="mr-25"></i>
-                                                        <span>Add New</span>
-                                                    </button>
-                                                </div>
+                                                <hr />
                                             </div>
                                         </div>
-
-                                        <div class="col-12 d-flex flex-sm-row flex-column mt-2">
-                                            <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                            <button type="reset" class="btn btn-outline-secondary">اغلاق</button>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
+                                                    <i data-feather="plus" class="mr-25"></i>
+                                                    <span>Add New</span>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </form>
-                                    </div>
                                 </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column mt-2">
+                                    <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
+                                    <button type="reset" class="btn btn-outline-secondary">اغلاق</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
-                </section>
-
+                    </div>
             </div>
-                <!-- Input Mask End -->
+            </section>
 
-            </div>
         </div>
+        <!-- Input Mask End -->
+
+    </div>
+    </div>
     </div>
     <!-- END: Content-->
 @endsection
@@ -225,15 +325,15 @@
 
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="{{asset("app-assets/vendors/js/forms/select/select2.full.min.js")}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="{{asset("app-assets/js/scripts/forms/form-select2.js")}}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/form-select2.js') }}"></script>
 
     <!-- BEGIN: Page JS-->
-    <script src="{{asset('app-assets/js/scripts/forms/form-repeater.js')}}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/form-repeater.js') }}"></script>
     <!-- END: Page JS-->
-    <script src="{{asset('app-assets/vendors/js/forms/repeater/jquery.repeater.min.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/repeater/jquery.repeater.min.js') }}"></script>
 
 @stop

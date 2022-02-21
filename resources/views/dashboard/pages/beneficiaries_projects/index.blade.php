@@ -31,8 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                  <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2>
-
+                                   <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2> 
                                 </div>
                             </div>
                         </div>
@@ -58,9 +57,11 @@
                             </div>
                             <!-- list section end -->
                         </section>
+
                         <form action="{{ route('beneficiareis-projects.create') }}" method="get" class="d-none"
                             id="create_new">
                             @csrf
+                            <input type="hidden" value="{{$project_id}}" name="project_id">
                             <button type="submit"></button>
                         </form>
                         @foreach ($beneficiariesProjects as $beneficiariesProject)
@@ -137,7 +138,6 @@
             "language": {
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
-
             columns: [
                 {
                     data: 'beneficiary_name',
@@ -235,7 +235,6 @@
                         }, 50);
                     }
                 },
-
                 {
                     text: 'اضافةمشروع  مستفيد',
                     className: 'add-new btn btn-primary mt-50',
@@ -255,7 +254,6 @@
                     orderable: false,
                     render: function(data, type, full, meta) {
                         var id = full['id'];
-
                         return (
                             '<div class="btn-group">' +
                             '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
@@ -286,8 +284,6 @@
                     }
                 }
             ]
-
-
         });
     </script>
     {{-- @toastr_js

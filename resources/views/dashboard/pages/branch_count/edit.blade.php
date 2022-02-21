@@ -52,8 +52,7 @@
                                                                     <option value=""> --- </option>
                                                                     @if($branches && $branches -> count() > 0)
                                                                         @foreach($branches as $branch)
-                                                                            <option @if($branch -> id == $branchesCount->branch_id) selected @endif value="{{$branch->id}}">{{$branch->name}}</option>
-
+                                                                            <option @if($branch->id == $branchesCount->branch_id) selected @endif value="{{$branch->id}}">{{$branch->name}}</option>
                                                                         @endforeach
                                                                     @endif
 

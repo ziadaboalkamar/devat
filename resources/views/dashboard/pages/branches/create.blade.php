@@ -48,18 +48,18 @@
 
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">رقم الهاتف</label>
-                                            <input type="text" name="phoneNumber" class="form-control credit-card-mask" placeholder="رقم الهاتف"  />
+                                            <input type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" class="form-control credit-card-mask" placeholder="رقم الهاتف"  />
                                             @error('phoneNumber')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">البريد الالكتروني</label>
-                                            <input type="email" name="email" class="form-control credit-card-mask" placeholder="البريد الالكتروني"  />
+                                            <input type="email" name="email" value="{{ old('email') }}" class="form-control credit-card-mask" placeholder="البريد الالكتروني"  />
                                             @error('email')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                         
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم المدير</label>
-                                            <input type="text" name="manager_name" class="form-control credit-card-mask" placeholder="اسم المدير"  />
+                                            <input type="text" name="manager_name" value="{{ old('manager_name') }}" class="form-control credit-card-mask" placeholder="اسم المدير"  />
                                             @error('manager_name')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
  
@@ -69,7 +69,7 @@
                                                 <select name="city_id" class="form-control">
                                                     <option value="" selected disabled>اختر المدينة</option>
                                                     @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"> {{ $city->city_name }}</option>                                                      
+                                                    <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : null }}> {{ $city->city_name }}</option>                                                      
                                                     @endforeach
                                                 </select>
                                                 @error('city_id')<span class="text-danger">{{ $message }}</span>@enderror
