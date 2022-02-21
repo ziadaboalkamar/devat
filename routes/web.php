@@ -53,7 +53,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
     Route::get('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
     Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
-    Route::get('/users/profile/{id}',[UserController::class,'profile'])->name('users.destroy');
+    Route::get('/users/profile/{id}',[UserController::class,'profile'])->name('user.profile');
+    Route::post('users/update/profile/{id}', [UserController::class, 'updateProfile'])->name('user.update.profile');
 
 
 //    end user

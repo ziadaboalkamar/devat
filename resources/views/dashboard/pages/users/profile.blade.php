@@ -13,7 +13,7 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <form action="{{route('users.update',auth()->id())}}" method="POST">
+                <form action="{{route('user.update.profile',auth()->id())}}" method="POST">
                     @csrf
                     <div class="card">
                         <div class="card-body">
@@ -32,13 +32,7 @@
                                         @error('lastname')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="basicInput">{{ __('اسم الوظيفة') }}</label>
-                                        <input type="text" class="form-control" name="jobName" value="{{ old('jobName',$user->jobName) }}" placeholder="ادخل اسم الوظيفة"/>
-                                        @error('jobName')<span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
+
                                 <div class="col-xl-4 col-md-6 col-12 mb-1">
                                     <div class="form-group">
                                         <label for="basicInput">{{ __('البريد الالكتروني') }}</label>
@@ -55,39 +49,6 @@
                                     </div>
                                 </div>
 
-
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="basicInput">{{ __('الصلاحيات') }}</label>
-                                        <select name="rolle_id" class="form-control">
-                                            <option value=""> --- </option>
-                                            @if($roles && $roles -> count() > 0)
-                                                @foreach($roles as $role)
-                                                    <option @if($role -> id == $user->role_id) selected @endif value="{{$role->id}}">{{$role->role_name}}</option>
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                        @error('rolle_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="basicInput">{{ __('الفروع') }}</label>
-                                        <select name="branch_id" class="form-control">
-                                            <option value=""> --- </option>
-                                            @if($branches && $branches -> count() > 0)
-                                                @foreach($branches as $branch)
-                                                    <option @if($branch -> id == $user->branch_id) selected @endif value="{{$branch->id}}">{{$branch->name}}</option>
-
-                                                @endforeach
-
-                                            @endif
-                                        </select>
-                                        @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
 
                             </div>
                                 <div class="row">

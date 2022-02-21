@@ -167,4 +167,47 @@ class UserController extends Controller
 
         return redirect()->route('users.index') ;
      }
+     public function profile($id){
+         $user = User::select()->find($id);
+         if (!$user){
+             return redirect()->route('users.index');
+         }
+
+         return view('dashboard.pages.users.profile' , compact('user'));
+     }
+    public function updateProfile(Request $request,$id){
+        try {
+            $user = User::select()->find($id);
+            if (!$user){
+                return redirect()->route('users.index');
+            }
+            $password = $request->password;
+            if($password == "password"){
+                $password = $user->password;
+            }
+
+            else{
+                $password = bcrypt($request ->password);
+            }
+
+            User::where('id' , $id)->update([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                'phoneNumber' => $request -> phoneNumber ,
+                'password' => $password,
+            ]);
+            toastr()->success(__('تم تحديث البيانات بنجاح'));
+            return redirect()->route('users.index');
+
+        }
+        catch (\Exception $exception){
+            return $exception;
+            toastr()->error(__('يوجد خطاء ما'));
+            return redirect()->route('users.index');
+
+        }
+
+    }
+
 }
