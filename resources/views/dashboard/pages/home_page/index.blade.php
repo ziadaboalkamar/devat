@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','index')
+@section('title','الرئيسية')
 
 @section('content')
     <!-- BEGIN: Content-->
@@ -80,10 +80,10 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>Company</th>
-                                                <th>Category</th>
-                                                <th>Views</th>
-                                                <th>Revenue</th>
+                                                <th>الفرع</th>
+                                                <th>اسم المشروع</th>
+                                                <th>عدد المستفيدين</th>
+                                                <th>الحالة</th>
                                                 <th>Sales</th>
                                             </tr>
                                             </thead>
@@ -120,13 +120,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$891.2</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">68%</span>
-                                                        <i data-feather="trending-down"
-                                                           class="text-danger font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -202,13 +196,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$522.29</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">62%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -242,13 +230,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$291.01</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">88%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -283,13 +265,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$783.93</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">16%</span>
-                                                        <i data-feather="trending-down"
-                                                           class="text-danger font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -324,13 +300,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$780.05</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">78%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             <tr>
                                                 <td>
@@ -364,13 +334,7 @@
                                                     </div>
                                                 </td>
                                                 <td>$531.49</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="font-weight-bolder mr-1">42%</span>
-                                                        <i data-feather="trending-up"
-                                                           class="text-success font-medium-1"></i>
-                                                    </div>
-                                                </td>
+
                                             </tr>
                                             </tbody>
                                         </table>
