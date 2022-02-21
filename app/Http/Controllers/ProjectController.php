@@ -60,7 +60,7 @@ class ProjectController extends Controller
         $mainBranches = MainBranche::all();
         $donors = Donor::all();
 
-        return view('dashboard.pages.projects.create', compact('categories','donors', 'mainBranches', 'categories_attachment', 'attachments', 'currencies'));
+        return view('dashboard.pages.projects.create', compact('categories','donors','mainBranches','categories_attachment', 'attachments', 'currencies'));
     }
 
     public function store(ProjectRequest $request)

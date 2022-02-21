@@ -148,6 +148,11 @@ class MainBrancheController extends Controller
         if (File::exists('assets/' . $main_branch->logo)) {
             unlink('assets/' . $main_branch->logo);
         }
+        if (count($main_branch->project)>0){
+            toastr()->error(__('لا يمكن حذف جمعية الرئيسية'));
+
+            return redirect()->route('main-branches.index');
+        }
         $main_branch->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 

@@ -10,7 +10,7 @@ class Project extends Model
     use HasFactory;
     protected  $table = 'projects';
     protected $fillable = [
-        'id','company_name','status','project_name', 'grant_date','donor_id','category_id','grant_value','currency_id','managerial_fees','start_date','project_branch_count_id','main_branch_id','created_at','updated_at'
+        'id','status','project_name','grant_date','donor_id','category_id','grant_value','currency_id','managerial_fees','start_date','project_branch_count_id','main_branch_id','created_at','updated_at'
     ];
 
 
