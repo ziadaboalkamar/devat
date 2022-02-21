@@ -65,7 +65,7 @@
                                             <option value=""> --- </option>
                                             @if($roles && $roles -> count() > 0)
                                                 @foreach($roles as $role)
-                                                    <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                                    <option value="{{$role->id}}" {{ old('rolle_id')== $role->id ? 'selected' : null}} >{{$role->role_name}}</option>
 
                                                 @endforeach
 
@@ -81,7 +81,7 @@
                                             <option value=""> --- </option>
                                             @if($branches && $branches -> count() > 0)
                                                 @foreach($branches as $branch)
-                                                    <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                                    <option value="{{$branch->id}}" {{ old('branch_id') == $branch->id?'selected': null }}>{{$branch->name}}</option>
 
                                                 @endforeach
 
@@ -101,7 +101,7 @@
                                 <div class="col-xl-4 col-md-6 col-12 mb-1">
                                     <div class="form-group">
                                         <label for="basicInput">{{ __('اسم المستخدم') }}</label>
-                                        <input type="text" class="form-control" name="userName" placeholder="ادخل اسم المستخدم" />
+                                        <input type="text" class="form-control" {{ old('userName') }} name="userName" placeholder="ادخل اسم المستخدم" />
                                         @error('userName')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
 
                                     <div class="form-group">
                                         <label for="basicInput">{{ __('كلمة المرور') }}</label>
-                                        <input type="password" class="form-control" name="password" placeholder="ادخل كلمة المرور" />
+                                        <input type="password" class="form-control" {{ old('password') }} name="password" placeholder="ادخل كلمة المرور" />
                                         @error('password')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
