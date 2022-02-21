@@ -32,7 +32,6 @@
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
                                    <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2> 
-
                                 </div>
                             </div>
                         </div>

@@ -45,22 +45,34 @@
                                         @csrf
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">
                                             <label for="date">اسم المشروع</label>
+<<<<<<< HEAD
                                             <input name="project_name" type="text" value="{{ old('project_name') }}"
                                                 class="form-control date-mask" placeholder="اسم المشروع" />
                                             @error('project_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input name="project_name" value="{{ old('project_name') }}" type="text" class="form-control date-mask" placeholder="اسم المشروع"  />
+                                            @error('project_name')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الجمعية الرئيسية</label>
                                             <select name="main_branch_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
                                                 @if ($mainBranches && $mainBranches->count() > 0)
                                                     @foreach ($mainBranches as $mainBranch)
                                                         <option value="{{ $mainBranch->id }}"
                                                             {{ old('main_branch_id') == $mainBranch->id ? 'selected' : null }}>
                                                             {{ $mainBranch->name }}</option>
+=======
+                                                @if($mainBranches && $mainBranches -> count() > 0)
+                                                    @foreach($mainBranches as $mainBranch)
+                                                        <option value="{{$mainBranch->id}}" {{ old('main_branch_id')== $mainBranch->id ? 'selected' : null }}>{{$mainBranch->name}}</option>
+
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
@@ -75,11 +87,18 @@
                                             <label for="date">المؤسسات الداعمة</label>
                                             <select name="donor_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
                                                 @if ($donors && $donors->count() > 0)
                                                     @foreach ($donors as $donor)
                                                         <option value="{{ $donor->id }}"
                                                             {{ old('donor_id') == $donor->id ? 'selected' : null }}>
                                                             {{ $donor->name }}</option>
+=======
+                                                @if($donors && $donors -> count() > 0)
+                                                    @foreach($donors as $donor)
+                                                        <option {{ old('donor_id')== $donor->id ? 'selected' : null }} value="{{$donor->id}}">{{$donor->name}}</option>
+
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
@@ -90,11 +109,16 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="time">تاريخ المنحة</label>
+<<<<<<< HEAD
                                             <input type="date" name="grant_date" value="{{ old('grant_date') }}" class="form-control time-mask"
                                                 placeholder="hh:mm:ss" id="time" />
                                             @error('grant_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input value="{{ old('grant_date') }}" type="date" name="grant_date" class="form-control time-mask" placeholder="hh:mm:ss" id="time" />
+                                            @error('grant_date')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <!-- Basic -->
@@ -102,9 +126,16 @@
                                             <label>نوع المنحة</label>
                                             <select name="category_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
                                                 @if ($categories && $categories->count() > 0)
                                                     @foreach ($categories as $category)
                                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected':null }}>{{ $category->name }}</option>
+=======
+                                                @if($categories && $categories -> count() > 0)
+                                                @foreach($categories as $category)
+                                                        <option {{ old('category_id')== $category->id ? 'selected' : null }} value="{{$category->id}}">{{$category->name}}</option>
+
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
@@ -116,20 +147,32 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="numeral-formatting">قيمة المنحة</label>
+<<<<<<< HEAD
                                             <input type="text" name="grant_value" value="{{ old('grant_value') }}" class="form-control numeral-mask"
                                                 placeholder="10,000" id="قيمة المنحة" />
                                             @error('grant_value')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input value="{{ old('grant_value') }}" type="text" name="grant_value" class="form-control numeral-mask" placeholder="10,000" id="قيمة المنحة" />
+                                            @error('grant_value')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label>العملة</label>
                                             <select name="currency_id" class="select2 form-control form-control-lg">
                                                 <option value=""> --- </option>
+<<<<<<< HEAD
                                                 @if ($currencies && $currencies->count() > 0)
                                                     @foreach ($currencies as $currency)
                                                         <option value="{{ $currency->id }}" {{ old('currency_id') == $currency->id ? 'selected' :null }}>{{ $currency->name }}</option>
+=======
+                                                @if($currencies && $currencies -> count() > 0)
+                                                    @foreach($currencies as $currency)
+                                                        <option {{ old('currency_id')== $currency->id ? 'selected' : null }}value="{{$currency->id}}">{{$currency->name}}</option>
+
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
                                                     @endforeach
                                                 @endif
 
@@ -141,29 +184,44 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="delimiters">سعر الصرف</label>
+<<<<<<< HEAD
                                             <input type="text" name="exchange_amount" value="{{ old('exchange_amount') }}" class="form-control delimiter-mask"
                                                 placeholder="سعر الصرف" id="delimiters" />
                                             @error('exchange_amount')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input type="text" value="{{ old('exchange_amount') }}" name="exchange_amount" class="form-control delimiter-mask" placeholder="سعر الصرف" id="delimiters" />
+                                            @error('exchange_amount')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="prefix">الاداريات</label>
+<<<<<<< HEAD
                                             <input type="text" name="managerial_fees" value="{{ old('managerial_fees') }}" class="form-control prefix-mask"
                                                 id="prefix" />
                                             @error('managerial_fees')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input type="text"  value="{{ old('managerial_fees') }}" name="managerial_fees" class="form-control prefix-mask" id="prefix" />
+                                            @error('managerial_fees')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>
+<<<<<<< HEAD
                                             <input type="date" name="start_date" value="{{ old('start_date') }}" class="form-control custom-delimiter-mask"
                                                 placeholder="" id="custom-delimiters" />
                                             @error('start_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+=======
+                                            <input type="date"  value="{{ old('start_date') }}" name="start_date" class="form-control custom-delimiter-mask" placeholder="" id="custom-delimiters" />
+                                            @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
+>>>>>>> 4c9c9241b0853616f032aa419462b77f3f6a04c3
 
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12 mb-2">

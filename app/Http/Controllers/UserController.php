@@ -76,6 +76,7 @@ class UserController extends Controller
             return redirect()->route('users.index');
 
         }catch (\Exception $ex){
+
             toastr()->error(__('يوجد خطاء ما'));
             return redirect()->route('users.index');
         }
