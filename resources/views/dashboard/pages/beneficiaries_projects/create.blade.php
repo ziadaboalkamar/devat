@@ -295,12 +295,7 @@
                                 '<input type="hidden" name="benficary_id"  value="'+id+'">'+
                                 '<input type="hidden" name="project_id"  value="{{$project_id}}">'+
                             '<button id="save_ben" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
-                            +'<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete{{ $project_id }}">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            ' حذف المستفيد</a>'
+                            
                             +'</form>'+
                             ' </div>' +
                             '</div>' +
