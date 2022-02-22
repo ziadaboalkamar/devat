@@ -370,7 +370,6 @@
                                                 <small>Starbucks</small>
                                             </div>
                                         </div>
-                                        <div class="font-weight-bolder text-danger">- $74</div>
                                     </div>
                                     <div class="transaction-item">
                                         <div class="media">
@@ -384,7 +383,6 @@
                                                 <small>Add Money</small>
                                             </div>
                                         </div>
-                                        <div class="font-weight-bolder text-success">+ $480</div>
                                     </div>
                                     <div class="transaction-item">
                                         <div class="media">
@@ -398,7 +396,6 @@
                                                 <small>Add Money</small>
                                             </div>
                                         </div>
-                                        <div class="font-weight-bolder text-success">+ $590</div>
                                     </div>
                                     <div class="transaction-item">
                                         <div class="media">
@@ -412,7 +409,6 @@
                                                 <small>Ordered Food</small>
                                             </div>
                                         </div>
-                                        <div class="font-weight-bolder text-danger">- $23</div>
                                     </div>
                                     <div class="transaction-item">
                                         <div class="media">
@@ -426,7 +422,6 @@
                                                 <small>Refund</small>
                                             </div>
                                         </div>
-                                        <div class="font-weight-bolder text-success">+ $98</div>
                                     </div>
                                 </div>
                             </div>
@@ -445,104 +440,22 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>الفرع</th>
-                                                <th>المشروع</th>
-                                                <th>عدد المستفيدين</th>
+                                                <th>اسم المؤسسة</th>
+                                                <th>اسم المشروع</th>
+                                                <th>تاريخ المنحة</th>
+                                                <th>نوع المنحة</th>
+                                                <th>قيمة المنحة</th>
+                                                <th>تاريخ بداء التنفيذ</th>
                                                 <th>الحالة</th>
                                             </tr>
                                             </thead>
                                             <tbody>
+
                                             <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar rounded">
-                                                            <div class="avatar-content">
-                                                                <img src="../../../app-assets/images/icons/toolbox.svg"
-                                                                     alt="Toolbar svg" />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="font-weight-bolder">Dixons</div>
-                                                            <div class="font-small-2 text-muted">meguc@ruj.io</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar bg-light-primary mr-1">
-                                                            <div class="avatar-content">
-                                                                <i data-feather="monitor" class="font-medium-3"></i>
-                                                            </div>
-                                                        </div>
-                                                        <span>Technology</span>
-                                                    </div>
-                                                </td>
                                                 <td class="text-nowrap">
                                                     <div class="d-flex flex-column">
-                                                        <span class="font-weight-bolder mb-25">23.4k</span>
-                                                        <span class="font-small-2 text-muted">in 24 hours</span>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar rounded">
-                                                            <div class="avatar-content">
-                                                                <img src="../../../app-assets/images/icons/parachute.svg"
-                                                                     alt="Parachute svg" />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="font-weight-bolder">Motels</div>
-                                                            <div class="font-small-2 text-muted">vecav@hodzi.co.uk
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar bg-light-success mr-1">
-                                                            <div class="avatar-content">
-                                                                <i data-feather="coffee" class="font-medium-3"></i>
-                                                            </div>
-                                                        </div>
-                                                        <span>Grocery</span>
-                                                    </div>
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="font-weight-bolder mb-25">78k</span>
-                                                        <span class="font-small-2 text-muted">in 2 days</span>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar rounded">
-                                                            <div class="avatar-content">
-                                                                <img src="../../../app-assets/images/icons/brush.svg"
-                                                                     alt="Brush svg" />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="font-weight-bolder">Zipcar</div>
-                                                            <div class="font-small-2 text-muted">davcilse@is.gov
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar bg-light-warning mr-1">
-                                                            <div class="avatar-content">
-                                                                <i data-feather="watch" class="font-medium-3"></i>
-                                                            </div>
-                                                        </div>
-                                                        <span>Fashion</span>
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
                                                     </div>
                                                 </td>
                                                 <td class="text-nowrap">
@@ -551,9 +464,37 @@
                                                         <span class="font-small-2 text-muted">in 5 days</span>
                                                     </div>
                                                 </td>
-
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="font-weight-bolder mb-25">162</span>
+                                                        <span class="font-small-2 text-muted">in 5 days</span>
+                                                    </div>
+                                                </td>
                                             </tr>
-
                                             </tbody>
                                         </table>
                                     </div>
