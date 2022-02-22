@@ -2,55 +2,127 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Route;
-use App\Models\RouteUser;
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function show_roles($id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $user = User::findOrFail($id);
-        $user_routes = $user->route;
-        $routes = [];
-        $all = [];
-        if (is_array($user_routes) || is_object($user_routes))
-        {
-            foreach ($user_routes as $route) {
-                $routes[] = $route->id;
+        return view('dashboard.pages.roles.index',[
+            'roles' => Role::get(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('dashboard.pages.roles.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'permissions' => 'required|array|min:1',
+        ]);
+
+        try {
+            $role = $this->process(new Role, $request);
+            if ($role){
+                toastr()->success(__('تم الحفظ البيانات بنجاح'));
+                return redirect()->route('roles.index');
             }
-        }
-
-        foreach ($user->roles->route as $route) {
-            $routes[] = $route->id;
-        }
-        foreach (Route::all() as $item) {
-            if (!in_array($item->id, $routes)) {
-                $all[] = $item;
+            else{
+                toastr()->error(__('يوجد خطا ما'));
+                return redirect()->route('roles.index');
             }
+        } catch (\Exception $ex) {
+            return $ex;
+            return redirect()->route('roles.index');
         }
+    }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-        return view('dashboard.pages.users.roles', [
-            'user' => $user,
-            'routes' => $all,
-            'user_routes' => $user->route,
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Role $role)
+    {
+        return view('dashboard.pages.roles.edit',[
+            'role' => $role,
         ]);
 
     }
 
-    public function update_role(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Role $role)
     {
-        $roles = $request->roles ?? [];
-        $user_route = RouteUser::where('user_id', $id)->delete();
-
-        foreach ($roles as $item) {
-            RouteUser::create([
-                'user_id' => $id,
-                'route_id' => $item
-            ]);
+        try {
+            $role = $this->process($role, $request);
+            if ($role){
+                toastr()->success(__('تم التعديل البيانات بنجاح'));
+                return redirect()->route('roles.index');
+            }
+            else{
+                toastr()->error(__('يوجد خطا ما'));
+                return redirect()->route('roles.index');
+            }
+        } catch (\Exception $ex) {
+            return $ex;
+            return redirect()->route('roles.index');
         }
-        return redirect()->route('admins.users.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+    protected function process(Role $role, Request $r)
+    {
+        $role->name = $r->name;
+        $role->permissions = json_encode($r->permissions);
+        $role->save();
+        return $role;
     }
 }

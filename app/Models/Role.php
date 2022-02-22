@@ -10,7 +10,7 @@ class Role extends Model
     use HasFactory;
     protected  $table = 'roles';
     protected $fillable = [
-        'id', 'role_name','created_at','updated_at'
+        'id', 'name','created_at','updated_at','permissions'
     ];
 
 
@@ -18,7 +18,7 @@ class Role extends Model
         'created_at','updated_at'
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
     public function users()
     {
         return $this->hasMany(User::class, 'rolle_id','id');
@@ -26,5 +26,10 @@ class Role extends Model
     public function route()
     {
         return $this->belongsToMany(Route::class, 'role_route','route_id','role_id');
+    }
+
+    public function getPermissionsAttribute($permissions)
+    {
+        return json_decode($permissions, true);
     }
 }

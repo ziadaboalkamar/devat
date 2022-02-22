@@ -29,7 +29,7 @@ class UserController extends Controller
                 })
                 ->editColumn('role_id', function (User $users) {
 
-                    return $users->roles->role_name;
+                    return $users->role->name;
                 })
                 ->editColumn('active', function (User $user) {
                     return $user->getActive();
