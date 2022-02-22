@@ -62,6 +62,7 @@ class BeneficiariesProjectController extends Controller
 
         $project_id = $request->project_id;
         if ($request->ajax()) {
+
             $beneficiary = Beneficiary::all();
 
             return DataTables::of($beneficiary)
@@ -81,10 +82,38 @@ class BeneficiariesProjectController extends Controller
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
-                // ->editColumn('project_name', function (Beneficiary $beneficiary) {
-                //     return $beneficiary->projects->company_name;
+                // ->addColumn('action', function ($row, Beneficiary $beneficiary, $project_id) {
+                //     $b = BeneficiariesProject::where('project_id', '=', $project_id)->where('beneficiary_id', '=', $beneficiary->id)->first();
+                //     if ($b) {
+                //         $btn = '<div class="btn-group time-selector">' .
+                //             '<form id="saveFormBen" method="post">' . '@csrf' .
+                //             '<input type="hidden" name="benficary_id"  value="' . $beneficiary->id . '">' .
+                //             '<input type="hidden" name="project_id"  value="'. $project_id.'">' .
+
+                //             '<button id="delete_ben' . $beneficiary->id . '"  value="' . $beneficiary->id .
+                //             '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check d-none">الغاء الاعتماد</button>' .
+
+                //             '</form>' .
+                //             ' </div>' .
+                //             '</div>' .
+                //             '</div>';
+                //     } else {
+                //         $btn = '<div class="btn-group time-selector">' .
+                //             '<form id="saveFormBen" method="post">' . '@csrf' .
+                //             '<input type="hidden" name="benficary_id"  value="' . $beneficiary->id . '">' .
+                //             '<input type="hidden" name="project_id"  value="'. $project_id.'">' .
+
+                //             '<button id="save_ben' . $beneficiary->id . '" value="' . $beneficiary->id .
+                //             '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' .
+
+                //             '</form>' .
+                //             ' </div>' .
+                //             '</div>' .
+                //             '</div>';
+                //     }
+                //     return $btn;
                 // })
-                // ->rawColumns(['record_select', 'actions'])
+                //->rawColumns('action')
                 ->make(true);
         }
 
@@ -108,10 +137,10 @@ class BeneficiariesProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        return $request;
-        $id =  $request->benficary_id;
+        // return $request;
+        // $id =  $request->benficary_id;
         $beneficiary = Beneficiary::find($id);
         // $project_id = $request->project_id;
         // $project = Project::find($id);
@@ -120,7 +149,7 @@ class BeneficiariesProjectController extends Controller
         $data = [];
         $data['project_id'] = $request->project_id;
 
-        $data['beneficiary_id'] = $request->benficary_id;
+        $data['beneficiary_id'] = $id;
         $data['branch_id'] = $beneficiary->branch_id;
         $data['recever_name'] = null;
         $data['family_member_count'] = $beneficiary->family_member;
@@ -132,7 +161,7 @@ class BeneficiariesProjectController extends Controller
 
         $success = BeneficiariesProject::create($data);
 
-       
+
         if ($success) {
             return response()->json([
                 'status' => 200,
@@ -209,14 +238,21 @@ class BeneficiariesProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        return $id;
+        //  find($id)->delete()
 
-       $data = BeneficiariesProject::findOrFail($id)->delete();
-        toastr()->success(__('تم حذف البيانات بنجاح'));
+        $data = BeneficiariesProject::where('project_id', '=', $request->project_id)->where('beneficiary_id', '=', $id)->delete();
 
-        return response()->json([$data],200);
+        if ($data) {
+            return response()->json([
+                'status' => 200,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+            ]);
+        }
     }
 
     public function updateStatus(Request $request)

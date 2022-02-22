@@ -41,22 +41,22 @@ require __DIR__ . '/auth.php';
 
 
 
-<<<<<<< HEAD
-Route::prefix('admin')->middleware('auth')->group(
-    function () {
-        //    home route
-        Route::get('/', [HomeController::class, 'index'])->name('admin');
-        //    start user
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
-        Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-        Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.view');
-        Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-        Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
-        Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('users.destroy');
-=======
+
+// Route::prefix('admin')->middleware('auth')->group(
+//     function () {
+//         //    home route
+//         Route::get('/', [HomeController::class, 'index'])->name('admin');
+//         //    start user
+//         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+//         Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+//         Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+//         Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+//         Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.view');
+//         Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+//         Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+//         Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
+//         Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('users.destroy');
+// =======
 Route::prefix('admin')->middleware('auth')->group(function () {
 //    home route
     Route::get('/',[HomeController::class,'index'])->name('admin');
@@ -71,7 +71,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
     Route::get('/users/profile/{id}',[UserController::class,'profile'])->name('user.profile');
     Route::post('users/update/profile/{id}', [UserController::class, 'updateProfile'])->name('user.update.profile');
->>>>>>> 24b3972d5358e9431b33458611628dff6a0fbda4
 
 
         //    end user
@@ -87,7 +86,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('category-of-projects', CategoryOfProjectController::class)->middleware('can:اقسام المشاريع الخيرية');
         Route::resource('donors', DonorController::class)->middleware('can:المؤسسات الداعمة');
         Route::resource('beneficiareis', BeneficiaryController::class)->middleware('can:المستفيدين');
-        Route::post('beneficiareis-projects/store/test', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
+        Route::post('beneficiareis-projects/test/{id}', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
+        Route::post('beneficiareis/projects/delete/{id}', [BeneficiariesProjectController::class, 'destroy'])->name('beneficiareisProjects.destroy');
+
         Route::resource('beneficiareis-projects', BeneficiariesProjectController::class)->middleware('can:مستفيدين المشروع');
         Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
         Route::resource('vawtchers', VawtcherController::class)->middleware('can:القسائم');
