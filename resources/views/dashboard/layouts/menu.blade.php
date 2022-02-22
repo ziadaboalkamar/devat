@@ -34,7 +34,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">الرئسية</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">2</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">الرئسية</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{route("admin")}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Analytics">عرض الرئيسية</span></a>
                     </li>
@@ -42,7 +42,7 @@
                 </ul>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Invoice">المستخدمين</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Invoice">المستخدمين</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\User::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{route('users.index')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">جميع المستخدمين</span></a>
                     </li>
@@ -53,7 +53,7 @@
                 </ul>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">الجمعية الرئيسية</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="award"></i><span class="menu-title text-truncate" data-i18n="Invoice">الجمعية الرئيسية</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\MainBranche::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('main-branches.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة الجمعيات</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('main-branches.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء جمعية</span></a>
@@ -61,7 +61,7 @@
 
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">المدن</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='truck'></i><span class="menu-title text-truncate" data-i18n="Invoice">المدن</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\City::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('cities.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة المدن</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('cities.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء المدينة</span></a>
@@ -69,7 +69,7 @@
 
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">الفروع</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">الفروع</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\Branches::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('branches.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة الفروع</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('branches.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء فرع</span></a>
@@ -78,14 +78,14 @@
                 </ul>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">المؤسسات الداعمة</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='briefcase'></i><span class="menu-title text-truncate" data-i18n="Invoice">المؤسسات الداعمة</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\Donor::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('donors.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة المؤسسات</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('donors.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء مؤسسة</span></a>
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">المستفيدين</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='book'></i><span class="menu-title text-truncate" data-i18n="Invoice">المستفيدين</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\Beneficiary::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('beneficiareis.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة المستفيدين</span></a>
                     <li><a class="d-flex align-items-center" href="{{ route('beneficiareis.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء مستفيد</span></a>
@@ -99,14 +99,14 @@
                     </li>
                 </ul>
             </li> --}}
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">قسائم شرائية</span></a>
-                <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="{{ route('vawtchers.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List"> كافة القسائم الشرائية </span></a>
-                    <li><a class="d-flex align-items-center" href="{{ route('vawtchers.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء قسيمة شرائية</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">المشاريع الخيرية</span></a>
+{{--            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">قسائم شرائية</span></a>--}}
+{{--                <ul class="menu-content">--}}
+{{--                    <li><a class="d-flex align-items-center" href="{{ route('vawtchers.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List"> كافة القسائم الشرائية </span></a>--}}
+{{--                    <li><a class="d-flex align-items-center" href="{{ route('vawtchers.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">انشاء قسيمة شرائية</span></a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='monitor'></i><span class="menu-title text-truncate" data-i18n="Invoice">المشاريع الخيرية</span><span class="badge badge-light-warning badge-pill ml-auto mr-1">{{\App\Models\Project::count()}}</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="{{ route('projects.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">عرض جميع المشاريع </span></a>
                     </li>
@@ -123,8 +123,8 @@
 
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('settings.index') }}"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">الاعدادات</span></a>
-                
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('settings.index') }}"><i data-feather="settings"></i><span class="menu-title text-truncate" data-i18n="Invoice">الاعدادات</span></a>
+
             </li>
         </ul>
     </div>

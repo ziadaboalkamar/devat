@@ -40,8 +40,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i> Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="page-account-settings.html">
-                        <i class="mr-50" data-feather="settings"></i> Settings</a>
+
                     <a class="dropdown-item" href="{{route('logout')}}"  onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" >
                         <i class="mr-50" data-feather="power"></i> Logout</a>

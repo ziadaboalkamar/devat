@@ -110,11 +110,12 @@ class BeneficiariesProjectController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $id =  $request->benficary_id;
         $beneficiary = Beneficiary::find($id);
-        $project_id = $request->project_id;
-        $project = Project::find($id);
-        $beneficiariesProjects = BeneficiariesProject::where('project_id', '=', $id)->get();
+        // $project_id = $request->project_id;
+        // $project = Project::find($id);
+        // $beneficiariesProjects = BeneficiariesProject::where('project_id', '=', $id)->get();
 
         $data = [];
         $data['project_id'] = $request->project_id;
@@ -130,21 +131,19 @@ class BeneficiariesProjectController extends Controller
 
 
         $success = BeneficiariesProject::create($data);
-        $msg_suc = toastr()->success(__('تم حفظ البيانات بنجاح'));
 
-       $msg_error = toastr()->error(__('تاكد من صحة العملية'));
+       
         if ($success) {
             return response()->json([
                 'status' => 200,
-                'msg' => $msg_suc,
             ]);
         } else {
             return response()->json([
                 'status' => 404,
-                'msg' => $msg_error,
             ]);
         }
-        return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
+        // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
+
 
     }
 
@@ -210,15 +209,14 @@ class BeneficiariesProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        return $request;
-        $id =  $request->project_id;
-        // return $id;
-        BeneficiariesProject::where('beneficiary_id',$id)->delete();
+        return $id;
+
+       $data = BeneficiariesProject::findOrFail($id)->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
-        return redirect()->back();
+        return response()->json([$data],200);
     }
 
     public function updateStatus(Request $request)

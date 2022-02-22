@@ -16,6 +16,8 @@
 
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.min.css') }}">
     {{-- @toastr_css --}}
 @stop
 @section('content')
@@ -64,43 +66,48 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach ($beneficiaries as $beneficiariesProject)
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="delete{{ $beneficiariesProject->id }}" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">حذف المستفيد <span
-                                                            class="text-primary"></span>
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="delete{{ $beneficiariesProject->id }}"
+                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">حذف المستفيد <span
+                                                                class="text-primary"></span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form
+                                                        action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
+                                                        method="post">
+                                                        {{ method_field('delete') }}
+                                                        {{ csrf_field() }}
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="project_id"
+                                                                value="{{ $project_id }}">
+                                                            <input type="hidden" name="projec"
+                                                                value="{{ $beneficiariesProject->id }}">
+                                                            <h5>هل انت متاكد من حذف البيانات</h5>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">{{ __('Close') }}</button>
+                                                            <button type="submit"
+                                                                class="btn btn-danger">{{ __('submit') }}</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
-                                                    method="post">
-                                                    {{ method_field('delete') }}
-                                                    {{ csrf_field() }}
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="project_id" value="{{ $project_id }}">
-                                                        <input type="hidden" name="projec" value="{{ $beneficiariesProject->id }}">
-                                                        <h5>هل انت متاكد من حذف البيانات</h5>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">{{ __('Close') }}</button>
-                                                        <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
-                                                    </div>
-                                                </form>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
-                                @endforeach
+                                        {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
+                                    @endforeach
                                     {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
-                                       
+
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <div class="form-group">
                                                 <label for="basicInput">اسم الفرع</label>
@@ -182,7 +189,7 @@
                     </div>
             </div>
             {{-- <button class="btn btn-success btn-save-project-beneficiaries">حفظ</button> --}}
-            <a href="{{ route('projects.beneficiareis.get',$project_id) }}" class="btn btn-outline-secondary">اغلاق</a>
+            <a href="{{ route('projects.beneficiareis.get', $project_id) }}" class="btn btn-outline-secondary">اغلاق</a>
 
             </section>
 
@@ -205,7 +212,8 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
-
+    <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-toastr.js') }}"></script>
     <script>
         $('#example tfoot th').each(function() {
             var title = $(this).text();
@@ -291,12 +299,19 @@
                         var id = full['id'];
 
                         return (
-                            '<div class="btn-group time-selector">' +'<form id="saveFormBen" method="post">'+'@csrf'+
-                                '<input type="hidden" name="benficary_id"  value="'+id+'">'+
-                                '<input type="hidden" name="project_id"  value="{{$project_id}}">'+
-                            '<button id="save_ben" value="'+id+'" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>'
-                            
-                            +'</form>'+
+                            '<div class="btn-group time-selector">' +
+                            '<form id="saveFormBen" method="post">' + '@csrf' +
+                            '<input type="hidden" name="benficary_id"  value="' + id + '">' +
+                            '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
+
+                            '<button id="save_ben' + id + '" value="' + id +
+                            '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
+                            '<button id="delete_ben' + id + '"  value="' + id +
+                            '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check d-none">الغاء الاعتماد</button>'
+
+
+                            +
+                            '</form>' +
                             ' </div>' +
                             '</div>' +
                             '</div>'
@@ -400,43 +415,91 @@
         });
     </script>
     <script>
-            $(document).on('click', '#save_ben', function (e) {
-        e.preventDefault();
-       var saveFormBen = new FormData($('#saveFormBen')[0])
-        $.ajax({
+        var buttonApprove = document.getElementById('save_ben');
+        var buttonDelete = document.getElementById('delete_ben');
+        @foreach (\App\Models\Beneficiary::all() as $x)
+            $(document).on('click', '#save_ben{{ $x->id }}', function (e) {
+            e.preventDefault();
+            var saveFormBen = new FormData($('#saveFormBen')[0])
+            $.ajax({
             type: 'post',
-            url: "{{route('beneficiareisProjects.store')}}",
+            url: "{{ route('beneficiareisProjects.store') }}",
             data: saveFormBen,
             processData: false,
             contentType: false,
-            cache: false,     
+            cache: false,
             success: function (data) {
-                if(data.status == 200){
-                   data.msg;
-                }
+            if(data.status == 200){
+            data.msg;
+        
+            $('#save_ben{{ $x->id }}').hide();
+            $('#delete_ben{{ $x->id }}').removeClass('d-none');
+            toastr['success']('تم اضافة بنجاح', 'Progress Bar', {
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+        
+            });
+        
+        
+            }
             },
             error: function (project) {
-
+        
             }
-        })
-    })
+            })
+            })
+        @endforeach
+        @foreach (\App\Models\Beneficiary::all() as $x)
+            $(document).on('click', '#delete_ben{{ $x->id }}', function (e) {
+            e.preventDefault();
+            $.ajax({
+            type: 'delete',
+            url: "{{ route('beneficiareis-projects.destroy',$x->id) }}",
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+            if(data.status == 200){
+            data.msg;
+        
+            $('#save_ben{{ $x->id }}').show();
+            $('#delete_ben{{ $x->id }}').hide();
+            toastr['success']('تم الغاء الاعتماد', 'Progress Bar', {
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+        
+            });
+        
+        
+            }
+            },
+            error: function (project) {
+        
+            }
+            })
+            })
+        @endforeach
     </script>
     <script>
-        $('.btn-save-project-beneficiaries').on('click', function(){
+        $('.btn-save-project-beneficiaries').on('click', function() {
             var beneficiaries = Array();
-            $('table .beneficiary-check').each(function(e){
-                if($(this).prop('checked')){
+            $('table .beneficiary-check').each(function(e) {
+                if ($(this).prop('checked')) {
                     beneficiaries.push($(this).val());
                 }
             });
-            
+
             $.ajax({
                 type: "POST",
                 url: "{{ route('beneficiareis-projects.store') }}",
-                data: { beneficiaries: beneficiaries},
+                data: {
+                    beneficiaries: beneficiaries
+                },
                 dataType: 'json'
-            }).done(function (data) {
-                
+            }).done(function(data) {
+
             });
         })
     </script>
