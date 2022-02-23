@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\AttachmentCategory;
 use App\Models\BeneficiariesProject;
+use App\Models\Beneficiary;
 use App\Models\Branches;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
@@ -222,7 +223,9 @@ class ProjectController extends Controller
 
 
             if($request->ajax()){
-                $beneficiariesProject = BeneficiariesProject::where('project_id','=',$id)->get();
+                $user = Auth::user()->branch_id;
+
+                $beneficiariesProject = BeneficiariesProject::where('project_id','=',$id)->where('branch_id','=',$user)->get();
 
 
                 return DataTables::of($beneficiariesProject)

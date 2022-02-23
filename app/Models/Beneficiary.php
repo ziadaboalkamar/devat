@@ -31,5 +31,10 @@ class Beneficiary extends Model
     {
         return ucfirst($this->firstName) . ' ' . ucfirst($this->secondName) . ' ' .ucfirst($this->thirdName) . ' ' .ucfirst($this->lastName);
     }
+
+    public function beneficiaryProject()
+    {
+        return $this->belongsToMany(Project::class,'beneficiaries_project','beneficiary_id','project_id');
+    }
     public $timestamps = true;
 }
