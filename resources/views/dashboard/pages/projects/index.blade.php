@@ -101,6 +101,31 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
 </div>
 </div>
+                            <div class="modal fade" id="delete{{$project->id}}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"> حذف المشروع <span class="text-primary">{{ $project->name }}</span></h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('projects.delete',$project->id) }}" method="post">
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
+                                                <h5>هل انت متاكد من حذف البيانات</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">اغلاق</button>
+                                                <button type="submit" class="btn btn-danger">حذف</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                     @endforeach
                     </div>
@@ -239,7 +264,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
                             'تعديل</a>' +
-                            '<a href="projects/delete/' + id + '" class="dropdown-item delete-record">' +
+                            '<a href="javascript:void()" class="dropdown-item delete-record" data-toggle="modal"' +
+                            ' data-target="#delete' + id + '">' +
                             feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
 
                             'حذف</a>' +

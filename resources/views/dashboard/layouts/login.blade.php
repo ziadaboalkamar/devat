@@ -2,6 +2,7 @@
 <html class="loading semi-dark-layout" lang="en" data-layout="semi-dark-layout" data-textdirection="rtl">
 @include('dashboard.layouts.head')
 
+
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
     data-menu="vertical-menu-modern" data-col="">
 

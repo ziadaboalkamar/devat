@@ -31,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                   <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2> 
+                                   <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +236,7 @@
                     }
                 },
                 {
-                    text: 'اضافةمشروع  مستفيد',
+                    text: 'اضافة مستفيد للمشروع',
                     className: 'add-new btn btn-primary mt-50',
                     onclick: "",
                     attr: {

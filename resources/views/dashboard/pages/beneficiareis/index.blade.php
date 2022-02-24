@@ -93,8 +93,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ __('Close') }}</button>
-                                                <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                                    data-dismiss="modal">{{ __('الغاء') }}</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('حذف') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -146,7 +146,7 @@
                 url: '{{ route('beneficiareis.index') }}',
             },
             columns: [
-               
+
             {
                     data: 'FullName',
                     name: 'FullName',
@@ -157,7 +157,7 @@
                     name: 'gender',
                     searchable: true
                 },
-               
+
                 {
                     data: 'id_number',
                     name: 'id_number',
@@ -178,7 +178,7 @@
                     name: 'branch_name',
                     searchable: true
                 },
-               
+
                 // {
                 //     data: 'city_name',
                 //     name: 'city_name',
