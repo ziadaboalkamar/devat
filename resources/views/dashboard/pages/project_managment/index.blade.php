@@ -1,20 +1,20 @@
 @extends('dashboard.layouts.master')
-@section('title', 'تقسيمة الفروع')
+@section('title', 'ادارة مشاريع خيرية')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
+          href="{{ asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
+          href="{{ asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
+          href="{{ asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
+          href="{{ asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+          href="{{ asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
 
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+          href="{{ asset('app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
     {{-- @toastr_css --}}
 @stop
 
@@ -31,7 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">تخصيص مشروع: {{$project->project_name}}</h2>
+                                    <h2 class="content-header-title float-left mb-0">ادارة المشاريع</h2>
 
                                 </div>
                             </div>
@@ -44,23 +44,23 @@
                                 <div class="card-datatable table-responsive pt-0">
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
-                                            <tr>
-                                                <th>اسم الفرع</th>
-                                                <th>الكمية المخصصة</th>
-                                                <th>المستفيدين</th>
-                                                <th>تاريخ الانتهاء</th>
-                                                <th>الحالة</th>
-                                                <th>العمليات</th>
-                                            </tr>
+                                        <tr>
+                                            <th>اسم المشروع</th>
+                                            <th>الكمية المخصصة</th>
+                                            <th> عدد المستفيدين</th>
+                                            <th>تاريخ الانتهاء</th>
+                                            <th>الحالة</th>
+                                            <th>العمليات</th>
+                                        </tr>
                                         </thead>
                                     </table>
                                 </div>
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{ route('projects.branchCount.create') }}" method="get" class="d-none" id="create_new">
+                        <form action="{{ route('projects.management.index') }}" method="get" class="d-none"
+                              id="create_new">
                             @csrf
-                            <input type="hidden" name="project_name" value="{{$project_id}}">
                             <button type="submit"></button>
                         </form>
                     @foreach ($branch as $branchOne)
@@ -76,7 +76,8 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="{{ route('projects.branchCount.update.status') }}" method="post" autocomplete="off">
+                                        <form action="{{ route('projects.management.update.status') }}" method="post"
+                                              autocomplete="off">
                                             {{ csrf_field() }}
                                             <div class="modal-body">
 
@@ -84,8 +85,19 @@
                                                     <label for="status">{{__('Status')}}</label>
                                                     <select class="form-control" id="status" name="status" required>
                                                         <option value="" selected disabled>--{{__('اختر')}}--</option>
-                                                        <option value="1" {{ old('status',$project->status) == 1 ? 'selected' : null }}>معتمد</option>
-                                                        <option value="0" {{ old('status',$project->status) == 0 ? 'selected' : null }}>غير معتمد</option>
+                                                        <option
+                                                            value="2" {{ old('status',$branchOne->status) == 2 ? 'selected' : null }}>
+                                                            تم الاعتماد
+                                                        </option>
+                                                        <option
+                                                            value="0" {{ old('status',$branchOne->status) == 0 ? 'selected' : null }}>
+                                                            انتظار
+                                                        </option>
+                                                        <option
+                                                            value="1" {{ old('status',$branchOne->status) == 1? 'selected' : null }}>
+                                                           قيد المتابعة
+
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -143,13 +155,13 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('projects.branchCount.index',$project_id) }}',
+                url: '{{route('projects.management.index')}}',
             },
             columns: [{
-                    data: 'branch_id',
-                    name: 'branch_id',
-                    searchable: true
-                },
+                data: 'project_id',
+                name: 'project_id',
+                searchable: true
+            },
                 {
                     data: 'count',
                     name: 'count',
@@ -177,92 +189,82 @@
             ],
             order: [2, 'desc'],
             buttons: [{
-                    extend: 'collection',
-                    className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
-                    text: feather.icons['share'].toSvg({
+                extend: 'collection',
+                className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
+                text: feather.icons['share'].toSvg({
+                    class: 'font-small-4 mr-50'
+                }) + 'تصدير',
+                buttons: [{
+                    extend: 'print',
+                    text: feather.icons['printer'].toSvg({
                         class: 'font-small-4 mr-50'
-                    }) + 'تصدير',
-                    buttons: [{
-                            extend: 'print',
-                            text: feather.icons['printer'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Print',
-                            className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Csv',
-                            className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            text: feather.icons['file'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Excel',
-                            className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Pdf',
-                            className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'copy',
-                            text: feather.icons['copy'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) + 'Copy',
-                            className: 'dropdown-item',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        }
-                    ],
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                        $(node).parent().removeClass('btn-group');
-                        setTimeout(function() {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass(
-                                'd-inline-flex');
-                        }, 50);
+                    }) + 'Print',
+                    className: 'dropdown-item',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
                     }
                 },
-
-                {
-                    text: 'تخصيص جديد',
-                    className: 'add-new btn btn-primary mt-50',
-                    onclick: "",
-                    attr: {
-                        'onclick': "document.getElementById('create_new').submit()",
+                    {
+                        extend: 'csv',
+                        text: feather.icons['file-text'].toSvg({
+                            class: 'font-small-4 mr-50'
+                        }) + 'Csv',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
                     },
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
+                    {
+                        extend: 'excel',
+                        text: feather.icons['file'].toSvg({
+                            class: 'font-small-4 mr-50'
+                        }) + 'Excel',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: feather.icons['clipboard'].toSvg({
+                            class: 'font-small-4 mr-50'
+                        }) + 'Pdf',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'copy',
+                        text: feather.icons['copy'].toSvg({
+                            class: 'font-small-4 mr-50'
+                        }) + 'Copy',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
                     }
+                ],
+                init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary');
+                    $(node).parent().removeClass('btn-group');
+                    setTimeout(function () {
+                        $(node).closest('.dt-buttons').removeClass('btn-group').addClass(
+                            'd-inline-flex');
+                    }, 50);
                 }
+            },
+
+
             ],
             columnDefs: [
                 // Actions
                 {
                     targets: -1,
                     orderable: false,
-                    render: function(data, type, full, meta) {
+                    render: function (data, type, full, meta) {
                         var id = full['id'];
-
+                        var project_id = full['project_name']
                         return (
                             '<div class="btn-group">' +
                             '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
@@ -271,17 +273,12 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="/admin/projects/branch/Count/edit/' + id + '" class="dropdown-item">' +
+                            '<a href="beneficiareis/'+project_id+'" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'تعديل</a>' +
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'حذف</a>' +
+                            'اضافة مستفيدين</a>' +
+
                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({

@@ -8,6 +8,7 @@ use App\Models\Beneficiary;
 use App\Models\Branches;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class BeneficiariesProjectController extends Controller
@@ -63,9 +64,9 @@ class BeneficiariesProjectController extends Controller
         $project_id = $request->project_id;
 
         if ($request->ajax()) {
+            $user = Auth::user()->branch_id;
 
-            $beneficiary = Beneficiary::all();
-
+            $beneficiary = Beneficiary::where('branch_id','=',$user)->get();
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
                 ->editColumn('created_at', function (Beneficiary $beneficiary) {
@@ -82,6 +83,15 @@ class BeneficiariesProjectController extends Controller
                 })
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
+                })
+                ->editColumn('isadded', function (Beneficiary $beneficiary) {
+                    $exist = $beneficiary->beneficiaryProject;
+                    if(count($exist) != 0){
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    }
                 })
                 // ->addColumn('action', function ($row, Beneficiary $beneficiary, $project_id) {
                 //     $b = BeneficiariesProject::where('project_id', '=', $project_id)->where('beneficiary_id', '=', $beneficiary->id)->first();
@@ -116,16 +126,14 @@ class BeneficiariesProjectController extends Controller
                 // })
                 //->rawColumns('action')
                 ->make(true);
+
+
         }
 
         for ($i = 1; $i < 16; $i++) {
             $n[] = $i;
         }
         return view('dashboard.pages.beneficiaries_projects.create', [
-            // 'projects' => Project::get(),
-            // 'brnches' => Branches::get(),
-            'beneficiaries' => Beneficiary::get(),
-            // 'beneficiariesProjects' => BeneficiariesProject::find($project_id),
 
             'project_id' => $project_id,
             'family_members' => $n,

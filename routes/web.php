@@ -15,6 +15,7 @@ use App\Http\Controllers\BeneficiariesProjectController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VawtcherController;
 use App\Http\Controllers\BranchCountController;
+use App\Http\Controllers\ProjectManagmentController;
 
 
 /*
@@ -67,7 +68,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('users.edit');
     Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('user.view');
     Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
-    Route::get('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
+    Route::post('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
     Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
     Route::get('/users/profile/{id}',[UserController::class,'profile'])->name('user.profile');
     Route::post('users/update/profile/{id}', [UserController::class, 'updateProfile'])->name('user.update.profile');
@@ -76,6 +77,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         //    end user
         //    start roles route
         // Route::get('/users/roles/{id}', [RoleController::class, 'show'])->name('user.view.role');
+
         Route::get('/users/roles/update/{id}', [RoleController::class, 'update_role'])->name('user.role-update');
 
         //    end roles route
@@ -86,6 +88,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('category-of-projects', CategoryOfProjectController::class)->middleware('can:اقسام المشاريع الخيرية');
         Route::resource('donors', DonorController::class)->middleware('can:المؤسسات الداعمة');
         Route::resource('beneficiareis', BeneficiaryController::class)->middleware('can:المستفيدين');
+        Route::get('getbeneficiareis', [BeneficiariesProjectController::class, 'create'])->name('beneficiareis.get');
         Route::post('beneficiareis-projects/test/{id}', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
         Route::post('beneficiareis/projects/delete/{id}', [BeneficiariesProjectController::class, 'destroy'])->name('beneficiareisProjects.destroy');
 
@@ -105,7 +108,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
             Route::post('/projects/delete/attachment/{id}', [ProjectController::class, 'deleteAttachment'])->name('projects.delete.attachment');
             Route::get('/projects/delete/attachment', [ProjectController::class, 'deleteaa'])->name('delete.attachment');
-            Route::get('/projects/delete/{id}', [ProjectController::class, 'delete'])->name('projects.delete');
+            Route::post('/projects/delete/{id}', [ProjectController::class, 'delete'])->name('projects.delete');
             Route::get('/projects/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
             Route::get('/projects/beneficiareis/{id}', [ProjectController::class, 'benefactoryPoject'])->name('projects.beneficiareis.get');
             Route::post('projects/update_status', [ProjectController::class, 'updateStatus'])->name('projects.update.status');
@@ -119,7 +122,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('projects/branch/count/update_status', [BranchCountController::class, 'updateStatus'])->name('projects.branchCount.update.status');
         });
 
+    Route::middleware('can:ادارة المشاريع الخيرية')->group(function () {
 
+        Route::get('/projects/management', [ProjectManagmentController::class, 'index'])->name('projects.management.index');
+        Route::post('projects/management/update_status', [ProjectManagmentController::class, 'updateStatus'])->name('projects.management.update.status');
+
+    });
         //    end branch count
 
 

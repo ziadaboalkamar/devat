@@ -7,7 +7,9 @@ use App\Models\Beneficiary;
 use App\Models\Branches;
 use App\Models\City;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -31,7 +33,9 @@ class BeneficiaryController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $beneficiary = Beneficiary::all();
+            $user = Auth::user()->branch_id;
+
+            $beneficiary = Beneficiary::where('branch_id','=',$user)->get();
 
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
@@ -73,10 +77,10 @@ class BeneficiaryController extends Controller
         {
             $n[] = $i;
         }
+
         return view('dashboard.pages.beneficiareis.create',[
             'cities' => City::get(),
             'projects' => Project::get(),
-            'brnches' => Branches::get(),
             'getPossibleGender' =>BeneficiaryController::getPossibleGender(),
             'family_members' => $n,
         ]);
@@ -99,16 +103,16 @@ class BeneficiaryController extends Controller
         $data['id_number'] = $request->id_number;
         $data['PhoneNumber'] = $request->PhoneNumber;
         $data['family_member'] = $request->family_member;
-        $data['branch_id'] = $request->branch_id;
+        $data['branch_id'] = Auth::user()->branch_id;
         $data['city_id'] = $request->city_id;
         $data['address'] = $request->address;
         $data['maritial'] = $request->maritial;
         $data['status_id'] = 1;
-        
+
         Beneficiary::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;        
+        return redirect()->route('beneficiareis.index') ;
     }
 
     /**
@@ -164,15 +168,15 @@ class BeneficiaryController extends Controller
         $data['id_number'] = $request->id_number;
         $data['PhoneNumber'] = $request->PhoneNumber;
         $data['family_member'] = $request->family_member;
-        $data['branch_id'] = $request->branch_id;
+        $data['branch_id'] = Auth::user()->branch_id;;
         $data['city_id'] = $request->city_id;
         $data['address'] = $request->address;
         $data['maritial'] = $request->maritial;
-        
+
         $beneficiarei->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;        
+        return redirect()->route('beneficiareis.index') ;
     }
 
     /**
@@ -190,13 +194,13 @@ class BeneficiaryController extends Controller
             ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;   
+        return redirect()->route('beneficiareis.index') ;
      }
     public function destroy(Beneficiary $beneficiarei)
     {
         $beneficiarei->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;   
+        return redirect()->route('beneficiareis.index') ;
     }
 }

@@ -22,7 +22,10 @@ class ProjectBranchCount extends Model
     public function branches(){
         return $this->belongsTo(Branches::class,'branch_id','id');
     }
+    public function projects(){
+        return $this->belongsTo(Project::class,'project_id','id');
+    }
     public function getActive(){
-        return $this->status_id == 0 ? __(' غير معتمد ') : __('معتمد') ;
+        return $this->status_id == 0 ? __(' انتظار') :( $this->status_id == 1 ? ' قيد المتابعة' :__('معتمد') ) ;
     }
 }

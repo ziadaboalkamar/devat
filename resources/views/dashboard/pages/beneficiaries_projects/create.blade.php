@@ -65,46 +65,6 @@
                                     <h4 class="card-title">اضافة مستفيد</h4>
                                 </div>
                                 <div class="card-body">
-                                    @foreach ($beneficiaries as $beneficiariesProject)
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="delete{{ $beneficiariesProject->id }}"
-                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">حذف المستفيد <span
-                                                                class="text-primary"></span>
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <form
-                                                        action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
-                                                        method="post">
-                                                        {{ method_field('delete') }}
-                                                        {{ csrf_field() }}
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="project_id"
-                                                                value="{{ $project_id }}">
-                                                            <input type="hidden" name="projec"
-                                                                value="{{ $beneficiariesProject->id }}">
-                                                            <h5>هل انت متاكد من حذف البيانات</h5>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">{{ __('Close') }}</button>
-                                                            <button type="submit"
-                                                                class="btn btn-danger">{{ __('submit') }}</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
-                                    @endforeach
                                     {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
                                         @csrf
 
@@ -196,6 +156,7 @@
         </div>
     </div>
     </div>
+
     <!-- END: Content-->
 @endsection
 @section('js')
@@ -215,6 +176,8 @@
     <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-toastr.js') }}"></script>
     <script>
+
+
         $('#example tfoot th').each(function() {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
@@ -235,7 +198,7 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('beneficiareis.index') }}',
+                url: '{{ route('beneficiareis.get') }}',
             },
             columns: [
 
@@ -283,7 +246,8 @@
                     searchable: true
                 },
                 {
-                    data: ''
+                    data: '',
+
                 }
             ],
             order: [0, 'desc'],
@@ -297,27 +261,45 @@
                     orderable: false,
                     render: function(data, type, full, meta) {
                         var id = full['id'];
-                        if (id)
+
+                        var isadded = full['isadded'];
+
+                        if(isadded == 0 ) {
+                        return (
+                            '<div class="btn-group time-selector">' +
+                            '<form id="saveFormBen'+id+'" method="post">' + '@csrf' +
+                            '<input type="hidden" name="benficary_id"  value="' + id + '">' +
+                            '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
+                            '<button id="save_ben' + id + '" value="' + id +
+                               '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
+                            '</form>' +
+                            ' </div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    }else
+                        {
+
                             return (
                                 '<div class="btn-group time-selector">' +
-                                '<form id="saveFormBen" method="post">' + '@csrf' +
+                                '<form id="saveFormBen'+id+'" method="post">' + '@csrf' +
                                 '<input type="hidden" name="benficary_id"  value="' + id + '">' +
                                 '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
-
-
-                                '<button id="save_ben' + id + '" value="' + id +
-                                '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
-
                                 '<button id="delete_ben' + id + '"  value="' + id +
-                                '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check d-none">الغاء الاعتماد</button>' +
-
+                                '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check">الغاء الاعتماد</button>' +
                                 '</form>' +
                                 ' </div>' +
                                 '</div>' +
                                 '</div>'
                             );
+
+
+                        }
+
+
+        }
                     }
-                }
+
             ],
             initComplete: function() {
                 this.api()
@@ -420,7 +402,7 @@
         @foreach (\App\Models\Beneficiary::all() as $x)
             $(document).on('click', '#save_ben{{ $x->id }}', function (e) {
             e.preventDefault();
-            var saveFormBen = new FormData($('#saveFormBen')[0])
+            var saveFormBen = new FormData($('#saveFormBen{{$x->id}}')[0])
             $.ajax({
             type: 'post',
             url: "{{ route('beneficiareisProjects.store', $x->id) }}",
@@ -431,21 +413,23 @@
             success: function (data) {
             if(data.status == 200){
             data.msg;
-        
-            $('#save_ben{{ $x->id }}').hide();
-            $('#delete_ben{{ $x->id }}').removeClass('d-none');
+                $('#save_ben{{ $x->id }}').hide();
+                var txt2 = $("<button id='delete_ben{{$x->id}}' class='btn btn-outline-danger btn-sm rounded-pill beneficiary-check'></button>").text("الغاء الاعتماد");  // Create text with jQuery
+
+                $('#saveFormBen{{$x->id}}').append(txt2);
             toastr['success']('تم اضافة بنجاح', 'Progress Bar', {
             closeButton: true,
             tapToDismiss: false,
             progressBar: true,
-        
+
             });
-        
-        
+
+
+
             }
             },
             error: function (project) {
-        
+
             }
             })
             });
@@ -489,25 +473,6 @@
             });
         @endforeach
     </script>
-    {{-- <script>
-        $('.btn-save-project-beneficiaries').on('click', function() {
-            var beneficiaries = Array();
-            $('table .beneficiary-check').each(function(e) {
-                if ($(this).prop('checked')) {
-                    beneficiaries.push($(this).val());
-                }
-            });
 
-            $.ajax({
-                type: "POST",
-                url: "{{ route('beneficiareis-projects.store') }}",
-                data: {
-                    beneficiaries: beneficiaries
-                },
-                dataType: 'json'
-            }).done(function(data) {
 
-            });
-        })
-    </script> --}}
 @stop

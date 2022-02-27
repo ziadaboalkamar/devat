@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\AttachmentCategory;
 use App\Models\BeneficiariesProject;
+use App\Models\Beneficiary;
 use App\Models\Branches;
 use App\Models\CategoriesOfProject;
 use App\Models\Currency;
@@ -188,16 +189,22 @@ class ProjectController extends Controller
     {
         try {
             $project= Project::find($id);
+       $benefactoryPoject = BeneficiariesProject::where('project_id','=',$id)->get();
             if (!$project){
                 toastr()->error(__('يوجد خطاء ما'));
-                return redirect()->route('user.index');
+                return redirect()->route('projects.index');
+            }
+            if (count($benefactoryPoject)>0){
+                toastr()->error(__('هذا المشروع يحتوي على مستفيدين لا يمكن حذفه'));
+                return redirect()->route('projects.index');
             }
             $project ->delete();
 
-            toastr()->success(__('تم تحديث البيانات بنجاح'));
+            toastr()->success(__('تم حذف المشروع بنجاح'));
             return back();
 
         }catch (\Exception $ex){
+            return $ex;
             toastr()->error(__('يوجد خطاء ما'));
             return back();
         }
@@ -220,7 +227,9 @@ class ProjectController extends Controller
 
 
             if($request->ajax()){
-                $beneficiariesProject = BeneficiariesProject::where('project_id','=',$id)->get();
+                $user = Auth::user()->branch_id;
+
+                $beneficiariesProject = BeneficiariesProject::where('project_id','=',$id)->where('branch_id','=',$user)->get();
 
 
                 return DataTables::of($beneficiariesProject)

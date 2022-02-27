@@ -10,7 +10,7 @@ class SettingController extends Controller
     public function index()
     {
         $collection = Setting::all();
-        return $collection;
+
         $setting['setting'] = $collection->flatMap(function ($collection) {
             return [$collection->key => $collection->value];
         });

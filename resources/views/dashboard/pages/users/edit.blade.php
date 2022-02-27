@@ -63,7 +63,7 @@
                                             <option value=""> --- </option>
                                             @if($roles && $roles -> count() > 0)
                                                 @foreach($roles as $role)
-                                                    <option @if($role -> id == $user->role_id) selected @endif value="{{$role->id}}">{{$role->role_name}}</option>
+                                                    <option @if($role -> id == $user->role_id) selected @endif value="{{$role->id}}">{{$role->name}}</option>
 
                                                 @endforeach
 
