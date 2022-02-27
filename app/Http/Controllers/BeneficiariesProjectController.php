@@ -61,6 +61,7 @@ class BeneficiariesProjectController extends Controller
     {
 
         $project_id = $request->project_id;
+
         if ($request->ajax()) {
 
             $beneficiary = Beneficiary::all();
@@ -121,10 +122,10 @@ class BeneficiariesProjectController extends Controller
             $n[] = $i;
         }
         return view('dashboard.pages.beneficiaries_projects.create', [
-            'projects' => Project::get(),
-            'brnches' => Branches::get(),
+            // 'projects' => Project::get(),
+            // 'brnches' => Branches::get(),
             'beneficiaries' => Beneficiary::get(),
-            'beneficiariesProjects' => BeneficiariesProject::find($project_id),
+            // 'beneficiariesProjects' => BeneficiariesProject::find($project_id),
 
             'project_id' => $project_id,
             'family_members' => $n,

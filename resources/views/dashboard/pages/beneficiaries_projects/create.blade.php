@@ -297,25 +297,25 @@
                     orderable: false,
                     render: function(data, type, full, meta) {
                         var id = full['id'];
-                        if(id)
-                        return (
-                            '<div class="btn-group time-selector">' +
-                            '<form id="saveFormBen" method="post">' + '@csrf' +
-                            '<input type="hidden" name="benficary_id"  value="' + id + '">' +
-                            '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
+                        if (id)
+                            return (
+                                '<div class="btn-group time-selector">' +
+                                '<form id="saveFormBen" method="post">' + '@csrf' +
+                                '<input type="hidden" name="benficary_id"  value="' + id + '">' +
+                                '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
 
 
-                            '<button id="save_ben' + id + '" value="' + id +
-                            '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
+                                '<button id="save_ben' + id + '" value="' + id +
+                                '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
 
-                            '<button id="delete_ben' + id + '"  value="' + id +
-                            '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check d-none">الغاء الاعتماد</button>' +
-                            
-                            '</form>' +
-                            ' </div>' +
-                            '</div>' +
-                            '</div>'
-                        );
+                                '<button id="delete_ben' + id + '"  value="' + id +
+                                '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check d-none">الغاء الاعتماد</button>' +
+
+                                '</form>' +
+                                ' </div>' +
+                                '</div>' +
+                                '</div>'
+                            );
                     }
                 }
             ],
@@ -450,49 +450,46 @@
             })
             });
         @endforeach
-     
     </script>
 
-<script>
-    var buttonApprove = document.getElementById('save_ben');
-    var buttonDelete = document.getElementById('delete_ben');
-    @foreach (\App\Models\Beneficiary::all() as $x)
-        $(document).on('click', '#delete_ben{{ $x->id }}', function (e) {
-        e.preventDefault();
-        var saveFormBen = new FormData($('#saveFormBen')[0])
-        $.ajax({
-        type: 'post',
-        url: "{{ route('beneficiareisProjects.destroy', $x->id) }}",
-        data: saveFormBen,
-        processData: false,
-        contentType: false,
-        cache: false,
-        success: function (data) {
-        if(data.status == 200){
-        data.msg;
-    
-        $('#delete_ben{{ $x->id }}').hide();
-        $('#save_ben{{ $x->id }}').show();
-        toastr['success']('تم الحذف بنجاح', 'Progress Bar', {
-        closeButton: true,
-        tapToDismiss: false,
-        progressBar: true,
-    
-        });
-    
-    
-        }
-        },
-        error: function (project) {
-    
-        }
-        })
-        });
-    @endforeach
- 
-</script>
-{{--     
     <script>
+        var buttonApprove = document.getElementById('save_ben');
+        var buttonDelete = document.getElementById('delete_ben');
+        @foreach (\App\Models\Beneficiary::all() as $x)
+            $(document).on('click', '#delete_ben{{ $x->id }}', function (e) {
+            e.preventDefault();
+            var saveFormBen = new FormData($('#saveFormBen')[0])
+            $.ajax({
+            type: 'post',
+            url: "{{ route('beneficiareisProjects.destroy', $x->id) }}",
+            data: saveFormBen,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+            if(data.status == 200){
+            data.msg;
+        
+            $('#delete_ben{{ $x->id }}').hide();
+            $('#save_ben{{ $x->id }}').show();
+            toastr['success']('تم الحذف بنجاح', 'Progress Bar', {
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+        
+            });
+        
+        
+            }
+            },
+            error: function (project) {
+        
+            }
+            })
+            });
+        @endforeach
+    </script>
+    {{-- <script>
         $('.btn-save-project-beneficiaries').on('click', function() {
             var beneficiaries = Array();
             $('table .beneficiary-check').each(function(e) {

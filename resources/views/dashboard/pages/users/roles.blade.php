@@ -1,4 +1,4 @@
-{{-- @extends('dashboard.layouts.master')
+@extends('dashboard.layouts.master')
 @section('title','الصلاحيات')
 @section('css')
     <!-- BEGIN: Vendor CSS-->
@@ -160,4 +160,4 @@
     <!-- END: Page JS-->
 
 
-@stop --}}
+@stop

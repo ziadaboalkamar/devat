@@ -75,7 +75,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
         //    end user
         //    start roles route
-        Route::get('/users/roles/{id}', [RoleController::class, 'show_roles'])->name('user.view.role');
+        // Route::get('/users/roles/{id}', [RoleController::class, 'show'])->name('user.view.role');
         Route::get('/users/roles/update/{id}', [RoleController::class, 'update_role'])->name('user.role-update');
 
         //    end roles route

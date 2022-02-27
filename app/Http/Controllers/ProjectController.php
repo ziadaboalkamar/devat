@@ -65,8 +65,6 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
-
-
         try {
             $project = Project::insertGetId([
                 'main_branch_id' => $request->main_branch_id,

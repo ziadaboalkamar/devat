@@ -12,9 +12,9 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
     public function index(Request $request){
-        $users = User::all();
+        $users = User::latest()->where('id', '<>', auth()->id())->get();
         if($request->ajax()){
-            $users = User::all();
+            $users = User::latest()->where('id', '<>', auth()->id())->get();
 
             return DataTables::of($users)
                 ->addIndexColumn()
