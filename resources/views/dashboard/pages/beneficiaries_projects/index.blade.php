@@ -79,18 +79,18 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}"
-                                            method="post">
+                                        <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}" method="POST">
                                             {{ method_field('delete') }}
                                             {{ csrf_field() }}
                                             <div class="modal-body">
+                                                <input type="hidden" name="project_id" value="{{ $beneficiariesProject->project_id }}">
                                                 {{-- <input type="hidden" name="id" value="{{ $section->id }}"> --}}
                                                 <h5>هل انت متاكد من حذف البيانات</h5>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ __('Close') }}</button>
-                                                <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                                    data-dismiss="modal">{{ __('الغاء') }}</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('حذف') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -262,17 +262,7 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="beneficiareis-projects/' + id + '/edit" class="dropdown-item">' +
-                            feather.icons['archive'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'تعديل</a>' +
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'حذف</a>'+ '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
+                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
                                 class: 'font-small-4 mr-50'

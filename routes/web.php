@@ -90,7 +90,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('beneficiareis', BeneficiaryController::class)->middleware('can:المستفيدين');
         Route::get('getbeneficiareis', [BeneficiariesProjectController::class, 'create'])->name('beneficiareis.get');
         Route::post('beneficiareis-projects/test/{id}', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
-        Route::post('beneficiareis/projects/delete/{id}', [BeneficiariesProjectController::class, 'destroy'])->name('beneficiareisProjects.destroy');
+        Route::post('beneficiareis/projects/delete/{id}', [BeneficiariesProjectController::class,'destroy'])->name('beneficiareisProjects.destroy');
 
         Route::resource('beneficiareis-projects', BeneficiariesProjectController::class)->middleware('can:مستفيدين المشروع');
         Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
