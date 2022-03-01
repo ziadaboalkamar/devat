@@ -38,6 +38,8 @@
                                     <li class="breadcrumb-item"><a href="#">مشروع المستفيد</a>
                                     </li>
                                     <li class="breadcrumb-item active">اضافة مشروع مستفيد
+
+
                                     </li>
                                 </ol>
                             </div>
@@ -65,61 +67,7 @@
                                     <h4 class="card-title">اضافة مستفيد</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{-- <form class="row" action="{{ route('beneficiareis-projects.store') }}" method="POST" id="create_new">
-                                        @csrf
 
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <div class="form-group">
-                                                <label for="basicInput">اسم الفرع</label>
-                                                <select name="branch_id" class="form-control">
-                                                    <option value="" selected disabled>اختر الفرع</option>
-                                                    @foreach ($brnches as $brnch)
-                                                    <option value="{{ $brnch->id }}" {{ old('branch_id') == $brnch->id ? 'selected' : null }}> {{ $brnch->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">اسم المتلقي</label>
-                                            <input type="text" name="recever_name" value="{{ old('recever_name') }}" class="form-control credit-card-mask" placeholder="اسم المتلقي"  />
-                                            @error('recever_name')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">عدد افراد الاسرة</label>
-                                            <select name="family_member_count" class="form-control">
-                                                <option value="" selected disabled>اختر العدد</option>
-                                                @foreach ($family_members as $family_member)
-                                                <option value="{{ $family_member }}" {{ old('family_member_count') == $family_member ? 'selected' : null }}>{{ $family_member }}</option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('family_member_count')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">تاريخ التسليم</label>
-                                            <input type="date" name="delivery_date" value="{{ old('delivery_date') }}" class="form-control credit-card-mask" placeholder="تاريخ التسليم"  />
-                                            @error('delivery_date')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">أضيف من قبل</label>
-                                            <input type="text" name="add_by" value="{{ old('add_by') }}" class="form-control credit-card-mask" placeholder="اضيف من قبل"  />
-                                            @error('add_by')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-
-                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="credit-card">الموظف الذي تم تسليمه</label>
-                                            <input type="text" name="employee_who_delivered" value="{{ old('employee_who_delivered') }}" class="form-control credit-card-mask" placeholder="الموظف الذي تم تسليمه"  />
-                                            @error('employee_who_delivered')<span class="text-danger">{{ $message }}</span>@enderror
-                                        </div>
-
-                                        <div class="col-12 d-flex flex-sm-row flex-column mt-2">
-                                            <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
-                                            <a href="{{ route('beneficiareis-projects.index') }}" class="btn btn-outline-secondary">اغلاق</a>
-                                        </div>
-                                    </form> --}}
 
                                     <section class="app-user-list">
                                         <div class="card">
@@ -199,6 +147,7 @@
             },
             ajax: {
                 url: '{{ route('beneficiareis.get') }}',
+                data: {'project_id': {{ $project_id }}}
             },
             columns: [
 
@@ -236,8 +185,9 @@
 
 
                 {
-                    data: 'maritial',
-                    name: 'maritial',
+                    // data: 'maritial',
+                    data: 'isadded',
+                    name: 'isadded',
                     searchable: true
                 },
                 {
@@ -269,7 +219,7 @@
                             '<div class="btn-group time-selector">' +
                             '<form id="saveFormBen'+id+'" method="post">' + '@csrf' +
                             '<input type="hidden" name="benficary_id"  value="' + id + '">' +
-                            '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
+                            '<input type="hidden" name="project_id"  value="{{$project_id}}">' +
                             '<button id="save_ben' + id + '" value="' + id +
                                '" class="btn btn-outline-primary btn-sm rounded-pill beneficiary-check">اعتماد</button>' +
                             '</form>' +
@@ -284,7 +234,7 @@
                                 '<div class="btn-group time-selector">' +
                                 '<form id="saveFormBen'+id+'" method="post">' + '@csrf' +
                                 '<input type="hidden" name="benficary_id"  value="' + id + '">' +
-                                '<input type="hidden" name="project_id"  value="{{ $project_id }}">' +
+                                '<input type="hidden" name="project_id"  value="{{$project_id}}">' +
                                 '<button id="delete_ben' + id + '"  value="' + id +
                                 '" class="btn btn-outline-danger btn-sm rounded-pill beneficiary-check">الغاء الاعتماد</button>' +
                                 '</form>' +
@@ -402,10 +352,11 @@
         @foreach (\App\Models\Beneficiary::all() as $x)
             $(document).on('click', '#save_ben{{ $x->id }}', function (e) {
             e.preventDefault();
+            console.log('hi');
             var saveFormBen = new FormData($('#saveFormBen{{$x->id}}')[0])
             $.ajax({
             type: 'post',
-            url: "{{ route('beneficiareisProjects.store', $x->id) }}",
+            url: "{{ route('beneficiareisProjects.store',$x->id) }}",
             data: saveFormBen,
             processData: false,
             contentType: false,
@@ -413,7 +364,7 @@
             success: function (data) {
             if(data.status == 200){
             data.msg;
-                $('#save_ben{{ $x->id }}').hide();
+                $('#save_ben{{ $x->id }}').remove();
                 var txt2 = $("<button id='delete_ben{{$x->id}}' class='btn btn-outline-danger btn-sm rounded-pill beneficiary-check'></button>").text("الغاء الاعتماد");  // Create text with jQuery
 
                 $('#saveFormBen{{$x->id}}').append(txt2);
@@ -442,10 +393,10 @@
         @foreach (\App\Models\Beneficiary::all() as $x)
             $(document).on('click', '#delete_ben{{ $x->id }}', function (e) {
             e.preventDefault();
-            var saveFormBen = new FormData($('#saveFormBen')[0])
+            var saveFormBen = new FormData($('#saveFormBen{{$x->id}}')[0])
             $.ajax({
             type: 'post',
-            url: "{{ route('beneficiareisProjects.destroy', $x->id) }}",
+            url: "{{ route('beneficiareisProjects.destroy',$x->id) }}",
             data: saveFormBen,
             processData: false,
             contentType: false,
@@ -453,21 +404,23 @@
             success: function (data) {
             if(data.status == 200){
             data.msg;
-        
-            $('#delete_ben{{ $x->id }}').hide();
-            $('#save_ben{{ $x->id }}').show();
+
+            $('#delete_ben{{ $x->id }}').remove();
+                var txt2 = $("<button id='save_ben{{ $x->id }}' class='btn btn-outline-primary btn-sm rounded-pill beneficiary-check'></button>").text("اعتماد");  // Create text with jQuery
+
+                $('#saveFormBen{{$x->id}}').append(txt2);
             toastr['success']('تم الحذف بنجاح', 'Progress Bar', {
             closeButton: true,
             tapToDismiss: false,
             progressBar: true,
-        
+
             });
-        
-        
+
+
             }
             },
             error: function (project) {
-        
+
             }
             })
             });

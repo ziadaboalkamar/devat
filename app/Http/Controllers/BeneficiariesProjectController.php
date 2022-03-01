@@ -13,6 +13,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BeneficiariesProjectController extends Controller
 {
+    public $project_id;
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +32,6 @@ class BeneficiariesProjectController extends Controller
                 ->editColumn('created_at', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->created_at->format('Y-m-d');
                 })
-
                 ->editColumn('active', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->getActive();
                 })
@@ -60,13 +61,19 @@ class BeneficiariesProjectController extends Controller
      */
     public function create(Request $request)
     {
+        $user = Auth::user()->branch_id;
 
-        $project_id = $request->project_id;
-
+        $this->project_id = $request->project_id;
+//        dd($this->project_id);
+        $beneficiary = Beneficiary::where('branch_id', '=', $user)->orderBy('created_at', 'desc')->first();
+//        dd($beneficiary);
+//        $exist = BeneficiariesProject::where('project_id', $this->project_id)->where('beneficiary_id', $beneficiary->id)->get();
+//        dd($exist);
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
-
-            $beneficiary = Beneficiary::where('branch_id','=',$user)->get();
+            $project_id = $this->project_id;
+//            dd($request->project_id);
+            $beneficiary = Beneficiary::where('branch_id', '=', $user)->get();
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
                 ->editColumn('created_at', function (Beneficiary $beneficiary) {
@@ -84,13 +91,13 @@ class BeneficiariesProjectController extends Controller
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
-                ->editColumn('isadded', function (Beneficiary $beneficiary) {
-                    $exist = $beneficiary->beneficiaryProject;
-                    if(count($exist) != 0){
-                        return 1;
-                    }
-                    else{
+                ->editColumn('isadded', function (Beneficiary $beneficiary) use ($project_id) {
+
+                    $exist = BeneficiariesProject::where('project_id', '=', $project_id)->where('beneficiary_id', '=', $beneficiary->id)->get();
+                    if (count($exist) == 0) {
                         return 0;
+                    } else {
+                        return 1;
                     }
                 })
                 ->make(true);
@@ -103,7 +110,7 @@ class BeneficiariesProjectController extends Controller
         }
         return view('dashboard.pages.beneficiaries_projects.create', [
 
-            'project_id' => $project_id,
+            'project_id' => $this->project_id,
             'family_members' => $n,
         ]);
     }
@@ -111,17 +118,13 @@ class BeneficiariesProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $id)
     {
-        // return $request;
-        // $id =  $request->benficary_id;
+
         $beneficiary = Beneficiary::find($id);
-        // $project_id = $request->project_id;
-        // $project = Project::find($id);
-        // $beneficiariesProjects = BeneficiariesProject::where('project_id', '=', $id)->get();
 
         $data = [];
         $data['project_id'] = $request->project_id;
@@ -133,7 +136,6 @@ class BeneficiariesProjectController extends Controller
         $data['delivery_date'] = null;
         $data['employee_who_delivered'] = null;
         $data['status_id'] = 0;
-
 
 
         $success = BeneficiariesProject::create($data);
@@ -156,7 +158,7 @@ class BeneficiariesProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -167,7 +169,7 @@ class BeneficiariesProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(BeneficiariesProject $beneficiareis_project)
@@ -187,8 +189,8 @@ class BeneficiariesProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(BeneficiariesProjectRequest $request, BeneficiariesProject $beneficiareis_project)
@@ -212,12 +214,13 @@ class BeneficiariesProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
     {
         //  find($id)->delete()
+
 
         $data = BeneficiariesProject::where('project_id', '=', $request->project_id)->where('beneficiary_id', '=', $id)->delete();
 
