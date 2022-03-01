@@ -127,7 +127,7 @@ class ProjectController extends Controller
         return view('dashboard.pages.projects.edit', compact('projects','donors','mainBranches', 'projectsAttachment', 'currencies', 'attachments', 'categories', 'categories_attachment'));
     }
 
-    public function update($id,ProjectRequest $request)
+    public function update($id,Request $request)
     {
 
         try {

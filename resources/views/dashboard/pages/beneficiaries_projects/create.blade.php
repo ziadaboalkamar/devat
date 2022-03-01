@@ -185,9 +185,8 @@
 
 
                 {
-                    // data: 'maritial',
-                    data: 'isadded',
-                    name: 'isadded',
+                     data: 'maritial',
+                    name: 'maritial',
                     searchable: true
                 },
                 {

@@ -126,6 +126,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
         Route::get('/projects/management', [ProjectManagmentController::class, 'index'])->name('projects.management.index');
         Route::post('projects/management/update_status', [ProjectManagmentController::class, 'updateStatus'])->name('projects.management.update.status');
+        Route::get('/projects/beneficiareis/{id}', [ProjectController::class, 'benefactoryPoject'])->name('projects.beneficiareis.get');
 
     });
         //    end branch count

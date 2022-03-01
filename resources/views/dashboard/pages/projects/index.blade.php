@@ -180,7 +180,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 {data: 'category_id',name:'category_id',searchable: false},
                 {data: 'grant_value',name:'grant_value',searchable: false},
                 {data: 'start_date',name:'start_date',searchable: false},
-                {data: 'active',name:'active',searchable: false},
+                {data: 'active',name:'active',searchable:true},
                 {data: ''}
 
 

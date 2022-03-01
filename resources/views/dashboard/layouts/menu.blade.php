@@ -188,7 +188,7 @@
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                             data-feather='briefcase'></i><span class="menu-title text-truncate" data-i18n="Invoice">مشاريع
                             الفرع</span><span
-                            class="badge badge-light-warning badge-pill ml-auto mr-1">{{ \App\Models\Donor::count() }}</span></a>
+                            class="badge badge-light-warning badge-pill ml-auto mr-1">{{ \App\Models\ProjectBranchCount::where("branch_id","=",auth()->user()->branch_id)->count() }}</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center" href="{{ route('projects.management.index') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة
