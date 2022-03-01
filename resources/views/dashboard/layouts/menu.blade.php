@@ -184,6 +184,7 @@
                             data-feather="settings"></i><span class="menu-title text-truncate"
                             data-i18n="Invoice">الاعدادات</span></a>
                 @endcan
+
                 @can('ادارة المشاريع الخيرية')
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                             data-feather='briefcase'></i><span class="menu-title text-truncate" data-i18n="Invoice">مشاريع
