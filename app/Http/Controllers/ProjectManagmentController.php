@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProjectBranchCount;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -31,6 +32,12 @@ class ProjectManagmentController extends Controller
                 })
                 ->addColumn('project_name', function (ProjectBranchCount $branchCount) {
                     return $branchCount->project_id;
+                })
+                ->editColumn('deadline_date', function (ProjectBranchCount $branchCount) {
+                    return $branchCount->deadline_date;
+                })
+                ->addColumn('date', function (ProjectBranchCount $branchCount) {
+                    return Carbon::now();
                 })
                 ->make(true);
 
