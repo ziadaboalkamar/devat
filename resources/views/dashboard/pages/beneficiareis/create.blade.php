@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">اسم الجد</label>
-                                            <input type="text" name="thirdName" value="" class="form-control credit-card-mask" placeholder="اسم الجد"  />
+                                            <input type="text" name="thirdName" value="{{ old('thirdName') }}" class="form-control credit-card-mask" placeholder="اسم الجد"  />
                                             @error('thirdName')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">

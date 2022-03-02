@@ -24,10 +24,8 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-
-
             'main_branch_id' =>['required'],
-            'project_name' => ['required', 'string','max:225','regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u'],
+            'project_name' => ['required', 'string','max:225'],
             'grant_date' =>  ['required', 'date'],
             'category_id' =>  ['required'],
             'donor_id' =>  ['required'],
@@ -36,17 +34,31 @@ class ProjectRequest extends FormRequest
             'exchange_amount' => ['required','numeric'],
             'start_date'=> ['required', 'date'],
             'managerial_fees' =>  ['required', 'string','max:225'],
-
-
         ];
     }
     public function messages()
     {
         return [
-            'required'=>"هذا الحقل مطلوب.",
-            'string' =>'يجب ادخال في الاحراف.',
-            'max'=>'هذا الحقل طويل للغاية.',
-            'numeric' => 'يجب ادخال رقم'
+            'main_branch_id.required' => 'هذا الحقل مطلوب',
+            'category_id.required' => 'هذا الحقل مطلوب',
+            'donor_id.required' => 'هذا الحقل مطلوب',
+            'currency_id.required' => 'هذا الحقل مطلوب',
+            'grant_value.required' => 'هذا الحقل مطلوب',
+            'grant_value.numeric' => 'يجب ان يكون الحقل رقمي',
+            'exchange_amount.required' => 'هذا الحقل مطلوب',
+            'exchange_amount.numeric' => 'يجب ان يكون الحقل رقمي',
+
+            'project_name.required' => 'هذا الحقل مطلوب',
+            'project_name.string' => 'يجب ان يكون الحق نصي',
+            'managerial_fees.required' => 'هذا الحقل مطلوب',
+            'managerial_fees.string' => 'يجب ان يكون الحق نصي',
+
+            'grant_date.required' => 'هذا الحقل مطلوب',
+            'grant_date.date' => 'يجب ان تكون الصيغة تاريخ',
+            'start_date.required' => 'هذا الحقل مطلوب',
+            'start_date.date' => 'يجب ان تكون الصيغة تاريخ',
+
+
         ];
     }
 }

@@ -49,6 +49,8 @@ class CategoryOfProjectController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
         ]);
 
         $data = [];
@@ -93,6 +95,8 @@ class CategoryOfProjectController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
         ]);
 
         $data = [];

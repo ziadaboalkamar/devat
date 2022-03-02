@@ -58,8 +58,26 @@ class BrancheController extends Controller
             'name' => 'required|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
             'phoneNumber' => 'required|Digits:10|numeric|unique:branches',
             'email' => 'required|unique:branches|email',
-            'manager_name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
+            'manager_name' => 'required|string',
             'city_id' => 'required',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.regex' => 'يجب ان يكون الحقل نصي',
+
+            'phoneNumber.required' => 'هذا الحقل مطلوب',
+            'phoneNumber.digits' => 'يجب ان يكون عدد الارقام 10 ',
+            'phoneNumber.numeric' => 'يجب ان يكون الحقل رقم',
+            'phoneNumber.unique' => 'القيمة مستخدمة من قبل',
+
+            'email.required' => 'هذا الحقل مطلوب',
+            'email.unique' => 'القيمة مستخدمة من قبل',
+            'email.email' => 'يجب ان تكون القيمة ايمبل صحيح',
+
+            'manager_name.required' => 'هذا الحقل مطلوب',
+            'manager_name.string' => 'يجب ان يكون الحقل نصي',
+
+            'city_id.required' =>'هذا الحقل مطلوب',
+            
         ]);
         //  return $request;
         $data = [];
@@ -115,6 +133,24 @@ class BrancheController extends Controller
             'email' => 'required|email|unique:branches,email,'.$branch->id,
             'manager_name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
             'city_id' => 'required',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.regex' => 'يجب ان يكون الحقل نصي',
+
+            'phoneNumber.required' => 'هذا الحقل مطلوب',
+            'phoneNumber.digits' => 'يجب ان يكون عدد الارقام 10 ',
+            'phoneNumber.numeric' => 'يجب ان يكون الحقل رقم',
+            'phoneNumber.unique' => 'القيمة مستخدمة من قبل',
+
+            'email.required' => 'هذا الحقل مطلوب',
+            'email.unique' => 'القيمة مستخدمة من قبل',
+            'email.email' => 'يجب ان تكون القيمة ايمبل صحيح',
+
+            'manager_name.required' => 'هذا الحقل مطلوب',
+            'manager_name.string' => 'يجب ان يكون الحقل نصي',
+
+            'city_id.required' =>'هذا الحقل مطلوب',
+            
         ]);
         //  return $request;
         $data = [];

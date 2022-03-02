@@ -85,8 +85,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ __('Close') }}</button>
-                                                <button type="submit" class="btn btn-danger">{{ __('submit') }}</button>
+                                                    data-dismiss="modal">{{ __('اغلاق') }}</button>
+                                                <button type="submit" class="btn btn-danger">{{ __('حذف') }}</button>
                                             </div>
                                         </form>
                                     </div>
