@@ -123,6 +123,7 @@
     <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-toastr.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
 
@@ -375,6 +376,15 @@
             });
 
 
+
+            }
+            else if(data.status == 404){
+                swal.fire({
+                    title: "عذرا",
+                    text: "لا يمكن اضافة مستفيد جديد قد تخطيت العدد المسموح",
+                    icon: "error",
+                    button: "اغلاق",
+                });
 
             }
             },

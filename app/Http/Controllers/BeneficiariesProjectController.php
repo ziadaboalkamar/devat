@@ -68,7 +68,7 @@ class BeneficiariesProjectController extends Controller
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
             $project_id = $this->project_id;
-            $beneficiary = Beneficiary::where('branch_id', '=', $user)->get();
+            $beneficiary = Beneficiary::where('branch_id', '=', $user)->where('status_id',1)->get();
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
                 ->editColumn('created_at', function (Beneficiary $beneficiary) {
@@ -144,8 +144,9 @@ class BeneficiariesProjectController extends Controller
                ]);
            }
        }else {
-
-           return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiaryProject]);
+           return response()->json([
+               'status' => 404
+           ]);
        }
 
         }
