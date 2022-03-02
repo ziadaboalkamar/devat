@@ -95,7 +95,7 @@
                                                         </option>
                                                         <option
                                                             value="1" {{ old('status',$branchOne->status) == 1? 'selected' : null }}>
-                                                           قيد المتابعة
+                                                            قيد المتابعة
 
                                                         </option>
                                                     </select>
@@ -264,32 +264,36 @@
                     orderable: false,
                     render: function (data, type, full, meta) {
                         var id = full['id'];
-                        var project_id = full['project_name']
-                        return (
-                            '<div class="btn-group">' +
-                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                            feather.icons['more-vertical'].toSvg({
-                                class: 'font-small-4'
-                            }) +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="beneficiareis/'+project_id+'" class="dropdown-item">' +
-                            feather.icons['archive'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'اضافة مستفيدين</a>' +
+                        var project_id = full['project_name'];
+                        var date = full['date'];
+                        var deadline_date = full['deadline_date'];
+                         if (date <= deadline_date){
+                                return (
+                                    '<div class="btn-group">' +
+                                    '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+                                    feather.icons['more-vertical'].toSvg({
+                                        class: 'font-small-4'
+                                    }) +
+                                    '</a>' +
 
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#update_status' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'تغير الحالة</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>'
-                        );
-                    }
+                                    '<div class="dropdown-menu dropdown-menu-right">' +
+
+                                    '<a href="beneficiareis/'+project_id+'" class="dropdown-item">' +
+                                    feather.icons['archive'].toSvg({
+                                        class: 'font-small-4 mr-50'
+                                    }) +
+                                    'اضافة مستفيدين</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            }else{
+                             return(
+                                 'لقد انتهاء تاريخ اضافة المستفيدين'
+                             );
+                         }
+
+                            }
                 }
             ]
 

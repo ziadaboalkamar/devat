@@ -7,6 +7,7 @@ use App\Models\BeneficiariesProject;
 use App\Models\Beneficiary;
 use App\Models\Branches;
 use App\Models\Project;
+use App\Models\ProjectBranchCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -64,16 +65,10 @@ class BeneficiariesProjectController extends Controller
         $user = Auth::user()->branch_id;
 
         $this->project_id = $request->project_id;
-//        dd($this->project_id);
-        $beneficiary = Beneficiary::where('branch_id', '=', $user)->orderBy('created_at', 'desc')->first();
-//        dd($beneficiary);
-//        $exist = BeneficiariesProject::where('project_id', $this->project_id)->where('beneficiary_id', $beneficiary->id)->get();
-//        dd($exist);
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
             $project_id = $this->project_id;
-//            dd($request->project_id);
-            $beneficiary = Beneficiary::where('branch_id', '=', $user)->get();
+            $beneficiary = Beneficiary::where('branch_id', '=', $user)->where('status_id',1)->get();
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
                 ->editColumn('created_at', function (Beneficiary $beneficiary) {
@@ -123,37 +118,42 @@ class BeneficiariesProjectController extends Controller
      */
     public function store(BeneficiariesProjectRequest $request, $id)
     {
-
         $beneficiary = Beneficiary::find($id);
+        $branch_id = $beneficiary->branch_id;
+        $project_id = $request->project_id;
+        $branch_count = ProjectBranchCount::where('branch_id',$branch_id)->where('project_id',$project_id)->first();
+       $beneficiaryCount= $branch_count -> beneficiaries_count;
+       $beneficiaryProject = BeneficiariesProject::where('project_id',$project_id)->where('branch_id',$branch_id)->count();
+       if ($beneficiaryProject <= $beneficiaryCount){
+           $data = [];
+           $data['project_id'] = $request->project_id;
 
-        $data = [];
-        $data['project_id'] = $request->project_id;
-
-        $data['beneficiary_id'] = $id;
-        $data['branch_id'] = $beneficiary->branch_id;
-        $data['recever_name'] = null;
-        $data['family_member_count'] = $beneficiary->family_member;
-        $data['delivery_date'] = null;
-        $data['employee_who_delivered'] = null;
-        $data['status_id'] = 0;
+           $data['beneficiary_id'] = $id;
+           $data['branch_id'] = $beneficiary->branch_id;
+           $data['recever_name'] = null;
+           $data['family_member_count'] = $beneficiary->family_member;
+           $data['delivery_date'] = null;
+           $data['employee_who_delivered'] = null;
+           $data['status_id'] = 0;
 
 
-        $success = BeneficiariesProject::create($data);
+           $success = BeneficiariesProject::create($data);
+           if ($success) {
+               return response()->json([
+                   'status' => 200,
+               ]);
+           }
+       }else {
+           return response()->json([
+               'status' => 404
+           ]);
+       }
 
-
-        if ($success) {
-            return response()->json([
-                'status' => 200,
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-            ]);
         }
         // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
 
 
-    }
+
 
     /**
      * Display the specified resource.
