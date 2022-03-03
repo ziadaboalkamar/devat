@@ -222,11 +222,8 @@ class ProjectController extends Controller
 
     }
 
-
     public function benefactoryPoject($id, Request $request)
     {
-
-
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
 
@@ -245,6 +242,9 @@ class ProjectController extends Controller
                 })
                 ->editColumn('branch_name', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->branchs->name;
+                })
+                ->editColumn('id_number', function (BeneficiariesProject $beneficiariesProject) {
+                    return $beneficiariesProject->beneficiaries->id_number;
                 })
                 ->editColumn('beneficiary_name', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->beneficiaries->firstName . ' ' . $beneficiariesProject->beneficiaries->lastName;
@@ -319,6 +319,9 @@ class ProjectController extends Controller
                 })
                 ->editColumn('maritial', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->beneficiaries->maritial;
+                })
+                ->editColumn('id_number', function (BeneficiariesProject $beneficiariesProject) {
+                    return $beneficiariesProject->beneficiaries->id_number;
                 })
                 ->editColumn('branch_name', function (BeneficiariesProject $beneficiariesProject) {
                     return $beneficiariesProject->branchs->name;

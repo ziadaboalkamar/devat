@@ -46,6 +46,7 @@
                                             <tr>
                                                 <th>اسم المستفيد</th>
                                                 <th>الحالة الاجتماعية</th>
+                                                <th>رقم الهوية</th>
                                                 <th>عدد افراد الاسرة</th>
                                                 <th>الحالة التسليم</th>
                                                 <th>العمليات</th>
@@ -147,6 +148,11 @@
                 {
                     data: 'family_member_count',
                     name: 'family_member_count',
+                    searchable: true
+                },
+                {
+                    data: 'id_number',
+                    name: 'id_number',
                     searchable: true
                 },
                 {

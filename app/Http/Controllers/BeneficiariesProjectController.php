@@ -69,7 +69,7 @@ class BeneficiariesProjectController extends Controller
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
             $project_id = $this->project_id;
-            $beneficiary = Beneficiary::where('branch_id', '=', $user)->where('status_id',1)->get();
+            $beneficiary = Beneficiary::where('branch_id', '=', $user)->where('status_id', 1)->get();
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
                 ->editColumn('created_at', function (Beneficiary $beneficiary) {
@@ -84,6 +84,7 @@ class BeneficiariesProjectController extends Controller
                 ->editColumn('FullName', function (Beneficiary $beneficiary) {
                     return $beneficiary->getFullNameAttribute();
                 })
+              
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
@@ -97,8 +98,6 @@ class BeneficiariesProjectController extends Controller
                     }
                 })
                 ->make(true);
-
-
         }
 
         for ($i = 1; $i < 16; $i++) {
@@ -122,45 +121,38 @@ class BeneficiariesProjectController extends Controller
         $beneficiary = Beneficiary::find($id);
         $branch_id = $beneficiary->branch_id;
         $project_id = $request->project_id;
-        $branch_count = ProjectBranchCount::where('branch_id',$branch_id)->where('project_id',$project_id)->first();
-       $beneficiaryCount= $branch_count -> beneficiaries_count;
-         $beneficiaryProject = BeneficiariesProject::where('project_id',$project_id)->where('branch_id',$branch_id)->count();
-       if ($beneficiaryProject < $beneficiaryCount){
-           $data = [];
-           $data['project_id'] = $request->project_id;
+        $branch_count = ProjectBranchCount::where('branch_id', $branch_id)->where('project_id', $project_id)->first();
+        $beneficiaryCount = $branch_count->beneficiaries_count;
+        $beneficiaryProject = BeneficiariesProject::where('project_id', $project_id)->where('branch_id', $branch_id)->count();
+        if ($beneficiaryProject < $beneficiaryCount) {
+            $data = [];
+            $data['project_id'] = $request->project_id;
 
-           $data['beneficiary_id'] = $id;
-           $data['branch_id'] = $beneficiary->branch_id;
-           $data['recever_name'] = null;
-           $data['family_member_count'] = $beneficiary->family_member;
-           $data['delivery_date'] = null;
-           $data['employee_who_delivered'] = null;
-           $data['status_id'] = 0;
+            $data['beneficiary_id'] = $id;
+            $data['branch_id'] = $beneficiary->branch_id;
+            $data['recever_name'] = null;
+            $data['family_member_count'] = $beneficiary->family_member;
+            $data['delivery_date'] = null;
+            $data['employee_who_delivered'] = null;
+            $data['status_id'] = 0;
+            $success = BeneficiariesProject::create($data);
 
+            if ($success) {
 
-           $success = BeneficiariesProject::create($data);
-         
-           
-           if ($success) {
-               
-            ProjectBranchCount::where('project_id',$request->project_id)->where('branch_id',$beneficiary->branch_id)->update([
-                'status_id' => 2,
-
-
-
+                ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id', $beneficiary->branch_id)->update([
+                    'status_id' => 2,
+                ]);
+                return response()->json([
+                    'status' => 200,
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 404
             ]);
-               return response()->json([
-                   'status' => 200,
-               ]);
-           }
-       }else {
-           return response()->json([
-               'status' => 404
-           ]);
-       }
-
         }
-        // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
+    }
+    // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
 
 
 

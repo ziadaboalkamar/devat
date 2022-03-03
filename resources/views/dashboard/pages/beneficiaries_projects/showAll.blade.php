@@ -46,6 +46,7 @@
                                             <tr>
                                                 <th>اسم المستفيد</th>
                                                 <th>اسم الفرع</th>
+                                                <th>رقم الهوية</th>
                                                 <th>الحالة الاجتماعية</th>
                                                 <th>عدد افراد الاسرة</th>
                                                 <th>الحالة التسليم</th>
@@ -115,6 +116,11 @@
                 {
                     data: 'branch_name',
                     name: 'branch_name',
+                    searchable: true
+                },
+                {
+                    data: 'id_number',
+                    name: 'id_number',
                     searchable: true
                 },
                 {
