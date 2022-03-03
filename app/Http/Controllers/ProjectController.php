@@ -214,7 +214,6 @@ class ProjectController extends Controller
             unlink('assets/' . $projectAttachment->file);
         }
         $projectAttachment->delete();
-
     }
 
 

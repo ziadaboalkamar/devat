@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        // $id = $this->route('id', 0);    
+        // $id = $this->route('id', 0);
         return [
             'firstname'=> ['required', 'string','max:100'],
             'lastname'=> ['required', 'string', 'max:100'],
@@ -44,7 +44,8 @@ class UserRequest extends FormRequest
             'required'=>"هذا الحقل مطلوب.",
             'string' =>'يجب ادخال في الاحراف.',
             'max'=>'هذا الحقل طويل للغاية.',
-            'numeric' => 'يجب ادخال في الارقام'
+            'numeric' => 'يجب ادخال في الارقام',
+            'digits:10'=>'يجب ان يحتوي على 10 ارقام'
         ];
     }
 }
