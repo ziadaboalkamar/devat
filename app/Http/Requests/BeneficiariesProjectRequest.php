@@ -34,4 +34,18 @@ class BeneficiariesProjectRequest extends FormRequest
             'employee_who_delivered' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'project_id.required' => 'هذا الحقل مطلوب',
+            'beneficiary_id.required' => 'هذا الحقل مطلوب',
+            'branch_id.required' => 'هذا الحقل مطلوب',
+            'recever_name.required' => 'هذا الحقل مطلوب',
+            'family_member_count.required' => 'هذا الحقل مطلوب',
+            'add_by.required' => 'هذا الحقل مطلوب',
+            'delivery_date.required' => 'هذا الحقل مطلوب',
+            'employee_who_delivered.required' => 'هذا الحقل مطلوب',
+        ];
+    }
 }

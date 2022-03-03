@@ -271,7 +271,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             'حذف</a>' +
 
                             '<a href="projects/show/' + id + '" class="dropdown-item delete-record">' +
-                            feather.icons['trash-2'].toSvg({class: 'font-small-4 mr-50'}) +
+                            feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
 
                             'عرض</a>' +
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +

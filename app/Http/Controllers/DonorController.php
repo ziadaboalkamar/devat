@@ -55,10 +55,22 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|',
+            'name' => 'required|string',
             'phone' => 'required|Digits:10|numeric|unique:donors',
             'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
             'email' => 'required|unique:donors|email',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.string' => 'يجب ان يكون الحق نصي',
+            'phone.required' => 'هذا الحقل مطلوب',
+            'phone.digits' => 'يجب ان يكون عدد الارقام 10 ',
+            'phone.numeric' => 'يجب ان يكون الحقل رقم',
+            'phone.unique' => 'القيمة مستخدمة من قبل',
+            'logo.required' => 'هذا الحقل مطلوب',
+            'logo.mimes' => 'يجب ان تكون صيغة الملف jpg,jpeg,png ',
+            'email.required' => 'هذا الحقل مطلوب',
+            'email.unique' => 'القيمة مستخدمة من قبل',
+            'email.email' => 'يجب ان تكون القيمة ايمبل صحيح',
         ]);
         //  return $request;
         $data = [];
@@ -112,10 +124,22 @@ class DonorController extends Controller
     public function update(Request $request, Donor $donor)
     {
         $request->validate([
-            'name' => 'required|string|regex:/^[A-Za-z0-9-أ-ي-pL\s\-]+$/u',
+            'name' => 'required|string',
             'phone' => 'required|Digits:10|numeric|unique:donors,phone,' . $donor->id,
             'logo' => 'sometimes|mimes:jpg,jpeg,png|max:2000',
             'email' => 'required|email|unique:donors,email,' . $donor->id,
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.string' => 'يجب ان يكون الحق نصي',
+            'phone.required' => 'هذا الحقل مطلوب',
+            'phone.digits' => 'يجب ان يكون عدد الارقام 10 ',
+            'phone.numeric' => 'يجب ان يكون الحقل رقم',
+            'phone.unique' => 'القيمة مستخدمة من قبل',
+            'logo.required' => 'هذا الحقل مطلوب',
+            'logo.mimes' => 'يجب ان تكون صيغة الملف jpg,jpeg,png ',
+            'email.required' => 'هذا الحقل مطلوب',
+            'email.unique' => 'القيمة مستخدمة من قبل',
+            'email.email' => 'يجب ان تكون القيمة ايمبل صحيح',
         ]);
         //  return $request;
         $data = [];

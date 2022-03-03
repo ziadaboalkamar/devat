@@ -54,6 +54,9 @@ class CityController extends Controller
     {
         $request->validate([
             'city_name' => 'required|string',
+        ],[
+            'city_name.required' => 'هذا الحقل مطلوب',
+            'city_name.string' => 'يجب ان يكون الحقل نصي',
         ]);
 
         $data = [];
@@ -100,6 +103,9 @@ class CityController extends Controller
     {
         $request->validate([
             'city_name' => 'required|string',
+        ],[
+            'city_name.required' => 'هذا الحقل مطلوب',
+            'city_name.string' => 'يجب ان يكون الحقل نصي',
         ]);
 
         $data = [];

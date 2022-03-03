@@ -62,6 +62,11 @@ class MainBrancheController extends Controller
         $request->validate([
             'name' => 'required|string',
             'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.string' => 'يجب ان يكون الحق نصي',
+            'logo.required' => 'هذا الحقل مطلوب',
+            'logo.mimes' => 'يجب ان تكون صيغة الملف jpg,jpeg,png ',
         ]);
 
         $data = [];
@@ -114,8 +119,12 @@ class MainBrancheController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
-
+            'logo' => 'sometimes|mimes:jpg,jpeg,png|max:2000',
+        ],[
+            'name.required' => 'هذا الحقل مطلوب',
+            'name.string' => 'يجب ان يكون الحق نصي',
+            'logo.required' => 'هذا الحقل مطلوب',
+            'logo.mimes' => 'يجب ان تكون صيغة الملف jpg,jpeg,png ',
         ]);
 
         $data = [];

@@ -116,7 +116,7 @@ class BeneficiariesProjectController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(BeneficiariesProjectRequest $request, $id)
     {
         $beneficiary = Beneficiary::find($id);
         $branch_id = $beneficiary->branch_id;

@@ -99,6 +99,7 @@ class UserController extends Controller
             if (!$user){
                 return redirect()->route('users.index');
             }
+
              $password = $request->password;
             if($password == "password"){
                    $password = $user->password;
