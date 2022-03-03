@@ -10,7 +10,7 @@ class BeneficiariesProject extends Model
     use HasFactory;
     protected  $table = 'beneficiaries_project';
     protected $fillable = [
-        'id', 'project_id','beneficiary_id', 'branch_id','recever_name','status','family_member_count','add_by','delivery_date','employee_who_delivered','created_at','updated_at'
+        'id', 'project_id','beneficiary_id','branch_status','branch_id','recever_name','status','family_member_count','add_by','delivery_date','employee_who_delivered','created_at','updated_at'
     ];
 
 
@@ -34,6 +34,10 @@ class BeneficiariesProject extends Model
     public function getFullNameAttribute(): string
     {
         return ucfirst($this->firstName) . ' ' . ucfirst($this->secondName) . ' ' .ucfirst($this->thirdName) . ' ' .ucfirst($this->lastName);
+    }
+
+    public function project(){
+        return $this->belongsTo(Project::class,'project_id','id');
     }
 
 }

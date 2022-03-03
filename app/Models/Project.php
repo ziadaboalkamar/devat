@@ -38,4 +38,15 @@ class Project extends Model
         return $this->status == 0 ? __(' غير فعال ') : __('فعال') ;
     }
 
+    public function branches(){
+        return $this->belongsToMany(Branches::class,'project_branch_count','project_id','branch_id')
+                    ->withPivot([
+                        'status_id'
+                    ]);
+    }
+
+    public function projectBranchCount(){
+        return $this->hasMany(ProjectBranchCount::class,'project_id','id');
+    }
+
 }
