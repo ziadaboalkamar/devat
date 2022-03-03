@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title', 'تقسيمة الفروع')
+@section('title', 'الصفحة الرئيسية للمشاريع')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css"
@@ -31,8 +31,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">تخصيص مشروع: {{$project->project_name}}</h2>
-
+                                   <h2 class="content-header-title float-left mb-0">المستفيدين: {{$project->project_name}}</h2>
                                 </div>
                             </div>
                         </div>
@@ -45,12 +44,11 @@
                                     <table class="project-list-table table">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th>اسم المستفيد</th>
                                                 <th>اسم الفرع</th>
-                                                <th>الكمية المخصصة</th>
-                                                <th>المستفيدين</th>
-                                                <th>تاريخ الانتهاء</th>
-                                                <th>الحالة</th>
-                                                <th>العمليات</th>
+                                                <th>الحالة الاجتماعية</th>
+                                                <th>عدد افراد الاسرة</th>
+                                                <th>الحالة التسليم</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -58,50 +56,14 @@
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{ route('projects.branchCount.create') }}" method="get" class="d-none" id="create_new">
+
+                        <form action="{{ route('beneficiareis-projects.create') }}" method="get" class="d-none"
+                            id="create_new">
                             @csrf
-                            <input type="hidden" name="project_name" value="{{$project_id}}">
+                            <input type="hidden" value="{{$project_id}}" name="project_id">
                             <button type="submit"></button>
                         </form>
-                    @foreach ($branch as $branchOne)
-                        <!-- Modal -->
-                            <div class="modal fade" id="update_status{{ $branchOne->id }}" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                تغيير الحالة</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form action="{{ route('projects.branchCount.update.status') }}" method="post" autocomplete="off">
-                                            {{ csrf_field() }}
-                                            <div class="modal-body">
 
-                                                <div class="form-group">
-                                                    <label for="status">{{__('Status')}}</label>
-                                                    <select class="form-control" id="status" name="status" required>
-                                                        <option value="" selected disabled>--{{__('اختر')}}--</option>
-                                                        <option value="1" {{ old('status',$project->status) == 1 ? 'selected' : null }}>معتمد</option>
-                                                        <option value="0" {{ old('status',$project->status) == 0 ? 'selected' : null }}>غير معتمد</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="id" value="{{ $branchOne->id }}">
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">{{__('الغاء')}}</button>
-                                                <button type="submit" class="btn btn-primary">{{__('حفظ')}}</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                        @endforeach
                     </div>
                 </div>
             </div>
@@ -141,41 +103,38 @@
             processing: true,
             "language": {
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
+            }, ajax: {
+                url: '{{ route('projects.beneficiareis.get.all',$project_id) }}',
             },
-            ajax: {
-                url: '{{ route('projects.branchCount.index',$project_id) }}',
-            },
-            columns: [{
-                    data: 'branch_id',
-                    name: 'branch_id',
+            columns: [
+                {
+                    data: 'beneficiary_name',
+                    name: 'beneficiary_name',
                     searchable: true
                 },
                 {
-                    data: 'count',
-                    name: 'count',
+                    data: 'branch_name',
+                    name: 'branch_name',
                     searchable: true
                 },
                 {
-                    data: 'beneficiaries_count',
-                    name: 'beneficiaries_count',
+                    data: 'maritial',
+                    name: 'maritial',
                     searchable: true
                 },
                 {
-                    data: 'deadline_date',
-                    name: 'deadline_date',
+                    data: 'family_member_count',
+                    name: 'family_member_count',
+                    searchable: true
+                },
+                {
+                    data: 'status',
+                    name: 'status',
                     searchable: true
                 },
 
-                {
-                    data: 'active',
-                    name: 'active',
-                    searchable: false
-                },
-                {
-                    data: ''
-                }
             ],
-            order: [2, 'desc'],
+            order: [0, 'desc'],
             buttons: [{
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle mr-2 mt-50',
@@ -243,67 +202,9 @@
                     }
                 },
 
-                {
-                    text: 'تخصيص جديد',
-                    className: 'add-new btn btn-primary mt-50',
-                    onclick: "",
-                    attr: {
-                        'onclick': "document.getElementById('create_new').submit()",
-                    },
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    }
-                }
             ],
-            columnDefs: [
-                // Actions
-                {
-                    targets: -1,
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-                        var id = full['id'];
-
-                        return (
-                            '<div class="btn-group">' +
-                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                            feather.icons['more-vertical'].toSvg({
-                                class: 'font-small-4'
-                            }) +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="/admin/projects/branch/Count/edit/' + id + '" class="dropdown-item">' +
-                            feather.icons['archive'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'تعديل</a>' +
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'حذف</a>' +
-                            '<a href="/admin/projects/branch/beneficiareis/'+id+'" class="dropdown-item" >' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'مستفيدين المشروع</a>' +
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#update_status' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'تغير الحالة</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>'
-                        );
-                    }
-                }
-            ]
-
 
         });
     </script>
-    {{-- @toastr_js
-@toastr_render --}}
+
 @stop

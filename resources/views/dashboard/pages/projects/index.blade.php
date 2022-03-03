@@ -277,7 +277,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             '<a href="projects/edit/' + id + '" class="dropdown-item">' +
                             feather.icons['user'].toSvg({class: 'font-small-4 mr-50'}) +
                             'قسيمة شرائية</a>' +
-                            '<a href="projects/beneficiareis/' + id + '" class="dropdown-item">' +
+                            '<a href="projects/all/beneficiareis/' + id + '" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({class: 'font-small-4 mr-50'}) +
                             'مستفدين المشروع</a>' +
                             '<a href="projects/branchCount/' + id + '" class="dropdown-item">' +

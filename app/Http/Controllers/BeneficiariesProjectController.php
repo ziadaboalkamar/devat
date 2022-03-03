@@ -123,8 +123,8 @@ class BeneficiariesProjectController extends Controller
         $project_id = $request->project_id;
         $branch_count = ProjectBranchCount::where('branch_id',$branch_id)->where('project_id',$project_id)->first();
        $beneficiaryCount= $branch_count -> beneficiaries_count;
-       $beneficiaryProject = BeneficiariesProject::where('project_id',$project_id)->where('branch_id',$branch_id)->count();
-       if ($beneficiaryProject <= $beneficiaryCount){
+         $beneficiaryProject = BeneficiariesProject::where('project_id',$project_id)->where('branch_id',$branch_id)->count();
+       if ($beneficiaryProject < $beneficiaryCount){
            $data = [];
            $data['project_id'] = $request->project_id;
 

@@ -26,7 +26,7 @@ class BeneficiariesProject extends Model
         return $this->belongsTo(Branches::class,'branch_id','id');
     }
     public function getActive(){
-        return $this->status_id == 0 ? ' غير فعال ': 'فعال' ;
+        return $this->status_id == 0 ? ' غير مستلم ': 'مستلم' ;
     }
     public function beneficiaries(){
         return $this->belongsTo(Beneficiary::class,'beneficiary_id','id');
