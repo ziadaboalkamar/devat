@@ -45,10 +45,10 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>اسم المستفيد</th>
+                                                <th>اسم الفرع</th>
                                                 <th>الحالة الاجتماعية</th>
                                                 <th>عدد افراد الاسرة</th>
                                                 <th>الحالة التسليم</th>
-                                                <th>العمليات</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -63,40 +63,7 @@
                             <input type="hidden" value="{{$project_id}}" name="project_id">
                             <button type="submit"></button>
                         </form>
-                        @foreach ($beneficiariesProjects as $beneficiariesProject)
-                            <!-- Modal -->
-                            <div class="modal fade" id="delete{{ $beneficiariesProject->id }}" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">حذف الفرع <span
-                                                    class="text-primary"></span>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form action="{{ route('beneficiareis-projects.destroy', $beneficiariesProject->id) }}" method="POST">
-                                            {{ method_field('delete') }}
-                                            {{ csrf_field() }}
-                                            <div class="modal-body">
-                                                <input type="hidden" name="project_id" value="{{ $beneficiariesProject->project_id }}">
-                                                {{-- <input type="hidden" name="id" value="{{ $section->id }}"> --}}
-                                                <h5>هل انت متاكد من حذف البيانات</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">{{ __('الغاء') }}</button>
-                                                <button type="submit" class="btn btn-danger">{{ __('حذف') }}</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- @include('dashboard.pages.beneficiareis.updateStatus') --}}
-                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -136,6 +103,8 @@
             processing: true,
             "language": {
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
+            }, ajax: {
+                url: '{{ route('projects.beneficiareis.get.all',$project_id) }}',
             },
             columns: [
                 {
@@ -143,10 +112,9 @@
                     name: 'beneficiary_name',
                     searchable: true
                 },
-
                 {
-                    data: 'family_member_count',
-                    name: 'family_member_count',
+                    data: 'branch_name',
+                    name: 'branch_name',
                     searchable: true
                 },
                 {
@@ -155,13 +123,16 @@
                     searchable: true
                 },
                 {
-                    data: 'active',
-                    name: 'active',
+                    data: 'family_member_count',
+                    name: 'family_member_count',
                     searchable: true
                 },
                 {
-                    data: ''
-                }
+                    data: 'status',
+                    name: 'status',
+                    searchable: true
+                },
+
             ],
             order: [0, 'desc'],
             buttons: [{
@@ -230,47 +201,10 @@
                         }, 50);
                     }
                 },
-                {
-                    text: 'اضافة مستفيد للمشروع',
-                    className: 'add-new btn btn-primary mt-50',
-                    onclick: "",
-                    attr: {
-                        'onclick': "document.getElementById('create_new').submit()",
-                    },
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    }
-                }
+
             ],
-            columnDefs: [
-                // Actions
-                {
-                    targets: -1,
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-                        var id = full['id'];
-                        return (
-                            '<div class="btn-group">' +
-                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                            feather.icons['more-vertical'].toSvg({
-                                class: 'font-small-4'
-                            }) +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-right">' +
-                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#update_status' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'تغيير الحالة</a> </div>' +
-                            '</div>' +
-                            '</div>'
-                        );
-                    }
-                }
-            ]
+
         });
     </script>
-    {{-- @toastr_js
-@toastr_render --}}
+
 @stop

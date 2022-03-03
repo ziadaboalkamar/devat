@@ -312,6 +312,11 @@
                                 class: 'font-small-4 mr-50'
                             }) +
                             'حذف</a>' +
+                            '<a href="/admin/projects/branch/beneficiareis/'+id+'" class="dropdown-item" >' +
+                            feather.icons['trash-2'].toSvg({
+                                class: 'font-small-4 mr-50'
+                            }) +
+                            'مستفيدين المشروع</a>' +
                             '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
                             ' data-target="#update_status' + id + '">' +
                             feather.icons['trash-2'].toSvg({
