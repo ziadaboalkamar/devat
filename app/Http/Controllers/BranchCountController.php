@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BeneficiariesProject;
 use App\Models\Branches;
 use App\Models\Project;
 use App\Models\ProjectBranchCount;
@@ -54,13 +55,22 @@ class BranchCountController extends Controller
 
     public function updateStatus(Request $request)
     {
+
         $b = ProjectBranchCount::findorfail($request->id);
         $project_id =  $b->project_id;
+        $branch_id = $b->branch_id;
         $project = Project::find($project_id);
         $branch = ProjectBranchCount::where("project_id","=",$project_id)->get();
+        $benefaciares_project = BeneficiariesProject::where('project_id',$project_id)->where('branch_id',$branch_id)->get();
+        foreach ($benefaciares_project as $benefaciare_project){
+            $benefaciare_project->update([
+                'branch_status' =>3
+            ]);
+        }
         $b->update([
             'status_id' => $request->status_id
         ]);
+
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
         return redirect()->route('projects.branchCount.index',$project_id)->with([$project_id,$branch,$project]);

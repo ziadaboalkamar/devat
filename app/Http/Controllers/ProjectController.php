@@ -306,9 +306,7 @@ class ProjectController extends Controller
 
 
         if ($request->ajax()) {
-            $user = Auth::user()->branch_id;
-
-            $beneficiariesProject = BeneficiariesProject::where('project_id', '=', $id)->get();
+            $beneficiariesProject = BeneficiariesProject::where('project_id', '=', $id)->where('branch_status',3)->get();
 
 
             return DataTables::of($beneficiariesProject)
