@@ -207,20 +207,13 @@ class ProjectController extends Controller
             return back();
         }
     }
-<<<<<<< HEAD
+
     public function deleteAttachment(ProjectAttachment $projectAttachment)
     {
         if (File::exists('assets/' . $projectAttachment->file)) {
             unlink('assets/' . $projectAttachment->file);
         }
         $projectAttachment->delete();
-=======
-
-    public function deleteAttachment($id)
-    {
-
-        ProjectAttachment::find($id)->delete();
->>>>>>> a4ba9b80c451e1f270072ddf9fc16cc3a6d17ae4
 
     }
 
