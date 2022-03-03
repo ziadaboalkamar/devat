@@ -106,7 +106,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('/projects/store', [ProjectController::class, 'store'])->name('projects.store');
             Route::get('/projects/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
             Route::post('/projects/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
-            Route::post('/projects/delete/attachment/{id}', [ProjectController::class, 'deleteAttachment'])->name('projects.delete.attachment');
+            Route::post('/projects/delete/attachment/{projectAttachment}', [ProjectController::class, 'deleteAttachment'])->name('projects.delete.attachment');
             Route::get('/projects/delete/attachment', [ProjectController::class, 'deleteaa'])->name('delete.attachment');
             Route::post('/projects/delete/{id}', [ProjectController::class, 'delete'])->name('projects.delete');
             Route::get('/projects/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
@@ -120,6 +120,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::get('/projects/branch/Count/edit/{id}', [BranchCountController::class, 'edit'])->name('projects.branchCount.edit');
             Route::post('/projects/branch/Count/update/{id}', [BranchCountController::class, 'update'])->name('projects.branchCount.update');
             Route::post('projects/branch/count/update_status', [BranchCountController::class, 'updateStatus'])->name('projects.branchCount.update.status');
+            Route::post('projects/branch/count/delete', [BranchCountController::class, 'delete'])->name('projects.branchCount.delete');
         });
 
     Route::middleware('can:ادارة المشاريع الخيرية')->group(function () {

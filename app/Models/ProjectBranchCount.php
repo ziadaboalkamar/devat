@@ -26,6 +26,6 @@ class ProjectBranchCount extends Model
         return $this->belongsTo(Project::class,'project_id','id');
     }
     public function getActive(){
-        return $this->status_id == 0 ? __(' انتظار') :( $this->status_id == 1 ? ' قيد المتابعة' :__('معتمد') ) ;
+        return $this->status_id == 1 ? __(' انتظار'):( $this->status_id == 2 ? ' قيد المتابعة' :__('تم الاعتماد') ) ;
     }
 }

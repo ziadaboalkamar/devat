@@ -134,7 +134,7 @@
             @can('المستفيدين')
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='book'></i><span
                             class="menu-title text-truncate" data-i18n="Invoice">المستفيدين</span><span
-                            class="badge badge-light-warning badge-pill ml-auto mr-1">{{ \App\Models\Beneficiary::count() }}</span></a>
+                            class="badge badge-light-warning badge-pill ml-auto mr-1">{{ \App\Models\Beneficiary::where('branch_id',auth()->user()->branch_id)->count() }}</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center" href="{{ route('beneficiareis.index') }}"><i
                                     data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">كافة

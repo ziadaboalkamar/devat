@@ -81,11 +81,12 @@
                                             <div class="modal-body">
 
                                                 <div class="form-group">
-                                                    <label for="status">{{__('Status')}}</label>
-                                                    <select class="form-control" id="status" name="status" required>
+                                                    <label for="status">{{__('تغيير الحالة')}}</label>
+                                                    <select class="form-control" id="status" name="status_id" required>
                                                         <option value="" selected disabled>--{{__('اختر')}}--</option>
-                                                        <option value="1" {{ old('status',$project->status) == 1 ? 'selected' : null }}>معتمد</option>
-                                                        <option value="0" {{ old('status',$project->status) == 0 ? 'selected' : null }}>غير معتمد</option>
+                                                        <option value="1" {{ old('status_id',$branchOne->status_id) == 1 ? 'selected' : null }}>انتظار</option>
+                                                        <option value="2" {{ old('status_id',$branchOne->status_id) == 2 ? 'selected' : null }}>قيد المتابعة</option>
+                                                        <option value="3" {{ old('status_id',$branchOne->status_id) == 3 ? 'selected' : null }}>تم الاعتماد</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -100,6 +101,35 @@
                                     </div>
                                 </div>
                             </div>
+
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="delete{{ $branchOne->id }}" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel"> حذف التخصيص <span class="text-primary"></span></h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="{{ route('projects.branchCount.delete') }}" method="post">
+                                                            {{ csrf_field() }}
+                                                            <div class="modal-body">
+                                                                <h5>هل انت متاكد من حذف البيانات</h5>
+                                                            </div>
+                                                            <input type="hidden" name="id" value="{{ $branchOne->id }}">
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">اغلاق</button>
+                                                                <button type="submit" class="btn btn-danger">حذف</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                         @endforeach
                     </div>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Donor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class DonorController extends Controller
@@ -146,13 +148,15 @@ class DonorController extends Controller
         $data['name'] = $request->name;
         $data['phone'] = $request->phone;
         $data['email'] = $request->email;
-        if ($request->logo != null) {
-            $img_path = null;
-            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-                $img = $request->file('logo');
-                $img_path = $img->store('/Donors', 'assets');
+        $img_path = null;
+        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+            $imag = $request->file('logo');
+            if ($donor->logo && Storage::disk('assets')->exists($donor->logo)) {
+                $img_path = $imag->storeAs('/Donors', basename($donor->logo), 'assets');
+            } else {
+                $img_path = $imag->store('/Donors', 'assets');
             }
-            $data['logo'] = $img_path;
+            $data['logo'] = strip_tags($img_path,'<img>');
         }
         $donor->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
@@ -168,6 +172,9 @@ class DonorController extends Controller
      */
     public function destroy(Donor $donor)
     {
+        if (File::exists('assets/' . $donor->logo)) {
+            unlink('assets/' . $donor->logo);
+        }
         if (count($donor->projects) > 0) {
             toastr()->error(__('لايمكنك حذف هذه المؤسسة'));
             return redirect()->route('donors.index');

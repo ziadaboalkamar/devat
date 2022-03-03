@@ -27,7 +27,7 @@ class BranchCountController extends Controller
 
         $branchesCount = ProjectBranchCount::find($id);
         $project_id=  $branchesCount->project_id;
-         $project = Project::find($project_id);
+        $project = Project::find($project_id);
         $branch = ProjectBranchCount::where("project_id","=",$project_id)->get();
 
         $attachment_array = $request->invoice;
@@ -40,6 +40,7 @@ class BranchCountController extends Controller
                 'count'=>$attachment_array[$i]["count"],
                 'deadline_date'=>$attachment_array[$i]["deadline_date"],
                 'project_id'=>$project_id,
+                'status_id' => 1,
 
 
 
@@ -53,17 +54,24 @@ class BranchCountController extends Controller
 
     public function updateStatus(Request $request)
     {
-
         $b = ProjectBranchCount::findorfail($request->id);
         $project_id =  $b->project_id;
         $project = Project::find($project_id);
         $branch = ProjectBranchCount::where("project_id","=",$project_id)->get();
         $b->update([
-            'status_id'=>$request->status
+            'status_id' => $request->status_id
         ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
         return redirect()->route('projects.branchCount.index',$project_id)->with([$project_id,$branch,$project]);
 
+    }
+
+    public function delete(Request $request)
+    {
+       $b = ProjectBranchCount::findorfail($request->id);
+       $b->delete();
+       toastr()->success(__('تم حذف البيانات بنجاح'));
+        return redirect()->back();
     }
 }

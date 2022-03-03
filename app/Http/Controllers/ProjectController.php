@@ -14,6 +14,7 @@ use App\Models\MainBranche;
 use App\Models\Project;
 use App\Models\ProjectAttachment;
 use App\Models\ProjectBranchCount;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -54,7 +55,7 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $categories = CategoriesOfProject::all();
+        $categories = CategoriesOfProject::get();
         $currencies = Currency::all();
         $attachments = ProjectAttachment::all();
         $categories_attachment = AttachmentCategory::all();
@@ -209,10 +210,12 @@ class ProjectController extends Controller
             return back();
         }
     }
-    public function deleteAttachment($id)
+    public function deleteAttachment(ProjectAttachment $projectAttachment)
     {
-
-     ProjectAttachment::find($id)->delete();
+        if (File::exists('assets/' . $projectAttachment->file)) {
+            unlink('assets/' . $projectAttachment->file);
+        }
+        $projectAttachment->delete();
 
     }
 

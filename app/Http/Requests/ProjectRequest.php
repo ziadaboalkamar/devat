@@ -27,7 +27,6 @@ class ProjectRequest extends FormRequest
             'main_branch_id' =>['required'],
             'project_name' => ['required', 'string','max:225'],
             'grant_date' =>  ['required', 'date'],
-            'category_id' =>  ['required'],
             'donor_id' =>  ['required'],
             'grant_value' => ['required','numeric'] ,
             'currency_id' => ['required'],
@@ -40,7 +39,6 @@ class ProjectRequest extends FormRequest
     {
         return [
             'main_branch_id.required' => 'هذا الحقل مطلوب',
-            'category_id.required' => 'هذا الحقل مطلوب',
             'donor_id.required' => 'هذا الحقل مطلوب',
             'currency_id.required' => 'هذا الحقل مطلوب',
             'grant_value.required' => 'هذا الحقل مطلوب',

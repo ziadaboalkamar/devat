@@ -114,7 +114,6 @@
                                                 @if ($categories && $categories->count() > 0)
                                                     @foreach ($categories as $category)
                                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected':null }}>{{ $category->name }}</option>
-
                                                     @endforeach
                                                 @endif
 
@@ -255,7 +254,7 @@
                                             <div class="col-12">
                                                 <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
                                                     <i data-feather="plus" class="mr-25"></i>
-                                                    <span>Add New</span>
+                                                    <span>اضافة جديدة</span>
                                                 </button>
                                             </div>
                                         </div>

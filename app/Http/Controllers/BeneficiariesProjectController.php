@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\ProjectBranchCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class BeneficiariesProjectController extends Controller
@@ -116,7 +117,7 @@ class BeneficiariesProjectController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BeneficiariesProjectRequest $request, $id)
+    public function store(Request $request, $id)
     {
         $beneficiary = Beneficiary::find($id);
         $branch_id = $beneficiary->branch_id;
@@ -138,7 +139,16 @@ class BeneficiariesProjectController extends Controller
 
 
            $success = BeneficiariesProject::create($data);
+         
+           
            if ($success) {
+               
+            ProjectBranchCount::where('project_id',$request->project_id)->where('branch_id',$beneficiary->branch_id)->update([
+                'status_id' => 2,
+
+
+
+            ]);
                return response()->json([
                    'status' => 200,
                ]);
