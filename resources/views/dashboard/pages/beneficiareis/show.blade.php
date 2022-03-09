@@ -41,50 +41,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane fade active show" id="home-02" role="tabpanel"
                                             aria-labelledby="home-02-tab">
-                                            {{-- <table class="table table-striped table-hover" style="text-align:center">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">{{__('الاسم الاول')}}</th>
-                                                        <td>{{ $beneficiary->firstName }}</td>
-                                                        <th scope="row">{{__('اسم الاب')}}</th>
-                                                        <td>{{$beneficiary->secondName}}</td>
-                                                        <th scope="row">{{__('اسم الجد')}}</th>
-                                                        <td>{{$beneficiary->thirdName}}</td>
-                                                        <th scope="row">{{__('اسم العائلة')}}</th>
-                                                        <td>{{$beneficiary->lastName}}</td>
-                                                    </tr>
-                                                    <br>
-                                                    <tr>
-                                                        <th scope="row">{{__('الجنس')}}</th>
-                                                        <td>{{ $beneficiary->gender }}</td>
-                                                        <th scope="row">{{__('رقم الهوية')}}</th>
-                                                        <td>{{$beneficiary->id_number}}</td>
-                                                        <th scope="row">{{__('رقم الهاتف')}}</th>
-                                                        <td>{{ $beneficiary->PhoneNumber}}</td>
-                                                        <th scope="row">{{__('عدد افراد الاسرة')}}</th>
-                                                        <td>{{ $beneficiary->family_member}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">{{__('اسم الفرع')}}</th>
-                                                        <td>{{ $beneficiary->branchs->name }}</td>
-                                                        <th scope="row">{{__('اسم المدينة')}}</th>
-                                                        <td>{{ $beneficiary->cities->city_name }}</td>
-                                                        <th scope="row">{{__('العنوان')}}</th>
-                                                        <td>{{ $beneficiary->address }}</td>
-                                                        <th scope="row">{{__('الحالة الاجتماعية')}}</th>
-                                                        <td>{{ $beneficiary->maritial }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">{{__('الحالة ')}}</th>
-                                                        <td>{{ $beneficiary->getActive() }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ $beneficiary->getActive() }}</td>
 
-                                                    </tr>
-                                                </tbody>
-                                             
-                                            </table> --}}
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-6 border-right-2 border-right-blue-400">
                                                     <div class="form-group row">
@@ -192,12 +149,9 @@
                         </div>
                     </div>
                 </section>
-                <!-- Input Mask End -->
-
             </div>
         </div>
     </div>
-    <!-- END: Content-->
 @endsection
 @section('js')
 @stop
