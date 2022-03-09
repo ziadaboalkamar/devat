@@ -84,7 +84,7 @@ class BeneficiariesProjectController extends Controller
                 ->editColumn('FullName', function (Beneficiary $beneficiary) {
                     return $beneficiary->getFullNameAttribute();
                 })
-              
+
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
@@ -107,6 +107,9 @@ class BeneficiariesProjectController extends Controller
 
             'project_id' => $this->project_id,
             'family_members' => $n,
+            'branchCount' => ProjectBranchCount::where('project_id','=', $this->project_id)->where('branch_id',$user)->first(),
+            'beneficiariesCount' =>BeneficiariesProject::where('project_id', '=', $this->project_id)->where('branch_id', '=', $user)->count()
+
         ]);
     }
 
@@ -139,9 +142,6 @@ class BeneficiariesProjectController extends Controller
 
             if ($success) {
 
-                ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id', $beneficiary->branch_id)->update([
-                    'status_id' => 2,
-                ]);
                 return response()->json([
                     'status' => 200,
                 ]);
@@ -246,5 +246,41 @@ class BeneficiariesProjectController extends Controller
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
         return redirect()->route('beneficiareis.index');
+    }
+    public function submitAll(Request $request){
+        try {
+            $branch_id = \auth()->user()->branch_id;
+
+            $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
+            if ($branchCount->status_id == 1){
+                if ($request->ajax()){
+                    $branch_id = \auth()->user()->branch_id;
+
+                    $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
+                    ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id',$branch_id)->update([
+                        'status_id' => 2,
+                    ]);
+                    return response()->json([
+                        'status' => 200,
+                    ]);
+                }else{
+                    ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id',$branch_id)->update([
+                        'status_id' => 2,
+                    ]);
+
+                    toastr()->success(__('تم اعتماد المستفدين بنجاح'));
+                    return redirect()->back();
+                }
+
+            }
+
+
+
+
+        }catch (\Exception $exception){
+            toastr()->success(__('يوجد خطاء في الاعتماد'));
+            return redirect()->back();
+        }
+
     }
 }

@@ -1,4 +1,6 @@
 @extends('dashboard.layouts.master')
+@section('title','الصلاحيات')
+
 @section('content')
 
     <div class="app-content content">

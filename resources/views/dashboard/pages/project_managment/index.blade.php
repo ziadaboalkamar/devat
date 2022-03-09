@@ -282,7 +282,7 @@
                                     feather.icons['archive'].toSvg({
                                         class: 'font-small-4 mr-50'
                                     }) +
-                                    'اضافة مستفيدين</a>' +
+                                    'عرض مستفيدين</a>' +
                                     '</div>' +
                                     '</div>' +
                                     '</div>'

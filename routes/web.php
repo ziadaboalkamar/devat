@@ -27,9 +27,7 @@ use App\Http\Controllers\ProjectManagmentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -131,6 +129,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::get('/projects/management', [ProjectManagmentController::class, 'index'])->name('projects.management.index');
         Route::post('projects/management/update_status', [ProjectManagmentController::class, 'updateStatus'])->name('projects.management.update.status');
         Route::get('/projects/beneficiareis/{id}', [ProjectController::class, 'benefactoryPoject'])->name('projects.beneficiareis.get');
+        Route::post('projects/submitAll/beneficiaries', [BeneficiariesProjectController::class, 'submitAll'])->name('projects.submit.all.beneficiaries');
+
 
     });
         //    end branch count

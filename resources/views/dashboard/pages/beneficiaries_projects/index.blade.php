@@ -64,6 +64,12 @@
                             <input type="hidden" value="{{$project_id}}" name="project_id">
                             <button type="submit"></button>
                         </form>
+                        <form action="{{ route('projects.submit.all.beneficiaries') }}" method="post" class="d-none"
+                              id="submit_all">
+                            @csrf
+                            <input type="hidden" value="{{$project_id}}" name="project_id">
+                            <button type="submit"></button>
+                        </form>
                         @foreach ($beneficiariesProjects as $beneficiariesProject)
                             <!-- Modal -->
                             <div class="modal fade" id="delete{{ $beneficiariesProject->id }}" tabindex="-1" role="dialog"
@@ -236,9 +242,11 @@
                         }, 50);
                     }
                 },
+                    @if($branchCount->status_id == 1 )
+
                 {
                     text: 'اضافة مستفيد للمشروع',
-                    className: 'add-new btn btn-primary mt-50',
+                    className: 'add-new btn btn-primary mr-2 mt-50',
                     onclick: "",
                     attr: {
                         'onclick': "document.getElementById('create_new').submit()",
@@ -247,6 +255,20 @@
                         $(node).removeClass('btn-secondary');
                     }
                 }
+                @endif,
+              @if($branchCount->beneficiaries_count	== $beneficiariesCount && $branchCount->status_id == 1 )
+                {
+                    text: 'اعتماد المستفيدين',
+                    className: 'add-new btn btn-primary mr-2 mt-50',
+                    onclick: "",
+                    attr: {
+                        'onclick': "document.getElementById('submit_all').submit()",
+                    },
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    }
+                }
+                @endif
             ],
             columnDefs: [
                 // Actions

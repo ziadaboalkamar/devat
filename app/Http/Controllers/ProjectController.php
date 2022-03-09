@@ -224,6 +224,8 @@ class ProjectController extends Controller
 
     public function benefactoryPoject($id, Request $request)
     {
+        $user = Auth::user()->branch_id;
+
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
 
@@ -256,21 +258,25 @@ class ProjectController extends Controller
         return view('dashboard.pages.beneficiaries_projects.index', [
             'beneficiariesProjects' => BeneficiariesProject::where('project_id', '=', $id)->get(),
             'project_id' => $id,
-            'project' => Project::find($id)
+            'project' => Project::find($id),
+            'branchCount' => ProjectBranchCount::where('project_id','=',$id)->where('branch_id',$user)->first(),
+            'beneficiariesCount' =>BeneficiariesProject::where('project_id', '=', $id)->where('branch_id', '=', $user)->count()
+
         ]);
     }
 
     public function benefactoryPojectForBranch($id, Request $request)
-    {    $project_branch_count = ProjectBranchCount::find($id);
-        $project_id =$project_branch_count->project_id;
+    {
+        $project_branch_count = ProjectBranchCount::find($id);
+        $project_id = $project_branch_count->project_id;
 
 
         if ($request->ajax()) {
             $project_branch_count = ProjectBranchCount::find($id);
-            $project_id =$project_branch_count->project_id;
+            $project_id = $project_branch_count->project_id;
             $branch_id = $project_branch_count->branch_id;
 
-            $beneficiariesProject = BeneficiariesProject::where('project_id','=',$project_id)->where('branch_id','=',$branch_id)->get();
+            $beneficiariesProject = BeneficiariesProject::where('project_id', '=', $project_id)->where('branch_id', '=', $branch_id)->get();
 
             return DataTables::of($beneficiariesProject)
                 ->addIndexColumn()
@@ -304,7 +310,7 @@ class ProjectController extends Controller
 
 
         if ($request->ajax()) {
-            $beneficiariesProject = BeneficiariesProject::where('project_id', '=', $id)->where('branch_status',3)->get();
+            $beneficiariesProject = BeneficiariesProject::where('project_id', '=', $id)->where('branch_status', 3)->get();
 
 
             return DataTables::of($beneficiariesProject)
@@ -400,6 +406,7 @@ class ProjectController extends Controller
 
         for ($i = 0; $i < count($attachment_array); $i++) {
 
+
             ProjectBranchCount::create([
                 'branch_id' => $attachment_array[$i]["branch_id"],
                 'beneficiaries_count' => $attachment_array[$i]["beneficiaries_count"],
@@ -410,8 +417,9 @@ class ProjectController extends Controller
 
 
             ]);
+
         }
-        toastr()->success(__('تم تحديث البيانات بنجاح'));
+        toastr()->success(__('تم اضافة تخصيص الفروع بنجاح'));
         return redirect()->route('projects.branchCount.index', $project_id)->with([$project_id, $branch, $project]);
 
     }

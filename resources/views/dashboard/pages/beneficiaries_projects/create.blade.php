@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <h5 class="card-header">Search Filter</h5>
+                                <h5 class="card-header">بحث متقدم</h5>
                                 <div class="d-flex justify-content-between align-items-center mx-50 row pt-0 pb-2">
                                     <div class="col-md-3 user_name"></div>
                                     <div class="col-md-3 famely_num"></div>
@@ -98,7 +98,12 @@
             </div>
             {{-- <button class="btn btn-success btn-save-project-beneficiaries">حفظ</button> --}}
             <a href="{{ route('projects.beneficiareis.get', $project_id) }}" class="btn btn-outline-secondary">اغلاق</a>
-
+            <form method="post"
+                  id="submit_all" style="display: inline-block;">
+                @csrf
+                <input type="hidden" value="{{$project_id}}" name="project_id">
+                <button id="submit_all_beneficiareis" class="btn btn-outline-secondary" style="display: none" type="submit">اعتماد المستفيدين</button>
+            </form>
             </section>
 
         </div>
@@ -206,6 +211,7 @@
 
             columnDefs: [
                 // Actions
+
                 {
                     targets: -1,
                     orderable: false,
@@ -374,11 +380,13 @@
             progressBar: true,
 
             });
-
+        $('#submit_all_beneficiareis').hide();
 
 
             }
             else if(data.status == 404){
+                $('#submit_all_beneficiareis').show();
+
                 swal.fire({
                     title: "عذرا",
                     text: "لا يمكن اضافة مستفيد جديد قد تخطيت العدد المسموح",
@@ -435,6 +443,39 @@
             });
         @endforeach
     </script>
+    <script>
+        var buttonApprove = document.getElementById('save_ben');
+        var buttonDelete = document.getElementById('delete_ben');
 
+        $(document).on('click', '#submit_all_beneficiareis', function (e) {
+            e.preventDefault();
+            var submitAll = new FormData($('#submit_all')[0])
+            $.ajax({
+                type: 'post',
+                url: "{{ route('projects.submit.all.beneficiaries') }}",
+                data: submitAll,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    if(data.status == 200){
+                        data.msg;
+                        toastr['success']('تم الاعتماد بنجاح', 'Progress Bar', {
+                            closeButton: true,
+                            tapToDismiss: false,
+                            progressBar: true,
+
+                        });
+
+
+                    }
+                },
+                error: function (project) {
+
+                }
+            })
+        });
+
+    </script>
 
 @stop

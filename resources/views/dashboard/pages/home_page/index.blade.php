@@ -26,9 +26,9 @@
                                 <!-- Bar Chart - Orders -->
                                 <div class="col-lg-3 col-md-3 col-6">
                                     <div class="card">
-                                        <div class="card-body pb-50">
-                                            <h6>المشاريع</h6>
-                                            <h2 class="font-weight-bolder mb-1">{{\App\Models\Project::count()}}</h2>
+                                        <div class="card-body pb-50" style="background: #5463FF">
+                                            <h6 style="color: white">المشاريع</h6>
+                                            <h2 style="color: white" class="font-weight-bolder mb-1">{{\App\Models\Project::count()}}</h2>
                                             <div id="statistics-order-chart"></div>
                                         </div>
                                     </div>
@@ -37,9 +37,9 @@
                                 <!-- Bar Chart - Orders -->
                                 <div class="col-lg-3 col-md-3 col-6">
                                     <div class="card">
-                                        <div class="card-body pb-50">
-                                            <h6>المستفدين</h6>
-                                            <h2 class="font-weight-bolder mb-1">{{\App\Models\Beneficiary::count()}}</h2>
+                                        <div class="card-body pb-50" style="background: #FFC300">
+                                            <h6 style="color: white">المستفدين</h6>
+                                            <h2 style="color: white"  class="font-weight-bolder mb-1">{{\App\Models\Beneficiary::count()}}</h2>
                                             <div id="statistics-order-chart"></div>
                                         </div>
                                     </div>
@@ -48,9 +48,9 @@
                                 <!-- Bar Chart - Orders -->
                                 <div class="col-lg-3 col-md-3 col-6">
                                     <div class="card">
-                                        <div class="card-body pb-50">
-                                            <h6>الفروع</h6>
-                                            <h2 class="font-weight-bolder mb-1">{{\App\Models\Branches::count()}}</h2>
+                                        <div class="card-body pb-50" style="background: #FF1818">
+                                            <h6 style="color: white">الفروع</h6>
+                                            <h2 style="color: white" class="font-weight-bolder mb-1">{{\App\Models\Branches::count()}}</h2>
                                             <div id="statistics-order-chart"></div>
                                         </div>
                                     </div>
@@ -60,9 +60,9 @@
                                 <!-- Line Chart - Profit -->
                                 <div class="col-lg-3 col-md-3 col-6">
                                     <div class="card card-tiny-line-stats">
-                                        <div class="card-body pb-50">
-                                            <h6>المشاريع الفعالة</h6>
-                                            <h2 class="font-weight-bolder mb-1">{{\App\Models\Project::where('status','=',1)->count()}}</h2>
+                                        <div class="card-body pb-50" style="background: #42C2FF">
+                                            <h6 style="color: white">المشاريع الفعالة</h6>
+                                            <h2 style="color: white" class="font-weight-bolder mb-1">{{\App\Models\Project::where('status','=',1)->count()}}</h2>
                                             <div id="statistics-profit-chart"></div>
                                         </div>
                                     </div>

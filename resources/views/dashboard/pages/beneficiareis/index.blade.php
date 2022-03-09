@@ -50,9 +50,6 @@
                                                 <th>رقم الهوية</th>
                                                 <th>رقم الجوال</th>
                                                 <th>عدد افراد الاسرة</th>
-                                                <th>اسم الفرع</th>
-                                                {{-- <th>المدينة</th>
-                                                <th>العنوان</th> --}}
                                                 <th>الحالة الاجتماعية</th>
                                                 <th>الحالة</th>
                                                 <th>العمليات</th>
@@ -173,22 +170,8 @@
                     name: 'family_member',
                     searchable: true
                 },
-                {
-                    data: 'branch_name',
-                    name: 'branch_name',
-                    searchable: true
-                },
 
-                // {
-                //     data: 'city_name',
-                //     name: 'city_name',
-                //     searchable: true
-                // },
-                // {
-                //     data: 'address',
-                //     name: 'address',
-                //     searchable: false
-                // },
+
                 {
                     data: 'maritial',
                     name: 'maritial',
