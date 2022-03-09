@@ -2,8 +2,7 @@
 @section('title','تعديل مستخدم')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset("app-assets/vendors/css/forms/select/select2.min.css")}}">
-
-    @stop
+@stop
 @section('content')
 
     <div class="app-content content ">
@@ -126,13 +125,6 @@
     </div>
 @endsection
 @section('js')
-
-
-
-    <!-- BEGIN: Page Vendor JS-->
     <script src="{{asset("app-assets/vendors/js/forms/select/select2.full.min.js")}}"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Page JS-->
     <script src="{{asset("app-assets/js/scripts/forms/form-select2.js")}}"></script>
 @stop

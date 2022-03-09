@@ -30,12 +30,8 @@
                         </div>
                     </div>
                     <div class="content-body">
-                        <!-- users list start -->
                         <section class="app-user-list">
-                            <!-- users filter start -->
-
-                            <!-- users filter end -->
-                            <!-- list section start -->
+                           
                             <div class="card">
                                 <div class="card-datatable table-responsive pt-0">
                                     <table class="user-list-table table">
