@@ -162,10 +162,8 @@
 
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
-                                            <label for="prefix">الاداريات</label>
-
-                                            <input type="text" name="managerial_fees" value="{{ old('managerial_fees') }}" class="form-control prefix-mask"
-                                                id="prefix" />
+                                            <label for="prefix">نسبة الادارايات</label>
+                                            <input type="text" name="managerial_fees" placeholder="%" value="{{ old('managerial_fees') }}" class="form-control prefix-mask" id="prefix" />
                                             @error('managerial_fees')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

@@ -100,7 +100,7 @@ class BeneficiariesProjectController extends Controller
                 ->make(true);
         }
 
-        for ($i = 1; $i < 16; $i++) {
+        for ($i = 1; $i < 31; $i++) {
             $n[] = $i;
         }
         return view('dashboard.pages.beneficiaries_projects.create', [
@@ -176,7 +176,7 @@ class BeneficiariesProjectController extends Controller
      */
     public function edit(BeneficiariesProject $beneficiareis_project)
     {
-        for ($i = 1; $i < 16; $i++) {
+        for ($i = 1; $i < 31; $i++) {
             $n[] = $i;
         }
         return view('dashboard.pages.beneficiaries_projects.edit', [

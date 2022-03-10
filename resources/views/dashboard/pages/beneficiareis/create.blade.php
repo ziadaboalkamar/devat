@@ -115,6 +115,7 @@
                                                 <option value="اعزب" {{ old('maritial') == 1 ? 'selected' : null }}>اعزب</option>
                                                 <option value="متزوج" {{ old('maritial') == 2 ? 'selected' : null }}>متزوج</option>
                                                 <option value="مطلق" {{ old('maritial') == 3 ? 'selected' : null }}>مطلق</option>
+                                                <option value="ارمل" {{ old('maritial') == 4 ? 'selected' : null }}>ارمل</option>
                                             </select>
                                             @error('maritial')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>

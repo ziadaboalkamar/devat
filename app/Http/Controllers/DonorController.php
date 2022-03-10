@@ -58,13 +58,12 @@ class DonorController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'phone' => 'required|Digits:10|numeric|unique:donors',
+            'phone' => 'nullable|Digits:10|numeric|unique:donors',
             'logo' => 'required|mimes:jpg,jpeg,png|max:2000',
             'email' => 'required|unique:donors|email',
         ],[
             'name.required' => 'هذا الحقل مطلوب',
             'name.string' => 'يجب ان يكون الحق نصي',
-            'phone.required' => 'هذا الحقل مطلوب',
             'phone.digits' => 'يجب ان يكون عدد الارقام 10 ',
             'phone.numeric' => 'يجب ان يكون الحقل رقم',
             'phone.unique' => 'القيمة مستخدمة من قبل',
@@ -127,13 +126,12 @@ class DonorController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'phone' => 'required|Digits:10|numeric|unique:donors,phone,' . $donor->id,
+            'phone' => 'nullable|Digits:10|numeric|unique:donors,phone,' . $donor->id,
             'logo' => 'sometimes|mimes:jpg,jpeg,png|max:2000',
             'email' => 'required|email|unique:donors,email,' . $donor->id,
         ],[
             'name.required' => 'هذا الحقل مطلوب',
             'name.string' => 'يجب ان يكون الحق نصي',
-            'phone.required' => 'هذا الحقل مطلوب',
             'phone.digits' => 'يجب ان يكون عدد الارقام 10 ',
             'phone.numeric' => 'يجب ان يكون الحقل رقم',
             'phone.unique' => 'القيمة مستخدمة من قبل',

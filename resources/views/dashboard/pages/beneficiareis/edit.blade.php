@@ -112,6 +112,7 @@
                                                 <option value="اعزب" {{ old('maritial',$beneficiary->maritial) == 'اعزب' ? 'selected' : null }}>اعزب</option>
                                                 <option value="متزوج" {{ old('maritial',$beneficiary->maritial) == 'متزوج' ? 'selected' : null }}>متزوج</option>
                                                 <option value="مطلق" {{ old('maritial',$beneficiary->maritial) == 'مطلق' ? 'selected' : null }}>مطلق</option>
+                                                <option value="ارمل" {{ old('maritial',$beneficiary->maritial) == 'ارمل' ? 'selected' : null }}>ارمل</option>
                                             </select>
                                             @error('maritial')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>

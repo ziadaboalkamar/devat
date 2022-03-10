@@ -32,7 +32,7 @@ class ProjectRequest extends FormRequest
             'currency_id' => ['required'],
             'exchange_amount' => ['required','numeric'],
             'start_date'=> ['required', 'date'],
-            'managerial_fees' =>  ['required', 'string','max:225'],
+            'managerial_fees' =>  ['required', 'numeric','max:100'],
         ];
     }
     public function messages()
@@ -49,7 +49,8 @@ class ProjectRequest extends FormRequest
             'project_name.required' => 'هذا الحقل مطلوب',
             'project_name.string' => 'يجب ان يكون الحق نصي',
             'managerial_fees.required' => 'هذا الحقل مطلوب',
-            'managerial_fees.string' => 'يجب ان يكون الحق نصي',
+            'managerial_fees.numeric' => 'يجب ان يكون الحق رقمي',
+            'managerial_fees.max' => 'يجب ان يكون الرقم اقل من 100 ',
 
             'grant_date.required' => 'هذا الحقل مطلوب',
             'grant_date.date' => 'يجب ان تكون الصيغة تاريخ',

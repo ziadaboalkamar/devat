@@ -54,14 +54,45 @@ class BeneficiaryController extends Controller
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
-                // ->editColumn('project_name', function (Beneficiary $beneficiary) {
-                //     return $beneficiary->projects->company_name;
-                // })
+                
                 ->rawColumns(['record_select', 'actions'])
                 ->make(true);
         }
 
         return view('dashboard.pages.beneficiareis.index',[
+            'beneficiareis' => Beneficiary::get(),
+        ]);
+    }
+    public function allBeneficiaries(Request $request)
+    {
+        // $beneficiary = Beneficiary::all();
+        // return $beneficiary;
+        if($request->ajax()){
+
+            $beneficiary = Beneficiary::all();
+            return DataTables::of($beneficiary)
+                ->addIndexColumn()
+                ->editColumn('created_at', function (Beneficiary $beneficiary) {
+                    return $beneficiary->created_at->format('Y-m-d');
+                })
+                ->editColumn('city_name', function (Beneficiary $beneficiary) {
+                    return $beneficiary->cities->city_name;
+                })
+                ->editColumn('active', function (Beneficiary $beneficiary) {
+                    return $beneficiary->getActive();
+                })
+                ->editColumn('FullName', function (Beneficiary $beneficiary) {
+                    return $beneficiary->getFullNameAttribute();
+                })
+                ->editColumn('branch_name', function (Beneficiary $beneficiary) {
+                    return $beneficiary->branchs->name;
+                })
+                
+                ->rawColumns(['record_select', 'actions'])
+                ->make(true);
+        }
+
+        return view('dashboard.pages.beneficiareis.allBeneficiaries',[
             'beneficiareis' => Beneficiary::get(),
         ]);
     }
@@ -73,7 +104,7 @@ class BeneficiaryController extends Controller
      */
     public function create()
     {
-        for($i = 1 ; $i < 16 ; $i++)
+        for($i = 1 ; $i < 31 ; $i++)
         {
             $n[] = $i;
         }
@@ -136,7 +167,7 @@ class BeneficiaryController extends Controller
      */
     public function edit(Beneficiary $beneficiarei)
     {
-        for($i = 1 ; $i < 16 ; $i++)
+        for($i = 1 ; $i < 31 ; $i++)
         {
             $n[] = $i;
         }

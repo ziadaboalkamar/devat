@@ -86,6 +86,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('category-of-projects', CategoryOfProjectController::class)->middleware('can:اقسام المشاريع الخيرية');
         Route::resource('donors', DonorController::class)->middleware('can:المؤسسات الداعمة');
         Route::resource('beneficiareis', BeneficiaryController::class)->middleware('can:المستفيدين');
+        Route::get('beneficiary/allBeneficiaries', [BeneficiaryController::class,'allBeneficiaries'])->name('beneficiareis.allBeneficiaries')->middleware('can:الصلاحيات');
+
         Route::get('getbeneficiareis', [BeneficiariesProjectController::class, 'create'])->name('beneficiareis.get');
         Route::post('beneficiareis-projects/test/{id}', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
         Route::post('beneficiareis/projects/delete/{id}',[BeneficiariesProjectController::class,'destroy'])->name('beneficiareisProjects.destroy');
