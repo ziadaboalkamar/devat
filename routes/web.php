@@ -16,7 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VawtcherController;
 use App\Http\Controllers\BranchCountController;
 use App\Http\Controllers\ProjectManagmentController;
-
+use App\Http\Controllers\Setting2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,25 +56,26 @@ require __DIR__ . '/auth.php';
 //         Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
 //         Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('users.destroy');
 // =======
-Route::prefix('admin')->middleware('auth')->group(function () {
-//    home route
-    Route::get('/',[HomeController::class,'index'])->name('admin');
-//    start user
-    Route::get('/users',[UserController::class,'index'])->name('users.index');
-    Route::get('/users/create',[UserController::class,'create'])->name('users.create');
-    Route::post('/users/store',[UserController::class,'store'])->name('users.store');
-    Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('users.edit');
-    Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('user.view');
-    Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
-    Route::post('/users/delete/{id}',[UserController::class,'destroy'])->name('users.destroy');
-    Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
-    Route::get('/users/profile/{id}',[UserController::class,'profile'])->name('user.profile');
-    Route::post('users/update/profile/{id}', [UserController::class, 'updateProfile'])->name('user.update.profile');
+Route::prefix('admin')->middleware('auth')->group(
+    function () {
+        //    home route
+        Route::get('/', [HomeController::class, 'index'])->name('admin');
+        //    start user
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+        Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('user.view');
+        Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::post('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::post('users/update_status', [UserController::class, 'updateStatus'])->name('users.update.status');
+        Route::get('/users/profile/{id}', [UserController::class, 'profile'])->name('user.profile');
+        Route::post('users/update/profile/{id}', [UserController::class, 'updateProfile'])->name('user.update.profile');
 
 
         //    end user
         //    start roles route
-        // Route::get('/users/roles/{id}', [RoleController::class, 'show'])->name('user.view.role');
+        Route::get('/users/roles/{id}', [RoleController::class,'show'])->name('user.view.role');
 
         Route::get('/users/roles/update/{id}', [RoleController::class, 'update_role'])->name('user.role-update');
 
@@ -86,17 +87,19 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('category-of-projects', CategoryOfProjectController::class)->middleware('can:اقسام المشاريع الخيرية');
         Route::resource('donors', DonorController::class)->middleware('can:المؤسسات الداعمة');
         Route::resource('beneficiareis', BeneficiaryController::class)->middleware('can:المستفيدين');
-        Route::get('beneficiary/allBeneficiaries', [BeneficiaryController::class,'allBeneficiaries'])->name('beneficiareis.allBeneficiaries')->middleware('can:الصلاحيات');
+        Route::get('allBeneficiaries', [BeneficiaryController::class, 'allBeneficiaries'])->name('beneficiareis.allBeneficiaries')->middleware('can:الصلاحيات');
 
         Route::get('getbeneficiareis', [BeneficiariesProjectController::class, 'create'])->name('beneficiareis.get');
         Route::post('beneficiareis-projects/test/{id}', [BeneficiariesProjectController::class, 'store'])->name('beneficiareisProjects.store');
-        Route::post('beneficiareis/projects/delete/{id}',[BeneficiariesProjectController::class,'destroy'])->name('beneficiareisProjects.destroy');
+        Route::post('beneficiareis/projects/delete/{id}', [BeneficiariesProjectController::class, 'destroy'])->name('beneficiareisProjects.destroy');
 
         Route::resource('beneficiareis-projects', BeneficiariesProjectController::class)->middleware('can:مستفيدين المشروع');
         Route::post('update_status', [BeneficiaryController::class, 'updateStatus'])->name('update_status');
         Route::resource('vawtchers', VawtcherController::class)->middleware('can:القسائم');
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index')->middleware('can:الاعدادات');
+        Route::get('settings-tow', [Setting2Controller::class, 'index'])->name('settings2.index')->middleware('can:الاعدادات');
         Route::post('update_setting', [SettingController::class, 'update'])->name('settings.update');
+        Route::post('update_setting_tow', [Setting2Controller::class, 'update'])->name('settings2.update');
         Route::resource('roles', RoleController::class)->middleware('can:الصلاحيات');
 
         //    start project
@@ -123,20 +126,21 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
             Route::post('projects/branch/count/delete', [BranchCountController::class, 'delete'])->name('projects.branchCount.delete');
             Route::get('/projects/branch/beneficiareis/{id}', [ProjectController::class, 'benefactoryPojectForBranch'])->name('projects.beneficiareis.get.for.branch');
+            Route::get('projects/deleteImag/{id}',[ProjectController::class, 'deleteImag'])->name('projects.deleteImag');
+            Route::post('projects/import_excel/import',[ProjectController::class, 'import'] )->name('import_excel.import');
 
         });
 
-    Route::middleware('can:ادارة المشاريع الخيرية')->group(function () {
+        Route::middleware('can:ادارة المشاريع الخيرية')->group(function () {
 
-        Route::get('/projects/management', [ProjectManagmentController::class, 'index'])->name('projects.management.index');
-        Route::post('projects/management/update_status', [ProjectManagmentController::class, 'updateStatus'])->name('projects.management.update.status');
-        Route::get('/projects/beneficiareis/{id}', [ProjectController::class, 'benefactoryPoject'])->name('projects.beneficiareis.get');
-        Route::post('projects/submitAll/beneficiaries', [BeneficiariesProjectController::class, 'submitAll'])->name('projects.submit.all.beneficiaries');
-
-
-    });
+            Route::get('/projects/management', [ProjectManagmentController::class, 'index'])->name('projects.management.index');
+            Route::post('projects/management/update_status', [ProjectManagmentController::class, 'updateStatus'])->name('projects.management.update.status');
+            Route::get('/projects/beneficiareis/{id}', [ProjectController::class, 'benefactoryPoject'])->name('projects.beneficiareis.get');
+            Route::post('projects/submitAll/beneficiaries', [BeneficiariesProjectController::class, 'submitAll'])->name('projects.submit.all.beneficiaries');
+            Route::post('projects/submitAll2/beneficiaries', [BeneficiariesProjectController::class, 'submitAll2'])->name('projects.submit.all2.beneficiaries');
+        });
         //    end branch count
-
+        Route::get('pro/beneficiareis/createBen',[BeneficiariesProjectController::class, 'createBen'])->name('beneficiareis.createBen');
 
 
     }

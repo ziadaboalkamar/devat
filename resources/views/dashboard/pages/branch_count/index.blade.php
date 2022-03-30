@@ -32,7 +32,10 @@
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
                                     <h2 class="content-header-title float-left mb-0">تخصيص مشروع: {{$project->project_name}}</h2>
-
+                                    <div>
+                                        <span>عدد المستفيدين <span class="h3">{{ $ben }}</span></span> |
+                                        <span>عدد الكمية <span class="h3">{{ $count }}</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

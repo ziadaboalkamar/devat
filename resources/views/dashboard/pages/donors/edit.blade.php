@@ -56,7 +56,7 @@
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الشعار</label>
                                             @if ($donor->logo)
-                                            <img src="{{asset('assets/'.$donor->logo)}}" height="80" alt="" class="ml-auto">
+                                            <img src="{{asset('storage/'.$donor->logo)}}" height="80" alt="" class="ml-auto">
                                            @endif     
                                            <input type="file" name="logo" class="form-control credit-card-mask" placeholder="الشعار" id="credit-card" />
                                            @error('logo')<span class="text-danger">{{ $message }}</span>@enderror

@@ -26,7 +26,7 @@ class DonorController extends Controller
                     return $donor->created_at->format('Y-m-d');
                 })
                 ->editColumn('logo', function ($data) {
-                    $url = asset('assets/' . $data->logo);
+                    $url = asset('storage/' . $data->logo);
                     return '<img src="' . $url . '" border="0" width="80" class="img-rounded" align="center" />';
                 })
                 ->rawColumns(['logo', 'actions'])
@@ -81,7 +81,7 @@ class DonorController extends Controller
         $img_path = null;
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             $img = $request->file('logo');
-            $img_path = $img->store('/Donors', 'assets');
+            $img_path = $img->store('Donors', 'public');
         }
         $data['logo'] = $img_path;
         Donor::create($data);
@@ -124,6 +124,8 @@ class DonorController extends Controller
      */
     public function update(Request $request, Donor $donor)
     {
+        // dd($request);
+        // return $request;
         $request->validate([
             'name' => 'required|string',
             'phone' => 'nullable|Digits:10|numeric|unique:donors,phone,' . $donor->id,
@@ -141,25 +143,30 @@ class DonorController extends Controller
             'email.unique' => 'القيمة مستخدمة من قبل',
             'email.email' => 'يجب ان تكون القيمة ايمبل صحيح',
         ]);
-        //  return $request;
-        $data = [];
-        $data['name'] = $request->name;
-        $data['phone'] = $request->phone;
-        $data['email'] = $request->email;
-        $img_path = null;
-        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-            $imag = $request->file('logo');
-            if ($donor->logo && Storage::disk('assets')->exists($donor->logo)) {
-                $img_path = $imag->storeAs('/Donors', basename($donor->logo), 'assets');
-            } else {
-                $img_path = $imag->store('/Donors', 'assets');
+        
+        try{
+            $data = [];
+            $data['name'] = $request->name;
+            $data['phone'] = $request->phone;
+            $data['email'] = $request->email;
+            $img_path = $donor->logo ?? null;
+            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+                unlink('storage/' . $img_path);
+                $imag = $request->file('logo');
+               
+                $img_path = $imag->store('Donors','public');
+                
+                $data['logo'] = $img_path;
             }
-            $data['logo'] = strip_tags($img_path,'<img>');
+            $donor->update($data);
+            toastr()->success(__('تم تعديل البيانات بنجاح'));
+    
+            return redirect()->route('donors.index');
+        }catch (\Exception $ex) {
+            toastr()->error(__('يوجد خطاء ما'));
+            return back();
         }
-        $donor->update($data);
-        toastr()->success(__('تم تعديل البيانات بنجاح'));
-
-        return redirect()->route('donors.index');
+        
     }
 
     /**
@@ -170,8 +177,8 @@ class DonorController extends Controller
      */
     public function destroy(Donor $donor)
     {
-        if (File::exists('assets/' . $donor->logo)) {
-            unlink('assets/' . $donor->logo);
+        if (File::exists('storage/' . $donor->logo)) {
+            unlink('storage/' . $donor->logo);
         }
         if (count($donor->projects) > 0) {
             toastr()->error(__('لايمكنك حذف هذه المؤسسة'));

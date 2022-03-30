@@ -4,10 +4,22 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand" href="">
                     <span class="brand-logo">
+                        @if (auth()->user()->setting_status == 0)
                         <img src="{{ asset('/assets/logo/' . App\Models\Setting::where('key', 'logo')->first()->value) }}" alt="" srcset="">
+  
+                        @else
+                        <img src="{{ asset('/assets/logo/' . App\Models\Setting2::where('key', 'logo')->first()->value) }}" alt="" srcset="">
+
+                        @endif
                     </span>
                     <h2 class="brand-text" style="font-size: 18px">
+                        @if (auth()->user()->setting_status == 0)
                         {{ App\Models\Setting::where('key', 'title')->first()->value }}</h2>
+
+                        @else
+                        {{ App\Models\Setting2::where('key', 'title')->first()->value }}</h2>
+
+                        @endif
                 </a></li>
             <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
         </ul>
@@ -142,9 +154,16 @@
 
             </li>
             @endcan
+            @if (auth()->user()->setting_status == 0)
             @can('الاعدادات')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('settings.index') }}"><i data-feather="settings"></i><span class="menu-title text-truncate" data-i18n="Invoice">الاعدادات</span></a>
-                @endcan
+             @endcan
+            @else
+            @can('الاعدادات')
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('settings2.index') }}"><i data-feather="settings"></i><span class="menu-title text-truncate" data-i18n="Invoice">الاعدادات</span></a>
+             @endcan
+            @endif
+
 
                 @can('ادارة المشاريع الخيرية')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='briefcase'></i><span class="menu-title text-truncate" data-i18n="Invoice">مشاريع

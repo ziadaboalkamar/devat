@@ -21,21 +21,22 @@ class BeneficiaryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public static function getPossibleGender(){
+    public static function getPossibleGender()
+    {
         $type = DB::select(DB::raw('SHOW COLUMNS FROM beneficiaries WHERE Field = "gender"'))[0]->Type;
         preg_match('/^enum\((.*)\)$/', $type, $matches);
         $values = array();
-        foreach(explode(',', $matches[1]) as $value){
+        foreach (explode(',', $matches[1]) as $value) {
             $values[] = trim($value, "'");
         }
         return $values;
     }
     public function index(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $user = Auth::user()->branch_id;
 
-            $beneficiary = Beneficiary::where('branch_id','=',$user)->get();
+            $beneficiary = Beneficiary::where('branch_id', '=', $user)->get();
 
             return DataTables::of($beneficiary)
                 ->addIndexColumn()
@@ -54,12 +55,12 @@ class BeneficiaryController extends Controller
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
-                
+
                 ->rawColumns(['record_select', 'actions'])
                 ->make(true);
         }
 
-        return view('dashboard.pages.beneficiareis.index',[
+        return view('dashboard.pages.beneficiareis.index', [
             'beneficiareis' => Beneficiary::get(),
         ]);
     }
@@ -67,7 +68,7 @@ class BeneficiaryController extends Controller
     {
         // $beneficiary = Beneficiary::all();
         // return $beneficiary;
-        if($request->ajax()){
+        if ($request->ajax()) {
 
             $beneficiary = Beneficiary::all();
             return DataTables::of($beneficiary)
@@ -87,12 +88,12 @@ class BeneficiaryController extends Controller
                 ->editColumn('branch_name', function (Beneficiary $beneficiary) {
                     return $beneficiary->branchs->name;
                 })
-                
+
                 ->rawColumns(['record_select', 'actions'])
                 ->make(true);
         }
 
-        return view('dashboard.pages.beneficiareis.allBeneficiaries',[
+        return view('dashboard.pages.beneficiareis.allBeneficiaries', [
             'beneficiareis' => Beneficiary::get(),
         ]);
     }
@@ -104,16 +105,16 @@ class BeneficiaryController extends Controller
      */
     public function create()
     {
-        for($i = 1 ; $i < 31 ; $i++)
-        {
+        for ($i = 1; $i < 31; $i++) {
             $n[] = $i;
         }
 
-        return view('dashboard.pages.beneficiareis.create',[
+        return view('dashboard.pages.beneficiareis.create', [
             'cities' => City::get(),
             'projects' => Project::get(),
-            'getPossibleGender' =>BeneficiaryController::getPossibleGender(),
+            'getPossibleGender' => BeneficiaryController::getPossibleGender(),
             'family_members' => $n,
+            'brnches' => Branches::get(),
         ]);
     }
 
@@ -125,6 +126,12 @@ class BeneficiaryController extends Controller
      */
     public function store(BeneficiaryRequest $request)
     {
+        $branch = '';
+        if ($request->branch_id) {
+            $branch = $request->branch_id;
+        } else {
+            $branch = Auth::user()->branch_id;
+        }
         $data = [];
         $data['firstName'] = $request->firstName;
         $data['secondName'] = $request->secondName;
@@ -134,7 +141,7 @@ class BeneficiaryController extends Controller
         $data['id_number'] = $request->id_number;
         $data['PhoneNumber'] = $request->PhoneNumber;
         $data['family_member'] = $request->family_member;
-        $data['branch_id'] = Auth::user()->branch_id;
+        $data['branch_id'] = $branch;
         $data['city_id'] = $request->city_id;
         $data['address'] = $request->address;
         $data['maritial'] = $request->maritial;
@@ -143,7 +150,7 @@ class BeneficiaryController extends Controller
         Beneficiary::create($data);
         toastr()->success(__('تم حفظ البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;
+        return redirect()->route('beneficiareis.index');
     }
 
     /**
@@ -154,9 +161,9 @@ class BeneficiaryController extends Controller
      */
     public function show(Beneficiary $beneficiarei)
     {
-       return view('dashboard.pages.beneficiareis.show',[
-           'beneficiary' => $beneficiarei,
-       ]);
+        return view('dashboard.pages.beneficiareis.show', [
+            'beneficiary' => $beneficiarei,
+        ]);
     }
 
     /**
@@ -167,11 +174,10 @@ class BeneficiaryController extends Controller
      */
     public function edit(Beneficiary $beneficiarei)
     {
-        for($i = 1 ; $i < 31 ; $i++)
-        {
+        for ($i = 1; $i < 31; $i++) {
             $n[] = $i;
         }
-        return view('dashboard.pages.beneficiareis.edit',[
+        return view('dashboard.pages.beneficiareis.edit', [
             'cities' => City::get(),
             'projects' => Project::get(),
             'brnches' => Branches::get(),
@@ -190,6 +196,12 @@ class BeneficiaryController extends Controller
      */
     public function update(BeneficiaryRequest $request, Beneficiary $beneficiarei)
     {
+        $branch = '';
+        if ($request->branch_id) {
+            $branch = $request->branch_id;
+        } else {
+            $branch = Auth::user()->branch_id;
+        }
         $data = [];
         $data['firstName'] = $request->firstName;
         $data['secondName'] = $request->secondName;
@@ -199,7 +211,7 @@ class BeneficiaryController extends Controller
         $data['id_number'] = $request->id_number;
         $data['PhoneNumber'] = $request->PhoneNumber;
         $data['family_member'] = $request->family_member;
-        $data['branch_id'] = Auth::user()->branch_id;;
+        $data['branch_id'] = $branch;
         $data['city_id'] = $request->city_id;
         $data['address'] = $request->address;
         $data['maritial'] = $request->maritial;
@@ -207,7 +219,7 @@ class BeneficiaryController extends Controller
         $beneficiarei->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;
+        return redirect()->route('beneficiareis.index');
     }
 
     /**
@@ -217,21 +229,21 @@ class BeneficiaryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function updateStatus(Request $request)
-     {
+    public function updateStatus(Request $request)
+    {
         $b = Beneficiary::findorfail($request->id);
-            $b->update([
-                'status_id'=>$request->status_id
-            ]);
+        $b->update([
+            'status_id' => $request->status_id
+        ]);
         toastr()->success(__('تم تعديل البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;
-     }
+        return redirect()->route('beneficiareis.index');
+    }
     public function destroy(Beneficiary $beneficiarei)
     {
         $beneficiarei->delete();
         toastr()->success(__('تم حذف البيانات بنجاح'));
 
-        return redirect()->route('beneficiareis.index') ;
+        return redirect()->route('beneficiareis.index');
     }
 }

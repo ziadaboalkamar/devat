@@ -62,6 +62,8 @@
                             id="create_new">
                             @csrf
                             <input type="hidden" value="{{$project_id}}" name="project_id">
+                            {{-- <input type="hidden" value="{{}}" name="project_id"> --}}
+
                             <button type="submit"></button>
                         </form>
                         <form action="{{ route('projects.submit.all.beneficiaries') }}" method="post" class="d-none"

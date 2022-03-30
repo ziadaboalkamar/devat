@@ -16,6 +16,8 @@ use Yajra\DataTables\Facades\DataTables;
 class BeneficiariesProjectController extends Controller
 {
     public $project_id;
+    public $branch_id;
+
 
     /**
      * Display a listing of the resource.
@@ -63,8 +65,8 @@ class BeneficiariesProjectController extends Controller
      */
     public function create(Request $request)
     {
-        $user = Auth::user()->branch_id;
 
+        $user = Auth::user()->branch_id;
         $this->project_id = $request->project_id;
         if ($request->ajax()) {
             $user = Auth::user()->branch_id;
@@ -113,6 +115,62 @@ class BeneficiariesProjectController extends Controller
         ]);
     }
 
+    public function createBen(Request $request)
+    {  
+
+        $this->project_id = $request->project_id;
+
+        $branch_Count = ProjectBranchCount::where('id',$request->branch_id)->first();
+
+        // $this->branch_id = $branch_Count->branch_id;
+        // $beneficiary = Beneficiary::where('branch_id', $branch_Count->branch_id)->where('status_id', 1)->get();
+        // return $beneficiary;
+        // return $branch_Count->branch_id;
+        if ($request->ajax()) {
+            $project_id = $this->project_id;
+
+            $beneficiary = Beneficiary::where('branch_id', $request->branchCount)->where('status_id', 1)->get();
+            // return $beneficiary;
+            return DataTables::of($beneficiary)
+                ->addIndexColumn()
+                ->editColumn('city_name', function ($beneficiary) {
+                    return $beneficiary->cities->city_name;
+                })
+                ->editColumn('active', function ( $beneficiary) {
+                    return $beneficiary->getActive();
+                })
+                ->editColumn('FullName', function ( $beneficiary) {
+                    return $beneficiary->getFullNameAttribute();
+                })
+
+                ->editColumn('branch_name', function ( $beneficiary) {
+                    return $beneficiary->branchs->name;
+                })
+                ->editColumn('isadded', function ( $beneficiary) use ($project_id) {
+
+                    $exist = BeneficiariesProject::where('project_id', '=', $project_id)->where('beneficiary_id', '=', $beneficiary->id)->get();
+                    if (count($exist) == 0) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                })
+                ->make(true);
+        }
+
+        for ($i = 1; $i < 31; $i++) {
+            $n[] = $i;
+        }
+        return view('dashboard.pages.beneficiaries_projects.create_ben', [
+
+            'project_id' => $this->project_id,
+            'family_members' => $n,
+            'branchCount' => $branch_Count->branch_id,
+            'beneficiariesCount' =>BeneficiariesProject::where('project_id', '=', $this->project_id)->where('branch_id', '=', $branch_Count->branch_id)->count()
+
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -153,10 +211,6 @@ class BeneficiariesProjectController extends Controller
         }
     }
     // return redirect()->route('projects.beneficiareis.get', $project_id)->with([$project_id, $beneficiariesProjects, $project]);
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -249,12 +303,49 @@ class BeneficiariesProjectController extends Controller
     }
     public function submitAll(Request $request){
         try {
-            $branch_id = \auth()->user()->branch_id;
+            $branch_id = auth()->user()->branch_id;
 
             $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
             if ($branchCount->status_id == 1){
                 if ($request->ajax()){
                     $branch_id = \auth()->user()->branch_id;
+
+                    $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
+                    ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id',$branch_id)->update([
+                        'status_id' => 2,
+                    ]);
+                    return response()->json([
+                        'status' => 200,
+                    ]);
+                }else{
+                    ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id',$branch_id)->update([
+                        'status_id' => 2,
+                    ]);
+
+                    toastr()->success(__('تم اعتماد المستفدين بنجاح'));
+                    return redirect()->back();
+                }
+
+            }
+
+
+
+
+        }catch (\Exception $exception){
+            toastr()->success(__('يوجد خطاء في الاعتماد'));
+            return redirect()->back();
+        }
+
+    }
+
+    public function submitAll2(Request $request){
+        try {
+            $branch_id = $request->branchCount;
+
+            $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
+            if ($branchCount->status_id == 1){
+                if ($request->ajax()){
+                    $branch_id = auth()->user()->branch_id;
 
                     $branchCount = ProjectBranchCount::where('project_id','=', $request->project_id)->where('branch_id',$branch_id)->first();
                     ProjectBranchCount::where('project_id', $request->project_id)->where('branch_id',$branch_id)->update([

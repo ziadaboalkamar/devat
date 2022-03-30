@@ -119,17 +119,32 @@
                                             </select>
                                             @error('maritial')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-                                        <div class="col-xl-8 col-md-6 col-sm-12 mb-2">
+                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">العنوان</label>
                                             <input type="text" name="address" value="{{ old('address') }}" class="form-control credit-card-mask" placeholder="العنوان"  />
                                             @error('address')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
-
-
+                                        @can('اضافة مستفيد')
+                                        <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
+                                            <div class="form-group">
+                                                <label for="basicInput">الفروع</label>
+                                                <select name="branch_id" class="form-control">
+                                                    <option value="" selected disabled>اختر الفرع</option>
+                                                    @foreach ($brnches as $brnche)
+                                                    <option value="{{ $brnche->id }}" {{ old('branch_id')== $brnche->id ? 'selected' : null }}> {{ $brnche->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('branch_id')<span class="text-danger">{{ $message }}</span>@enderror
+                                            </div>
+                                        </div>
+                                        @endcan
+                                       
 
                                         <div class="col-12 d-flex flex-sm-row flex-column mt-2">
                                             <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">حفظ</button>
                                             <a href="{{ route('beneficiareis.index') }}" class="btn btn-outline-secondary">اغلاق</a>
+                                            {{-- <button  class="btn btn-outline-secondary" onclick="history.back()">اغلاق</button> --}}
+
                                         </div>
                                     </form>
                                     </div>

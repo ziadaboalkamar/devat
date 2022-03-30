@@ -29,7 +29,8 @@ class User extends Authenticatable
         'userName',
         'updated_at',
         'status',
-        'created_at'
+        'created_at',
+        'setting_status',
     ];
 
     /**

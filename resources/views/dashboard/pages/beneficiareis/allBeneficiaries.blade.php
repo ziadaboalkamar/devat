@@ -51,6 +51,7 @@
                                                 <th>رقم الجوال</th>
                                                 <th>عدد افراد الاسرة</th>
                                                 <th>الحالة الاجتماعية</th>
+                                                <th> اسم الفرع</th>
                                                 <th>الحالة</th>
                                                 <th>العمليات</th>
                                             </tr>
@@ -175,6 +176,11 @@
                 {
                     data: 'maritial',
                     name: 'maritial',
+                    searchable: false
+                },
+                {
+                    data: 'branch_name',
+                    name: 'branch_name',
                     searchable: false
                 },
                 {

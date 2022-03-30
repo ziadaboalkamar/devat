@@ -71,6 +71,7 @@ class UserController extends Controller
                 'branch_id' => $request->branch_id,
                 'userName'=>$request->userName,
                 'status' => 1,
+                'setting_status' => auth()->user()->setting_status,
             ]);
             toastr()->success(__('تم حفظ البيانات بنجاح'));
             return redirect()->route('users.index');
@@ -118,6 +119,7 @@ class UserController extends Controller
                 'password' => $password,
                 'role_id' => $request->rolle_id,
                 'branch_id' => $request->branch_id,
+                'setting_status' => auth()->user()->setting_status,
 
             ]);
             toastr()->success(__('تم تحديث البيانات بنجاح'));

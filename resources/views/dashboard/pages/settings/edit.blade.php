@@ -80,7 +80,7 @@
                                                     <div class="col-lg-8">
                                                         <div class="mb-3">
                                                             <img style="width: 100px" height="100px"
-                                                                src="{{ asset('assets/logo/'.$setting['logo']) }}" alt="">
+                                                                src="{{ asset('storage/logo/'.$setting['logo']) }}" alt="">
                                                         </div>
                                                         <input name="logo" accept="image/*" type="file" class="file-input"
                                                             data-show-caption="false" data-show-upload="false" data-fouc>

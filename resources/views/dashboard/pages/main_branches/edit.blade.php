@@ -49,7 +49,7 @@
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="credit-card">الشعار</label>
                                             @if ($main_branch->logo)
-                                             <img src="{{asset('assets/'.$main_branch->logo)}}" height="120" alt="" class="ml-auto">
+                                             <img src="{{asset('storage/'.$main_branch->logo)}}" height="120" alt="" class="ml-auto">
                                             @endif     
                                             <input type="file" name="logo" class="form-control credit-card-mask" placeholder="الشعار" id="credit-card" />
                                             @error('logo')<span class="text-danger">{{ $message }}</span>@enderror

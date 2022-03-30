@@ -28,7 +28,7 @@ class MainBrancheController extends Controller
                     return $mainBranche->created_at->format('Y-m-d');
                 })
                 ->editColumn('logo', function ($data) {
-                    $url = asset('assets/' . $data->logo);
+                    $url = asset('storage/' . $data->logo);
                     return '<img src="' . $url . '" border="0" width="80" class="img-rounded" align="center" />';
                 })
                 ->rawColumns(['logo', 'actions'])
@@ -74,7 +74,7 @@ class MainBrancheController extends Controller
         $img_path = null;
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             $img = $request->file('logo');
-            $img_path = $img->store('/MainBranches', 'assets');
+            $img_path = $img->store('MainBranches', 'public');
         }
 
         $data['logo'] = strip_tags($img_path,'<img>');
@@ -117,6 +117,7 @@ class MainBrancheController extends Controller
      */
     public function update(Request $request, MainBranche $main_branch)
     {
+        // return $request;
         $request->validate([
             'name' => 'required|string',
             'logo' => 'sometimes|mimes:jpg,jpeg,png|max:2000',
@@ -129,16 +130,18 @@ class MainBrancheController extends Controller
 
         $data = [];
         $data['name'] = $request->name;
-        $img_path = null;
-        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
-            $imag = $request->file('logo');
-            if ($main_branch->logo && Storage::disk('assets')->exists($main_branch->logo)) {
-                $img_path = $imag->storeAs('/MainBranches', basename($main_branch->logo), 'assets');
-            } else {
-                $img_path = $imag->store('/MainBranches', 'assets');
+        
+         $img_path = $main_branch->logo ?? null;
+            
+            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+                unlink('storage/' . $img_path);
+                $imag = $request->file('logo');
+               
+                $img_path = $imag->store('MainBranches','public');
+                
+                $data['logo'] = $img_path;
             }
-            $data['logo'] = strip_tags($img_path,'<img>');
-        }
+        
 
         $main_branch->update($data);
         toastr()->success(__('تم تعديل البيانات بنجاح'));

@@ -57,10 +57,11 @@
                             <!-- list section end -->
                         </section>
 
-                        <form action="{{ route('beneficiareis-projects.create') }}" method="get" class="d-none"
+                        <form action="{{ route('beneficiareis.createBen') }}" method="get" class="d-none"
                               id="create_new">
                             @csrf
                             <input type="hidden" value="{{$project_id}}" name="project_id">
+                            <input type="hidden" value="{{ $id }}" name="branch_id">
                             <button type="submit"></button>
                         </form>
                     @foreach ($beneficiariesProjects as $beneficiariesProject)
@@ -230,7 +231,17 @@
                     }, 50);
                 }
             },
-
+            {
+                    text: 'اضافة مستفيدين',
+                    className: 'add-new btn btn-primary mt-50',
+                    onclick: "",
+                    attr: {
+                        'onclick': "document.getElementById('create_new').submit()",
+                    },
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    }
+                }
             ],
             columnDefs: [
                 // Actions
