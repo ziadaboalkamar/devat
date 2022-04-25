@@ -170,7 +170,12 @@
                                             @error('managerial_fees')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
-
+                                            <select name="type" class="form-control">
+                                                <option value="" disabled>---</option>
+                                                <option value="fixed" {{ old('type', $projects->type) == 'fixed' ? 'selected' : null }}>ثابت</option>
+                                                <option value="percentage" {{ old('type', $projects->type) == 'percentage' ? 'selected' : null }}>نسبة مؤوية</option>
+                                            </select>
+                                            @error('type')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                         <div class="col-xl-4 col-md-6 col-sm-12 mb-2">
                                             <label for="custom-delimiters">تاريخ بداء التنفيذ</label>

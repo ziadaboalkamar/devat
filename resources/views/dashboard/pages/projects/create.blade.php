@@ -169,6 +169,12 @@
                                             <input type="text" name="managerial_fees" placeholder="%"
                                                 value="{{ old('managerial_fees') }}" class="form-control prefix-mask"
                                                 id="prefix" />
+                                                <select name="type" class="form-control">
+                                                    <option value="">---</option>
+                                                    <option value="fixed" {{ old('type') == 'fixed' ? 'selected' : null }}>ثابت</option>
+                                                    <option value="percentage" {{ old('type') == 'percentage' ? 'selected' : null }}>نسبة مؤوية</option>
+                                                </select>
+                                                 @error('type')<span class="text-danger">{{ $message }}</span>@enderror
                                             @error('managerial_fees')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

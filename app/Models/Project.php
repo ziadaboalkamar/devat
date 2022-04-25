@@ -11,7 +11,7 @@ class Project extends Model
     protected  $table = 'projects';
     protected $fillable = [
         'id','status','project_name','grant_date','donor_id','category_id','grant_value','currency_id','exchange_amount','managerial_fees','start_date','project_branch_count_id','main_branch_id','setting_status',
-        'created_at','updated_at','image_one','	image_two','image_three','image_fore','image_five','image_six'
+        'created_at','updated_at','type',
     ];
 
 
@@ -52,5 +52,17 @@ class Project extends Model
 
     public function image(){
         return $this->hasOne(ImageAttachment::class,'project_id','id');
+    }
+
+    protected function doProcess($total)
+    {
+        switch ($this->type) {
+            case 'fixed':
+                return $this->value;
+            case 'percentage':
+                return ($this->value / 100) * $total;
+            default:
+                return 0;
+        }
     }
 }

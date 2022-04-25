@@ -69,6 +69,7 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
+        // return $request;
         try {
             $data = array();
             $data['main_branch_id'] = $request->main_branch_id;
@@ -82,6 +83,7 @@ class ProjectController extends Controller
             $data['start_date'] = $request->start_date;
             $data['donor_id'] = $request->donor_id;
             $data['status'] = 1;
+            $data['type'] = $request->type;
             $pro = Project::insertGetId($data);
 
             $img_path = null;
@@ -213,8 +215,8 @@ class ProjectController extends Controller
 
     public function update($id, Request $request)
     {
-           return $request;
-        // try {
+        //    return $request;
+        try {
         $project = Project::with('image')->find($id);
         // dd($project);
         if (!$project) {
@@ -231,7 +233,9 @@ class ProjectController extends Controller
             'exchange_amount' => $request->exchange_amount,
             'managerial_fees' => $request->managerial_fees,
             'start_date' => $request->start_date,
-            'donor_id' => $request->donor_id
+            'donor_id' => $request->donor_id,
+            'type' => $request->type,
+
 
         ]);
 
@@ -376,11 +380,11 @@ class ProjectController extends Controller
         // }
         toastr()->success(__('تم تحديث البيانات بنجاح'));
         return redirect()->route('projects.index');
-        // } catch (\Exception $exception) {
+        } catch (\Exception $exception) {
 
-        // toastr()->error(__('يوجد خطاء ما'));
-        //     return redirect()->route('projects.index');
-        // }
+        toastr()->error(__('يوجد خطاء ما'));
+            return redirect()->route('projects.index');
+        }
     }
 
     public function deleteImag($id)
