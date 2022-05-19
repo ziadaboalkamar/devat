@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -66,7 +67,11 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        
+        $user = User::with('role')->find($id);
+        return view('dashboard.pages.roles.show',[
+            'user' => $user->role
+        ]);
+
     }
 
     /**

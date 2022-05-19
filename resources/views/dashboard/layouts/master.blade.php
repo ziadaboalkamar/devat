@@ -7,7 +7,7 @@
 
     @include('dashboard.layouts.header')
     @include('dashboard.layouts.menu')
-  @yield('content')
+    @yield('content')
     @include('dashboard.layouts.footer')
     {{-- @include('sweetalert::alert') --}}
     <!-- BEGIN: Vendor JS-->
@@ -19,6 +19,7 @@
     <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
     <!-- END: Theme JS-->
 
+    
 
     <script>
         $.ajaxSetup({
@@ -31,7 +32,7 @@
     @toastr_js
     @toastr_render
     <script>
-        $(window).on('load', function () {
+        $(window).on('load', function() {
             if (feather) {
                 feather.replace({
                     width: 14,

@@ -33,6 +33,8 @@ class User extends Authenticatable
         'setting_status',
     ];
 
+    protected $appends = ['full_name'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,7 +44,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public function getFullNameAttribute(): string
+    {
+        return ucfirst($this->firstname) . ' ' . ucfirst($this->lastname);
+    }
     /**
      * The attributes that should be cast.
      *

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\myEvent;
 use App\Http\Requests\ProjectRequest;
 use App\Imports\ProjectImport;
 use App\Models\AttachmentCategory;
@@ -84,6 +85,7 @@ class ProjectController extends Controller
             $data['donor_id'] = $request->donor_id;
             $data['status'] = 1;
             $data['type'] = $request->type;
+            
             $pro = Project::insertGetId($data);
 
             $img_path = null;
@@ -188,6 +190,11 @@ class ProjectController extends Controller
 
             //     ]);
             // }
+            $event = [
+                'project_name' => $request->project_name,
+                'main_branch_id' => $request->main_branch_id,
+            ];
+            event(new myEvent($event));
 
             toastr()->success(__('تم حفظ البيانات بنجاح'));
             return redirect()->route('projects.index');

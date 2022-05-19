@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\myEvent;
 use App\Http\Controllers\BrancheController;
 use App\Http\Controllers\CategoryOfProjectController;
 use App\Http\Controllers\CityController;
@@ -60,6 +61,12 @@ Route::prefix('admin')->middleware('auth')->group(
     function () {
         //    home route
         Route::get('/', [HomeController::class, 'index'])->name('admin');
+
+        // Route::get('/',function(){
+        //     event(new myEvent('hello world'));
+        //     return view('dashboard.pages.home_page.index');
+        // })->name('admin');
+        
         //    start user
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/users/create', [UserController::class, 'create'])->name('users.create');

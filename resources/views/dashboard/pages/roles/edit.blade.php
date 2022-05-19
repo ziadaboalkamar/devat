@@ -78,13 +78,14 @@
                                                 </div>
                                             </div>
                                             <div class="form-actions">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="la la-check-square-o"></i> تحديث
+                                                </button>
                                                 <button type="button" class="btn btn-warning mr-1"
                                                     onclick="history.back();">
                                                     <i class="ft-x"></i> تراجع
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> تحديث
-                                                </button>
+                                                
                                             </div>
                                         </form>
                                     </div>

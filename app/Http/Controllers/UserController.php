@@ -84,6 +84,14 @@ class UserController extends Controller
 
 
     }
+
+    // public function show($id)
+    // {
+    //     $user = User::with('role')->find($id);
+    //     return $user;
+
+    // }
+
     public function edit($id){
         $user = User::select()->find($id);
         $roles = Role::all();
